@@ -1,0 +1,177 @@
+@import "tailwindcss";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-white text-black font-sans;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Modern streetwear + tattoo-shop aesthetic */
+@layer base {
+  /* Design tokens */
+  :root {
+    --color-black: #1a1a1a;
+    --color-charcoal: #2d2d2d;
+    --color-bone: #f5f5dc;
+    --color-off-white: #fafaf8;
+    --color-oxblood: #5c0a0a;
+  }
+
+  h1 {
+    @apply font-bold;
+    font-size: clamp(1.875rem, 6vw, 3.5rem);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  h2 {
+    @apply font-bold;
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    letter-spacing: -0.015em;
+    line-height: 1.2;
+  }
+
+  h3 {
+    @apply font-semibold;
+    font-size: clamp(1.125rem, 3vw, 1.75rem);
+    letter-spacing: -0.01em;
+  }
+
+  h4, h5, h6 {
+    @apply font-semibold;
+    letter-spacing: -0.01em;
+  }
+
+  p {
+    line-height: 1.6;
+    color: #555;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+@layer components {
+  /* Premium buttons */
+  .btn-primary {
+    @apply px-6 py-3 bg-black text-white font-semibold rounded-md hover:bg-gray-900 transition-all duration-300 flex items-center justify-center gap-2;
+  }
+
+  .btn-primary-oxblood {
+    @apply px-6 py-3 bg-red-900 text-white font-semibold rounded-md hover:bg-red-950 transition-all duration-300;
+  }
+
+  .btn-secondary {
+    @apply px-6 py-3 bg-white text-black border border-black font-semibold rounded-md hover:bg-gray-100 transition-all duration-300;
+  }
+
+  .btn-ghost {
+    @apply px-6 py-3 text-black hover:text-red-900 transition-colors duration-300;
+  }
+
+  /* Product card */
+  .product-card {
+    @apply cursor-pointer;
+  }
+
+  .product-image {
+    @apply bg-gray-100 aspect-square overflow-hidden rounded-none mb-4;
+  }
+
+  .product-image img {
+    @apply w-full h-full object-cover transition-transform duration-500;
+  }
+
+  .product-card:hover .product-image img {
+    @apply scale-105;
+  }
+
+  /* Badge */
+  .badge {
+    @apply inline-block px-2 py-1 bg-red-900 text-white text-xs font-semibold rounded;
+  }
+
+  /* Section spacing */
+  .section-padding {
+    @apply py-16 md:py-24;
+  }
+
+  /* Tattoo accent line - subtle ornament */
+  .tattoo-divider::before {
+    content: '✦';
+    @apply block text-black/30 my-4 text-sm tracking-widest;
+  }
+
+  /* Fine linework ornament */
+  .ornament {
+    @apply text-black/20;
+  }
+}
+
+/* Subtle texture (fine paper grain) */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100' height='100' fill='%23fafaf8' filter='url(%23noise)' opacity='0.015'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Focus styles for keyboard navigation */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  @apply outline-2 outline-offset-2 outline-red-900;
+}
+
+/* Smooth transitions */
+button,
+a,
+input,
+select,
+textarea {
+  @apply transition-colors duration-200;
+}
+
+/* Utility for responsive grid */
+.product-grid {
+  @apply grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4;
+}
+
+.product-grid-3 {
+  @apply grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3;
+}
+
+.collection-grid {
+  @apply grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3;
+}
