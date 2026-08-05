@@ -1,81 +1,60 @@
 import { printfulRequest } from './client';
-import { PrintfulOrder, PrintfulRecipient, PrintfulOrderItem } from '../types/printful';
-import { ShippingAddress, OrderItem } from '../types/order';
+import { PrintfulDraftOrderPayload, PrintfulOrder, PrintfulRecipient } from './types';
+import { StoreOrder, StoreOrderItem } from '@/lib/orders/types';
 
-export interface CreatePrintfulOrderRequest {
-  external_id: string;
-  recipient: PrintfulRecipient;
-  items: PrintfulOrderItem[];
-  shipping: string;
-  confirm: boolean;
-}
+export type ResolvedPrintfulOrderItem = {
+  sync_variant_id: number;
+  quantity: number;
+  name: string;
+};
 
-export async function createPrintfulOrder(
-  externalId: string,
-  customer: {
-    firstName: string;
-    lastName: string;
-    email: string;
-    phone?: string;
-  },
-  shippingAddress: ShippingAddress,
-  items: OrderItem[],
-  autoConfirm: boolean = false
-): Promise<PrintfulOrder> {
-  const recipient: PrintfulRecipient = {
-    name: `${customer.firstName} ${customer.lastName}`,
+export function buildPrintfulRecipient(shippingAddress: StoreOrder['shippingAddress'], email: string, phone?: string): PrintfulRecipient {
+  return {
+    name: `${shippingAddress.firstName} ${shippingAddress.lastName}`,
     address1: shippingAddress.address,
     address2: shippingAddress.addressLine2,
     city: shippingAddress.city,
     state_code: shippingAddress.state.toUpperCase(),
     country_code: shippingAddress.country,
     zip: shippingAddress.postalCode,
-    email: customer.email,
-    phone: customer.phone || '',
+    email,
+    phone,
   };
+}
 
-  const printfulItems: PrintfulOrderItem[] = items.map((item) => ({
-    sync_variant_id: parseInt(item.printfulVariantId.split('_')[1] || '1'),
+export function mapOrderItemsToPrintful(items: StoreOrderItem[]): ResolvedPrintfulOrderItem[] {
+  return items.map((item) => ({
+    sync_variant_id: Number(item.printfulVariantId),
     quantity: item.quantity,
     name: item.name,
   }));
+}
 
-  const request: CreatePrintfulOrderRequest = {
-    external_id: externalId,
-    recipient,
-    items: printfulItems,
+export async function createPrintfulDraftOrder(order: StoreOrder, confirm = false): Promise<PrintfulOrder> {
+  const payload: PrintfulDraftOrderPayload = {
+    external_id: order.id,
+    recipient: buildPrintfulRecipient(order.shippingAddress, order.customerEmail),
+    items: mapOrderItemsToPrintful(order.items),
     shipping: 'STANDARD',
-    confirm: autoConfirm,
+    confirm,
   };
 
   const response = await printfulRequest<PrintfulOrder>('/orders', {
     method: 'POST',
-    body: JSON.stringify(request),
+    body: JSON.stringify(payload),
   });
 
   return response.result;
 }
 
 export async function getPrintfulOrder(orderId: number): Promise<PrintfulOrder> {
-  const response = await printfulRequest<PrintfulOrder>(`/orders/${orderId}`, {
-    method: 'GET',
-  });
-
-  return response.result;
+  return (await printfulRequest<PrintfulOrder>(`/orders/${orderId}`, { method: 'GET' })).result;
 }
 
 export async function confirmPrintfulOrder(orderId: number): Promise<PrintfulOrder> {
-  const response = await printfulRequest<PrintfulOrder>(`/orders/${orderId}/confirm`, {
-    method: 'POST',
-    body: JSON.stringify({}),
-  });
-
-  return response.result;
+  return (await printfulRequest<PrintfulOrder>(`/orders/${orderId}/confirm`, { method: 'POST', body: JSON.stringify({}) })).result;
 }
 
 export async function cancelPrintfulOrder(orderId: number): Promise<void> {
-  await printfulRequest<void>(`/orders/${orderId}/cancel`, {
-    method: 'POST',
-    body: JSON.stringify({}),
-  });
+  await printfulRequest<void>(`/orders/${orderId}/cancel`, { method: 'POST', body: JSON.stringify({}) });
 }

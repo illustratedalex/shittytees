@@ -1,9 +1,63 @@
+import { mkdir, readFile, writeFile } from 'fs/promises';
+import { dirname, resolve } from 'path';
 import { Order } from '../types/order';
 
-// Local in-memory store for development
-// In production, replace with a real database
-const orders = new Map<string, Order>();
-const fulfillmentLog = new Map<string, string>(); // sessionId -> fulfillmentState
+const STORE_PATH = resolve(process.cwd(), '.generated/orders.json');
+const DEFAULT_STORE = { orders: [], fulfillmentLog: {} as Record<string, string> };
+
+type StoredOrder = Omit<Order, 'createdAt' | 'updatedAt'> & {
+  createdAt: string;
+  updatedAt: string;
+};
+
+type OrderStoreState = {
+  orders: StoredOrder[];
+  fulfillmentLog: Record<string, string>;
+};
+
+async function readStore(): Promise<OrderStoreState> {
+  try {
+    const raw = await readFile(STORE_PATH, 'utf8');
+    const parsed = JSON.parse(raw) as Partial<OrderStoreState>;
+    return {
+      orders: Array.isArray(parsed.orders) ? parsed.orders : [],
+      fulfillmentLog: parsed.fulfillmentLog || {},
+    };
+  } catch (error) {
+    const missing = typeof error === 'object' && error !== null && 'code' in error && (error as { code?: string }).code === 'ENOENT';
+    if (missing) {
+      return { ...DEFAULT_STORE };
+    }
+    throw error;
+  }
+}
+
+async function writeStore(store: OrderStoreState): Promise<void> {
+  await mkdir(dirname(STORE_PATH), { recursive: true });
+  await writeFile(STORE_PATH, `${JSON.stringify(store, null, 2)}\n`, 'utf8');
+}
+
+function toStoredOrder(order: Order): StoredOrder {
+  return {
+    ...order,
+    createdAt: order.createdAt.toISOString(),
+    updatedAt: order.updatedAt.toISOString(),
+  };
+}
+
+function fromStoredOrder(order: StoredOrder): Order {
+  return {
+    ...order,
+    createdAt: new Date(order.createdAt),
+    updatedAt: new Date(order.updatedAt),
+  };
+}
+
+async function updateStore(mutator: (store: OrderStoreState) => void): Promise<void> {
+  const store = await readStore();
+  mutator(store);
+  await writeStore(store);
+}
 
 export interface OrderRepository {
   save(order: Order): Promise<void>;
@@ -17,39 +71,48 @@ export interface FulfillmentTracker {
   markFulfilled(sessionId: string, printfulOrderId?: string): Promise<void>;
 }
 
-// In-memory order repository for development
 export const orderRepository: OrderRepository = {
   async save(order: Order) {
-    orders.set(order.id, order);
+    await updateStore((store) => {
+      const storedOrder = toStoredOrder(order);
+      const index = store.orders.findIndex((item) => item.id === storedOrder.id);
+      if (index >= 0) {
+        store.orders[index] = storedOrder;
+      } else {
+        store.orders.push(storedOrder);
+      }
+    });
   },
   async findByCheckoutSessionId(sessionId: string) {
-    for (const order of orders.values()) {
-      if (order.stripeCheckoutSessionId === sessionId) {
-        return order;
-      }
-    }
-    return null;
+    const store = await readStore();
+    const order = store.orders.find((item) => item.stripeCheckoutSessionId === sessionId);
+    return order ? fromStoredOrder(order) : null;
   },
   async findById(id: string) {
-    return orders.get(id) || null;
+    const store = await readStore();
+    const order = store.orders.find((item) => item.id === id);
+    return order ? fromStoredOrder(order) : null;
   },
   async list() {
-    return Array.from(orders.values());
+    const store = await readStore();
+    return store.orders.map(fromStoredOrder);
   },
 };
 
-// Fulfillment tracker to prevent duplicate submissions
 export const fulfillmentTracker: FulfillmentTracker = {
   async isFulfilled(sessionId: string) {
-    return fulfillmentLog.has(sessionId);
+    const store = await readStore();
+    return Boolean(store.fulfillmentLog[sessionId]);
   },
   async markFulfilled(sessionId: string, printfulOrderId?: string) {
-    fulfillmentLog.set(sessionId, printfulOrderId || 'submitted');
+    await updateStore((store) => {
+      store.fulfillmentLog[sessionId] = printfulOrderId || 'submitted';
+    });
   },
 };
 
 export async function getOrderStats() {
-  const allOrders = Array.from(orders.values());
+  const allOrders = await orderRepository.list();
   const paidOrders = allOrders.filter((o) => o.status !== 'pending_payment');
   const totalRevenue = paidOrders.reduce((sum, o) => sum + o.total, 0);
 

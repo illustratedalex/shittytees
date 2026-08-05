@@ -16,6 +16,7 @@
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
+    "ignoreDeprecations": "5.0",
     "noEmit": true,
     "jsx": "react-jsx",
     /* Linting */

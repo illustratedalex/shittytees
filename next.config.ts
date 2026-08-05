@@ -1,11 +1,12 @@
 import type { NextConfig } from 'next';
+import path from 'path';
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   compress: true,
   poweredByHeader: false,
   turbopack: {
-    root: '.',
+    root: path.resolve(__dirname),
   },
   headers: async () => [
     {
@@ -26,6 +27,19 @@ const nextConfig: NextConfig = {
         {
           key: 'Referrer-Policy',
           value: 'strict-origin-when-cross-origin',
+        },
+      ],
+    },
+    {
+      source: '/order/:path*',
+      headers: [
+        {
+          key: 'Referrer-Policy',
+          value: 'no-referrer',
+        },
+        {
+          key: 'Cache-Control',
+          value: 'private, no-store',
         },
       ],
     },

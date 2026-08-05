@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { randomUUID } from 'crypto';
 import { CheckoutRequestSchema } from '@/lib/validation/schemas';
 import { createCheckoutSession } from '@/lib/stripe/checkout';
-import { DEMO_PRODUCTS } from '@/lib/data/products';
+import { generatePublicAccessToken } from '@/lib/orders/publicAccess';
+import { validateAndNormalizeCheckoutItems } from '@/lib/orders/services/checkoutSecurity';
 
 export async function POST(request: NextRequest) {
   try {
@@ -10,37 +12,16 @@ export async function POST(request: NextRequest) {
     // Validate request format
     const validated = CheckoutRequestSchema.parse(body);
 
-    // Verify all products and variants exist with correct pricing
-    for (const item of validated.items) {
-      let found = false;
-      for (const product of DEMO_PRODUCTS) {
-        const variant = product.variants.find((v) => v.id === item.variantId);
-        if (variant && variant.available) {
-          found = true;
-          // Verify client price doesn't exceed server price
-          if (item.unitPrice > variant.retailPrice * 1.01) {
-            return NextResponse.json(
-              { error: 'Price validation failed' },
-              { status: 400 }
-            );
-          }
-          break;
-        }
-      }
-      if (!found) {
-        return NextResponse.json(
-          { error: `Product or variant not found or unavailable: ${item.variantId}` },
-          { status: 404 }
-        );
-      }
-    }
+    const normalized = validateAndNormalizeCheckoutItems(validated.items);
+    const orderId = randomUUID();
+    const orderAccessToken = generatePublicAccessToken();
 
     // Check if demo checkout mode is enabled
     if (process.env.NEXT_PUBLIC_DEMO_CHECKOUT === 'true') {
       // Return demo checkout page instead of real Stripe session
       const baseUrl = request.headers.get('origin') || process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
       return NextResponse.json({ 
-        url: `${baseUrl}/checkout/demo`,
+        url: `${baseUrl}/checkout/demo?order_id=${encodeURIComponent(orderId)}&token=${encodeURIComponent(orderAccessToken)}`,
         isDemo: true
       });
     }
@@ -48,9 +29,11 @@ export async function POST(request: NextRequest) {
     // Create Stripe checkout session (production)
     const baseUrl = request.headers.get('origin') || process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
     const checkoutUrl = await createCheckoutSession({
-      items: validated.items,
+      items: normalized,
       shippingAddress: validated.shippingAddress,
       baseUrl,
+      orderId,
+      orderAccessToken,
     });
 
     return NextResponse.json({ url: checkoutUrl, isDemo: false });

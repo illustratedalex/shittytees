@@ -4,7 +4,7 @@ A production-ready print-on-demand apparel storefront built with Next.js, Stripe
 
 **Domain:** shittytees.com  
 **Staging:** shittytees.staging.deadsignal.co  
-**Local:** http://localhost:3000/shittytees
+**Local:** http://localhost:3000
 
 ## Overview
 
@@ -15,6 +15,7 @@ ShittyTees is a screenprintshop aesthetic e-commerce platform with:
 - **Stripe Checkout** for secure payments
 - **Printful integration** for print-on-demand fulfillment
 - **Webhook handlers** for payment and fulfillment tracking
+- **Order repository adapter layer** (file + PostgreSQL)
 - **Underground visual design** (black, bone white, faded red)
 - **Responsive & accessible** UI
 
@@ -58,7 +59,7 @@ npm run dev
 6. **Open browser:**
 
 ```
-http://localhost:3000/shittytees
+http://localhost:3000
 ```
 
 ## Environment Variables
@@ -78,7 +79,7 @@ All variables in `.env.example` must be set. For development/testing:
 
 1. In Stripe Dashboard, go to Developers → Webhooks
 2. Click "Add endpoint"
-3. URL: `http://localhost:3000/shittytees/api/stripe/webhook`
+3. URL: `http://localhost:3000/api/stripe/webhook`
 4. Events: Select `checkout.session.completed`, `checkout.session.async_payment_succeeded`, `checkout.session.async_payment_failed`, `charge.refunded`
 5. Copy the **Signing Secret** to `STRIPE_WEBHOOK_SECRET`
 
@@ -90,7 +91,7 @@ All variables in `.env.example` must be set. For development/testing:
    - Type: "Fixed amount"
    - Amount: "$10.00"
    - Delivery: "5-7 business days"
-3. Copy the rate ID (looks like `shr_...`) to `STRIPE_STANDARD_SHIPPING_RATE_ID`
+3. Set `STRIPE_STANDARD_SHIPPING_RATE=10` for a $10 default shipping line
 
 ### Printful (Optional for Testing)
 
@@ -98,13 +99,32 @@ All variables in `.env.example` must be set. For development/testing:
 2. Go to Settings → API
 3. Copy your API token to `PRINTFUL_API_TOKEN`
 4. Find your Store ID in Settings → General
-5. For now, leave `PRINTFUL_AUTO_CONFIRM=false` in development
+5. Set safety flags for development:
+  - `PRINTFUL_ENABLE_FULFILLMENT=false`
+  - `PRINTFUL_AUTO_CONFIRM=false`
+6. Optional tooling secret:
+  - `PRINTFUL_SYNC_SECRET=...`
 
 ### Other Variables
 
 - `NEXT_PUBLIC_SITE_URL`: Used for Stripe redirect URLs. Default: `http://localhost:3000`
-- `CONTACT_EMAIL`: Where contact form submissions go (placeholder for now)
-- `DATABASE_URL`: Leave empty; database integration is a TODO
+- `NEXT_PUBLIC_DEMO_CHECKOUT`: When `true`, checkout returns a local demo confirmation route
+- `ORDER_REPOSITORY`: `file` or `postgres` (production should use `postgres`)
+- `DATABASE_URL`: required when `ORDER_REPOSITORY=postgres`
+- `ADMIN_DEV_TOKEN`: development-only admin login token
+- `ADMIN_SESSION_SECRET`: signing secret for admin session cookie
+- `PRINTFUL_ENABLE_FULFILLMENT`: Master gate for sending paid orders to Printful
+- `PRINTFUL_AUTO_CONFIRM`: When fulfillment is enabled, controls draft vs confirm behavior
+
+### Printful Tooling
+
+```bash
+npm run printful:inspect
+npm run printful:sync
+```
+
+- `printful:inspect` returns a read-only report of local mapping coverage and remote connectivity.
+- `printful:sync` currently performs a dry-run plan output only.
 
 ## Local Development
 
@@ -112,6 +132,12 @@ All variables in `.env.example` must be set. For development/testing:
 
 ```bash
 npm run test
+```
+
+### Migration Dry-Run
+
+```bash
+npm run orders:migrate
 ```
 
 ### Type Checking
@@ -148,7 +174,7 @@ stripe login
 3. **Forward webhooks to local server:**
 
 ```bash
-stripe listen --forward-to localhost:3000/shittytees/api/stripe/webhook
+stripe listen --forward-to localhost:3000/api/stripe/webhook
 ```
 
 4. **Trigger test events:**
@@ -168,15 +194,14 @@ The CLI output will show event details. Check your server logs to verify webhook
 ```
 shittytees/
 ├── app/
-│   ├── shittytees/          # Main pages (routes start here)
-│   │   ├── shop/            # Product listing
-│   │   ├── shop/[slug]/     # Product detail
-│   │   ├── collections/     # Collection pages
-│   │   ├── cart/            # Shopping cart
-│   │   ├── checkout/        # Success/cancel pages
-│   │   ├── about/           # Info pages
-│   │   ├── api/             # API routes
-│   │   └── workspace/       # Admin dashboard
+│   ├── shop/                # Product listing
+│   ├── shop/[slug]/         # Product detail
+│   ├── collections/         # Collection pages
+│   ├── cart/                # Shopping cart
+│   ├── checkout/            # Success/cancel pages
+│   ├── about/               # Info pages
+│   ├── api/                 # API routes
+│   ├── workspace/           # Admin dashboard
 │   └── layout.tsx           # Root layout
 ├── lib/
 │   ├── data/                # Demo products & collections
@@ -184,7 +209,8 @@ shittytees/
 │   ├── validation/          # Zod schemas
 │   ├── stripe/              # Stripe helpers
 │   ├── printful/            # Printful API client
-│   ├── db/                  # In-memory persistence (TODO: replace)
+│   ├── orders/              # Repository contract + adapters + services
+│   ├── db/                  # Legacy repository (compatibility)
 │   └── hooks/               # React hooks (cart context)
 ├── components/              # React components (scaffold)
 ├── styles/                  # Global CSS & Tailwind
@@ -225,19 +251,25 @@ shittytees/
    - `checkout.session.async_payment_succeeded` → Same as above
    - `checkout.session.async_payment_failed` → Order marked failed
 4. Fulfillment tracker prevents duplicate processing
-5. (TODO) Order submitted to Printful after payment confirmed
+5. If `PRINTFUL_ENABLE_FULFILLMENT=true`, order is submitted to Printful as draft or confirmed based on `PRINTFUL_AUTO_CONFIRM`
 
 ### Order Persistence
 
-Currently using in-memory store. **NOT SUITABLE FOR PRODUCTION.**
+Order persistence now uses a repository interface with pluggable adapters:
 
-- `lib/db/repository.ts` – Order storage interface
-- `lib/db/repository.ts` – Fulfillment tracking
+- `lib/orders/repository.ts` – canonical contract
+- `lib/orders/fileRepository.ts` – local/test persistence (`.generated/orders.v2.json`)
+- `lib/orders/postgresRepository.ts` – production persistence
 
-To use a real database:
-1. Update `orderRepository` functions to query DB
-2. Update `fulfillmentTracker` to store in DB
-3. No changes needed in checkout/webhook logic
+Runtime selection is handled by `lib/orders/index.ts` and fails closed if production is configured to use file storage.
+
+### Operations Docs
+
+- `ORDER_SYSTEM.md`
+- `ADMIN_ORDERS_GUIDE.md`
+- `ORDER_STATUS_SECURITY.md`
+- `DATABASE_MIGRATION.md`
+- `DIRECT_COMMERCE_LAUNCH.md`
 
 ## Demo Products
 
@@ -324,7 +356,7 @@ Stripe webhook endpoint. Requires valid signature.
 
 ### POST `/api/printful/webhook`
 
-Printful webhook endpoint (currently a placeholder).
+Printful webhook endpoint with signature verification and order status updates.
 
 ### POST `/api/contact`
 
@@ -342,7 +374,7 @@ Contact form submission with rate limiting.
 
 ## Workspace
 
-http://localhost:3000/shittytees/workspace
+http://localhost:3000/workspace
 
 Admin dashboard showing:
 - Order counts & revenue

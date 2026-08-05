@@ -1,58 +1,28 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { validatePrintfulWebhook } from '@/lib/printful/client';
+import { getOrderRepository } from '@/lib/orders';
+import { toErrorResponse } from '@/lib/orders/http';
+import { processPrintfulEvent } from '@/lib/orders/services/webhooks';
 
 export async function POST(request: NextRequest) {
+  const repository = getOrderRepository();
   const body = await request.text();
   const signature = request.headers.get('X-Printful-Signature') || '';
 
-  // Validate webhook signature
   if (!validatePrintfulWebhook(body, signature)) {
     console.warn('Printful webhook signature validation failed');
-    // Still process for development, but log the warning
+    return NextResponse.json({ error: 'Invalid signature' }, { status: 401 });
   }
 
   try {
-    const event = JSON.parse(body);
-
-    switch (event.type) {
-      case 'order_failed':
-        await handleOrderFailed(event.data);
-        break;
-      case 'order_canceled':
-        await handleOrderCanceled(event.data);
-        break;
-      case 'package_shipped':
-        await handlePackageShipped(event.data);
-        break;
-      case 'package_returned':
-        await handlePackageReturned(event.data);
-        break;
-      default:
-        console.log(`Unhandled Printful event type: ${event.type}`);
-    }
+    const event = JSON.parse(body) as Parameters<typeof processPrintfulEvent>[1];
+    await processPrintfulEvent(repository, {
+      ...event,
+      id: event.id || request.headers.get('X-Printful-Event-Id') || undefined,
+    });
 
     return NextResponse.json({ received: true });
   } catch (error) {
-    console.error('Printful webhook handler error:', error);
-    return NextResponse.json({ error: 'Webhook handler error' }, { status: 500 });
+    return toErrorResponse(error);
   }
-}
-
-async function handleOrderFailed(data: any) {
-  console.log(`Printful order failed: ${data.order?.id}`);
-  // Update order status to failed
-  // Find order by printful order ID and update status
-}
-
-async function handleOrderCanceled(data: any) {
-  console.log(`Printful order canceled: ${data.order?.id}`);
-}
-
-async function handlePackageShipped(data: any) {
-  console.log(`Printful package shipped: ${data.order?.id}`);
-  // Update order status to fulfilled
-}
-
-async function handlePackageReturned(data: any) {
-  console.log(`Printful package returned: ${data.order?.id}`);
 }
