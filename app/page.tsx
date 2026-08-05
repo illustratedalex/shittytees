@@ -15,7 +15,7 @@ export default function Home() {
 
       {/* Header */}
       <header className="sticky top-0 z-40 bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex justify-between items-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-7 flex justify-between items-center">
           <h1 className="text-xl sm:text-2xl font-bold tracking-tight">
             <Link href="/" className="hover:text-red-900 transition-colors">
               ShittyTees
@@ -46,16 +46,16 @@ export default function Home() {
 
       <main className="min-h-screen bg-white">
         {/* Hero Section - Split Design */}
-        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
-          <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <section className="py-12 sm:py-14 lg:py-16 px-4 sm:px-6 lg:px-8 bg-white">
+          <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-center">
             <div>
-              <p className="text-xs uppercase tracking-widest font-semibold text-gray-500 mb-4">
+              <p className="text-xs uppercase tracking-widest font-semibold text-gray-500 mb-3">
                 Independent apparel for questionable people
               </p>
-              <h1 className="mb-6 text-black">
+              <h1 className="mb-5 text-black">
                 Terrible Ideas. Excellent Shirts.
               </h1>
-              <p className="text-lg text-gray-600 mb-8 leading-relaxed max-w-lg">
+              <p className="text-base text-gray-600 mb-7 leading-relaxed max-w-lg">
                 Original apparel with dark humor, tattoo-shop attitude, and zero interest in behaving.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
@@ -92,9 +92,9 @@ export default function Home() {
         </section>
 
         {/* New Releases */}
-        <section className="section-padding px-4 sm:px-6 lg:px-8 bg-white">
+        <section className="py-12 md:py-16 px-4 sm:px-6 lg:px-8 bg-white">
           <div className="max-w-7xl mx-auto">
-            <div className="mb-12">
+            <div className="mb-10">
               <h2 className="text-black mb-2">New Releases</h2>
               <div className="w-12 h-1 bg-red-900"></div>
             </div>
@@ -123,7 +123,7 @@ export default function Home() {
         </section>
 
         {/* Brand Statement */}
-        <section className="section-padding px-4 sm:px-6 lg:px-8 bg-gray-50 border-y border-gray-200">
+        <section className="py-12 md:py-16 px-4 sm:px-6 lg:px-8 bg-gray-50 border-y border-gray-200">
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-2xl sm:text-3xl font-bold text-black leading-relaxed">
               Made for tattoo shops, garages, dive bars, night shifts, bad decisions, and people who laugh at the wrong time.
@@ -132,9 +132,9 @@ export default function Home() {
         </section>
 
         {/* Collections */}
-        <section className="section-padding px-4 sm:px-6 lg:px-8 bg-white">
+        <section className="py-12 md:py-16 px-4 sm:px-6 lg:px-8 bg-white">
           <div className="max-w-7xl mx-auto">
-            <div className="mb-12">
+            <div className="mb-10">
               <h2 className="text-black mb-2">Collections</h2>
               <div className="w-12 h-1 bg-red-900"></div>
             </div>
@@ -145,7 +145,7 @@ export default function Home() {
                   href={`/collections/${collection.slug}`}
                   className="product-card"
                 >
-                  <div className="bg-gray-100 aspect-square mb-4 flex items-center justify-center overflow-hidden rounded-none border border-gray-300 group-hover:border-red-900 transition-colors">
+                  <div className="bg-gray-100 aspect-square mb-4 flex items-center justify-center overflow-hidden rounded-none border border-gray-300 hover:border-red-900 transition-colors">
                     <div className="text-center px-4">
                       <h3 className="text-lg font-bold text-gray-900 mb-2">
                         {collection.name}
@@ -160,13 +160,13 @@ export default function Home() {
         </section>
 
         {/* How It Works */}
-        <section className="section-padding px-4 sm:px-6 lg:px-8 bg-gray-50 border-y border-gray-200">
+        <section className="py-12 md:py-16 px-4 sm:px-6 lg:px-8 bg-gray-50 border-y border-gray-200">
           <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-12">
+            <div className="text-center mb-10">
               <h2 className="text-black mb-2">How It Works</h2>
               <div className="w-12 h-1 bg-red-900 mx-auto"></div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
               {[
                 { step: '01', title: 'Pick a Shirt', desc: 'Choose your design and size.' },
                 { step: '02', title: 'We Print It', desc: 'High-quality print with attention to detail.' },
@@ -183,7 +183,7 @@ export default function Home() {
         </section>
 
         {/* Email Signup */}
-        <section className="section-padding px-4 sm:px-6 lg:px-8 bg-white">
+        <section className="py-12 md:py-16 px-4 sm:px-6 lg:px-8 bg-white">
           <div className="max-w-md mx-auto">
             <div className="text-center mb-8">
               <h2 className="text-black mb-2">Join the Bad Influence</h2>
