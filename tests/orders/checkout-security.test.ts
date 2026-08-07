@@ -1,9 +1,30 @@
 import { describe, expect, it } from 'vitest';
 import { validateAndNormalizeCheckoutItems } from '@/lib/orders/services/checkoutSecurity';
 import { DEMO_PRODUCTS } from '@/lib/data/products';
+import { findPrintfulVariantMapping } from '@/data/printfulMappings';
+import { evaluateVariantFulfillmentReadiness } from '@/lib/fulfillment/readiness';
 
-const product = DEMO_PRODUCTS[0];
-const variant = product.variants[0];
+const mappedFixture = DEMO_PRODUCTS
+  .flatMap((candidate) =>
+    candidate.variants.map((candidateVariant) => ({ product: candidate, variant: candidateVariant })),
+  )
+  .find(({ product: candidate, variant: candidateVariant }) =>
+    evaluateVariantFulfillmentReadiness(candidate.id, candidateVariant.id).ready,
+  );
+
+if (!mappedFixture) {
+  throw new Error('Expected at least one fulfillment-ready product variant fixture.');
+}
+
+const product = mappedFixture.product;
+const variant = mappedFixture.variant;
+const mapping = findPrintfulVariantMapping(product.id, variant.id);
+
+if (!mapping) {
+  throw new Error('Expected mapped printful variant for checkout security fixture.');
+}
+
+const mappedVariantId = `${mapping.printfulVariantId}`;
 
 function lineItem(overrides: Partial<{
   productId: string;
@@ -25,7 +46,7 @@ function lineItem(overrides: Partial<{
     size: variant.size,
     color: variant.color,
     unitPrice: variant.retailPrice,
-    printfulVariantId: '300000',
+    printfulVariantId: mappedVariantId,
     ...overrides,
   };
 }
