@@ -447,3 +447,7 @@ export function getCollectionBySlug(slug: string): Collection | undefined {
 export function getAllCollections(): Collection[] {
   return COLLECTIONS;
 }
+
+export function getPublicProducts(): Product[] {
+  return DEMO_PRODUCTS.filter((product) => product.active);
+}
