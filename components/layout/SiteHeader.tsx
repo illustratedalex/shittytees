@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { useCart } from '@/lib/hooks/useCart';
 import { NAVIGATION } from '@/data/navigation';
 import { LogoLockup } from '@/components/brand';
 import MobileMenu from './MobileMenu';
@@ -11,6 +12,7 @@ interface SiteHeaderProps {
 }
 
 export default function SiteHeader({ transparentOnTop = false }: SiteHeaderProps) {
+  const { itemCount } = useCart();
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -39,7 +41,7 @@ export default function SiteHeader({ transparentOnTop = false }: SiteHeaderProps
           ))}
         </nav>
 
-        <MobileMenu links={NAVIGATION.header} />
+        <MobileMenu links={NAVIGATION.header} cartCount={itemCount} />
       </div>
     </header>
   );
