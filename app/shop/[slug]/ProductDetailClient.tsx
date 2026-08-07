@@ -4,12 +4,14 @@ import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import { useCart } from '@/lib/hooks/useCart';
 import { CartItem } from '@/lib/types/cart';
+import { evaluateVariantFulfillmentReadiness } from '@/lib/fulfillment/readiness';
+import { resolveProductGallery, resolveProductImage, toResolvedProductImage } from '@/lib/products/imageResolver';
 import { SiteFooter, SiteHeader } from '@/components/layout';
 import Button from '@/components/common/Button';
 import Price from '@/components/common/Price';
-import ProductLabel from '@/components/common/ProductLabel';
 import ProductRail from '@/components/product/ProductRail';
-import GarmentMockup from '@/components/product/GarmentMockup';
+import ProductImageStage from '@/components/product/ProductImageStage';
+import ProductThumbnailRail from '@/components/product/ProductThumbnailRail';
 
 export interface ProductViewModel {
   id: string;
@@ -20,6 +22,7 @@ export interface ProductViewModel {
   category: string;
   collectionSlug: string;
   retailPrice: number;
+  currency?: string;
   images: Array<{
     id: string;
     src: string;
@@ -40,28 +43,8 @@ interface Props {
   relatedProducts: ProductViewModel[];
 }
 
-function mockupColor(color?: string): 'black' | 'bone' | 'charcoal' | 'white' | 'oxblood' {
-  const normalized = (color || '').toLowerCase();
-  if (normalized.includes('cream') || normalized.includes('bone')) return 'bone';
-  if (normalized.includes('white')) return 'white';
-  if (normalized.includes('charcoal') || normalized.includes('gray') || normalized.includes('grey')) return 'charcoal';
-  if (normalized.includes('maroon') || normalized.includes('oxblood') || normalized.includes('red')) return 'oxblood';
-  return 'black';
-}
-
-function uniqueVariantColors(
-  variants: ProductViewModel['variants'],
-): Array<{ label: string; value: string }> {
-  const seen = new Set<string>();
-  const colors: Array<{ label: string; value: string }> = [];
-  variants.forEach((variant) => {
-    const key = variant.color.toLowerCase();
-    if (!seen.has(key)) {
-      seen.add(key);
-      colors.push({ label: variant.color, value: key });
-    }
-  });
-  return colors;
+export function resolveCartThumbnail(product: ProductViewModel): string {
+  return resolveProductImage(product).src;
 }
 
 export default function ProductDetailClient({ product, relatedProducts }: Props) {
@@ -69,18 +52,31 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
   const [selectedVariant, setSelectedVariant] = useState(product.variants[0]);
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
+  const [addError, setAddError] = useState('');
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
-  const colorOptions = useMemo(() => uniqueVariantColors(product.variants), [product.variants]);
+  const gallery = useMemo(() => resolveProductGallery(product), [product]);
+  const selectedGalleryImage = gallery[selectedImageIndex] || gallery[0];
+  const selectedImage = selectedGalleryImage ? toResolvedProductImage(selectedGalleryImage) : resolveProductImage(product);
+  const cartImage = resolveCartThumbnail(product);
 
   const handleAddToCart = () => {
     if (!selectedVariant) return;
+
+    const readiness = evaluateVariantFulfillmentReadiness(product.id, selectedVariant.id);
+    if (!readiness.ready) {
+      setAddError('This product variant is not ready for checkout yet.');
+      return;
+    }
+
+    setAddError('');
 
     const cartItem: CartItem = {
       productId: product.id,
       variantId: selectedVariant.id,
       quantity,
       name: product.name,
-      image: product.images[0].src,
+      image: cartImage,
       size: selectedVariant.size,
       color: selectedVariant.color,
       unitPrice: selectedVariant.retailPrice,
@@ -95,70 +91,49 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
   return (
     <>
       <SiteHeader />
-      <main className="min-h-screen bg-[#0e0d0c] pt-20 sm:pt-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
-          <Link href="/shop" className="text-[#d4cdbc] hover:text-[#f2ecde] text-xs uppercase tracking-[0.16em] font-semibold mb-8 inline-flex items-center gap-2">
+      <main className="min-h-screen bg-[#111111] pt-[4.75rem]">
+        <div className="site-shell section-shell">
+          <Link href="/shop" className="text-[#d5d0c6] hover:text-[#f3efe6] text-sm tracking-[0.04em] font-semibold mb-8 inline-flex items-center gap-2">
             ← Back to Shop
           </Link>
 
-          <div className="grid grid-cols-1 lg:grid-cols-[1.08fr_0.92fr] gap-10 lg:gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-[1.12fr_0.88fr] gap-8 lg:gap-12">
             <div>
-              <div className="min-h-[24rem] sm:min-h-[31rem] sticky top-24 mb-4">
-                <GarmentMockup
-                  color={mockupColor(selectedVariant?.color)}
-                  artworkText={product.name}
-                  background="charcoal"
-                  scale="hero"
-                  className="h-full w-full"
-                  interactive
+              <div className="mb-5">
+                <ProductImageStage
+                  image={selectedImage}
+                  aspect="4/5"
+                  className="w-full"
+                  priority
+                  sizes="(max-width: 1023px) 92vw, (max-width: 1279px) 54vw, 720px"
                 />
               </div>
-              <div className="grid grid-cols-3 gap-3">
-                {product.variants.slice(0, 3).map((variant) => (
-                  <button
-                    key={variant.id}
-                    type="button"
-                    onClick={() => setSelectedVariant(variant)}
-                    className={`min-h-20 border rounded-[0.5rem] ${selectedVariant?.id === variant.id ? 'border-[#f2ecde] bg-[#1d1916]' : 'border-[#f2ecde1f] bg-[#141311]'} transition-colors`}
-                    aria-label={`Select ${variant.size} ${variant.color}`}
-                  >
-                    <GarmentMockup
-                      color={mockupColor(variant.color)}
-                      artworkText={product.name}
-                      background="black"
-                      scale="small"
-                      className="h-full w-full"
-                    />
-                  </button>
-                ))}
-              </div>
+
+              <ProductThumbnailRail images={gallery} selectedIndex={selectedImageIndex} onSelect={setSelectedImageIndex} />
             </div>
 
-            <div className="lg:sticky lg:top-24 self-start panel-soft p-6 sm:p-7">
-              <div className="mb-3">
-                <ProductLabel category={product.category} status="core" />
-              </div>
-              <h1 className="text-[#f2ecde] mb-2">{product.name}</h1>
-              <Price amount={selectedVariant?.retailPrice || product.retailPrice} className="mb-6 text-2xl" />
+            <div className="lg:sticky lg:top-24 self-start bg-[#1b1b1b] border border-[#2f2f2f] rounded-2xl p-6 sm:p-7">
+              <h1 className="text-[#f3efe6] mb-2 text-[1.9rem] sm:text-[2.3rem] leading-[0.96]">{product.name}</h1>
+              <Price amount={selectedVariant?.retailPrice || product.retailPrice} currency={product.currency || 'USD'} className="mb-5 text-[1.6rem] sm:text-[1.8rem] text-[#f3efe6]" />
 
-              <p className="text-[#d4cdbc] text-base mb-7 leading-relaxed">{product.description}</p>
+              <p className="text-[#d5d0c6] text-sm sm:text-base mb-7 leading-relaxed max-w-[44ch]">{product.shortDescription || product.description}</p>
 
-              <Link href="/faq" className="text-sm underline decoration-[#8f8779] text-[#c4b9a7] hover:text-[#f2ecde] mb-7 inline-block">
+              <Link href="/faq" className="text-sm underline decoration-[#aaa59c] text-[#d5d0c6] hover:text-[#f3efe6] mb-7 inline-block">
                 View size guide
               </Link>
 
-              <div className="mb-7">
-                <label className="block font-semibold text-[#f2ecde] mb-4 text-sm uppercase tracking-[0.1em]">Select Size & Color</label>
+              <div className="mb-6">
+                <label className="block font-semibold text-[#f3efe6] mb-4 text-sm uppercase tracking-[0.1em]">Select Size & Color</label>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                   {product.variants.map((variant) => (
                     <button
                       key={variant.id}
                       onClick={() => setSelectedVariant(variant)}
                       disabled={!variant.available}
-                      className={`p-3 font-semibold text-xs rounded-md border transition-all ${
+                      className={`min-h-[52px] p-3 font-semibold text-xs rounded-md border transition-all focus-visible-ring ${
                         selectedVariant?.id === variant.id
-                          ? 'border-[#f2ecde] bg-[#5b1216] text-[#f2ecde]'
-                          : 'border-[#f2ecde3d] bg-[#141311] text-[#f2ecde] hover:border-[#f2ecde]'
+                          ? 'border-[#f3efe6] bg-[#7f1d1d] text-[#f3efe6]'
+                          : 'border-[#3a3a3a] bg-[#171717] text-[#f3efe6] hover:border-[#aaa59c]'
                       } ${!variant.available ? 'opacity-50 cursor-not-allowed' : ''}`}
                     >
                       <div>{variant.size}</div>
@@ -166,19 +141,14 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
                     </button>
                   ))}
                 </div>
-                <div className="flex gap-2 mt-4">
-                  {colorOptions.map((option) => (
-                    <span key={option.value} className="badge badge--soft">{option.label}</span>
-                  ))}
-                </div>
               </div>
 
-              <div className="mb-7">
-                <label className="block font-semibold text-[#f2ecde] mb-4 text-sm uppercase tracking-[0.1em]">Quantity</label>
-                <div className="flex gap-2">
+              <div className="mb-6">
+                <label className="block font-semibold text-[#f3efe6] mb-4 text-sm uppercase tracking-[0.1em]">Quantity</label>
+                <div className="flex gap-2 items-center">
                   <button
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="px-4 py-2 bg-[#201d1a] hover:bg-[#292621] font-semibold text-[#f2ecde] rounded-md transition-colors"
+                    className="min-h-[48px] min-w-[48px] px-4 py-2 bg-[#242424] hover:bg-[#2e2e2e] font-semibold text-[#f3efe6] rounded-md transition-colors focus-visible-ring"
                     aria-label="Decrease quantity"
                   >
                     −
@@ -187,12 +157,12 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
                     type="number"
                     value={quantity}
                     onChange={(e) => setQuantity(Math.min(100, Math.max(1, parseInt(e.target.value, 10) || 1)))}
-                    className="px-4 py-2 bg-[#12110f] border border-[#f2ecde3d] text-center text-[#f2ecde] rounded-md w-20 focus:outline-none"
+                    className="min-h-[48px] px-4 py-2 bg-[#141414] border border-[#3a3a3a] text-center text-[#f3efe6] rounded-md w-20"
                     aria-label="Quantity"
                   />
                   <button
                     onClick={() => setQuantity(Math.min(100, quantity + 1))}
-                    className="px-4 py-2 bg-[#201d1a] hover:bg-[#292621] font-semibold text-[#f2ecde] rounded-md transition-colors"
+                    className="min-h-[48px] min-w-[48px] px-4 py-2 bg-[#242424] hover:bg-[#2e2e2e] font-semibold text-[#f3efe6] rounded-md transition-colors focus-visible-ring"
                     aria-label="Increase quantity"
                   >
                     +
@@ -208,23 +178,29 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
                 {added ? 'Added to Cart' : 'Add to Cart'}
               </Button>
 
+              {addError ? <p className="text-sm text-[#e7b2b2] mb-3">{addError}</p> : null}
+
               <Button href="/cart" variant="secondary" fullWidth>
                 View Cart
               </Button>
 
-              <div className="mt-10 pt-6 border-t border-[#f2ecde22] space-y-3">
-                <details className="group border border-[#f2ecde24] rounded-md px-4 py-3">
-                  <summary className="cursor-pointer text-sm uppercase tracking-[0.14em] text-[#f2ecde] font-semibold">Product Details</summary>
-                  <p className="text-sm text-[#cabda8] mt-3">{product.shortDescription}</p>
+              <div className="mt-9 pt-6 border-t border-[#2f2f2f] space-y-3">
+                <details className="group border border-[#2f2f2f] rounded-md px-4 py-3">
+                  <summary className="cursor-pointer text-sm uppercase tracking-[0.14em] text-[#f3efe6] font-semibold">Details</summary>
+                  <p className="text-sm text-[#d5d0c6] mt-3">{product.description}</p>
                 </details>
-                <details className="group border border-[#f2ecde24] rounded-md px-4 py-3">
-                  <summary className="cursor-pointer text-sm uppercase tracking-[0.14em] text-[#f2ecde] font-semibold">Shipping & Returns</summary>
-                  <p className="text-sm text-[#cabda8] mt-3">Orders are printed on demand, then shipped to your door. Visit returns policy for full details.</p>
+                <details className="group border border-[#2f2f2f] rounded-md px-4 py-3">
+                  <summary className="cursor-pointer text-sm uppercase tracking-[0.14em] text-[#f3efe6] font-semibold">Shipping</summary>
+                  <p className="text-sm text-[#d5d0c6] mt-3">Orders are printed on demand and ship after production.</p>
+                </details>
+                <details className="group border border-[#2f2f2f] rounded-md px-4 py-3">
+                  <summary className="cursor-pointer text-sm uppercase tracking-[0.14em] text-[#f3efe6] font-semibold">Returns</summary>
+                  <p className="text-sm text-[#d5d0c6] mt-3">Returns are accepted according to our published returns policy.</p>
                 </details>
                 <div className="pt-2">
-                  <p className="text-xs uppercase tracking-[0.14em] text-[#8f8779] mb-2">Collection</p>
-                  <Link href="/collections" className="text-sm text-[#d4cdbc] hover:text-[#f2ecde] underline decoration-[#5b1216]">
-                    {product.collectionSlug}
+                  <p className="text-xs uppercase tracking-[0.14em] text-[#aaa59c] mb-2">Collection</p>
+                  <Link href="/collections" className="text-sm text-[#d5d0c6] hover:text-[#f3efe6] underline decoration-[#7f1d1d]">
+                    {product.collectionSlug.replace(/-/g, ' ')}
                   </Link>
                 </div>
               </div>
@@ -232,7 +208,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
           </div>
 
           <section className="mt-16">
-            <h2 className="text-[#f2ecde] text-2xl mb-4">Related Products</h2>
+            <h2 className="text-[#f3efe6] text-2xl mb-6">Related Products</h2>
             <ProductRail products={relatedProducts} title="Related products" />
           </section>
         </div>
