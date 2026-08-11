@@ -4,7 +4,6 @@ import { redirect } from 'next/navigation';
 import { requireAdminSession } from '@/lib/admin/auth';
 import { getCatalogRepository } from '@/lib/catalog';
 import { query } from '@/lib/orders/database';
-import { syncPrintfulCatalog } from '@/lib/printful/catalogSync';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -58,15 +57,6 @@ function displaySyncProductId(product: AdminProductRow): string {
 
 function unique(values: string[]): string[] {
   return [...new Set(values)].sort((a, b) => a.localeCompare(b));
-}
-
-async function syncNowAction() {
-  'use server';
-
-  await requireAdminSession();
-  await syncPrintfulCatalog();
-  revalidatePath('/admin/printful');
-  revalidatePath('/workspace');
 }
 
 async function publishProductAction(formData: FormData) {
@@ -191,12 +181,19 @@ async function editProductAction(formData: FormData) {
   revalidatePath(`/shop/${slug}`);
 }
 
-export default async function AdminPrintfulPage() {
+export default async function AdminPrintfulPage({
+  searchParams,
+}: {
+  searchParams?: Promise<{ sync?: string }>;
+} = {}) {
   try {
     await requireAdminSession();
   } catch {
     redirect('/admin/login');
   }
+
+  const params = (await searchParams) || {};
+  const syncStatus = params.sync;
 
   const repository = getCatalogRepository();
   const [allProducts, lastSync, productRows, variantRows] = await Promise.all([
@@ -263,6 +260,18 @@ export default async function AdminPrintfulPage() {
           <h1 className="mt-2 text-[#f2ecde] text-[1.9rem] sm:text-[2.3rem] leading-[1]">PRINTFUL PRODUCTS</h1>
           <p className="mt-3 text-[#c9beaa] max-w-[56ch]">New shirts discovered in Printful and waiting for review.</p>
 
+          {syncStatus === 'success' ? (
+            <p className="mt-3 rounded-sm border border-[#65d77755] bg-[#122417] px-3 py-2 text-sm text-[#9af2aa]">
+              Printful sync completed.
+            </p>
+          ) : null}
+
+          {syncStatus === 'error' ? (
+            <p className="mt-3 rounded-sm border border-[#ff8a8a55] bg-[#2a1515] px-3 py-2 text-sm text-[#ffc2c2]">
+              Printful sync failed. Please retry and check server logs for details.
+            </p>
+          ) : null}
+
           <div className="mt-5 grid grid-cols-2 lg:grid-cols-5 gap-3">
             <div className="panel-soft p-3 border border-[#f2ecde1f] rounded-sm">
               <p className="text-[0.65rem] uppercase tracking-[0.2em] text-[#9f9787]">Printful Products</p>
@@ -288,7 +297,7 @@ export default async function AdminPrintfulPage() {
             </div>
           </div>
 
-          <form action={syncNowAction} className="mt-5">
+          <form action="/api/admin/printful/sync" method="post" className="mt-5">
             <button type="submit" className="btn-primary text-[0.75rem] tracking-[0.16em] uppercase px-5 py-2.5">
               [ SYNC PRINTFUL NOW ]
             </button>

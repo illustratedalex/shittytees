@@ -112,6 +112,7 @@ describe('admin printful page', () => {
     expect(markup).toContain('PRINTFUL PRODUCTS');
     expect(markup).toContain('Waiting for Review');
     expect(markup).toContain('Printful Review Tee');
+    expect(markup).not.toContain('PRINTFUL_SYNC_SECRET');
     expect(queryMock).toHaveBeenCalledTimes(2);
   });
 });
