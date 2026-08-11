@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import type { FormEvent } from 'react';
 
 export default function AdminLoginForm() {
@@ -9,7 +8,6 @@ export default function AdminLoginForm() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
 
   const onSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -19,6 +17,7 @@ export default function AdminLoginForm() {
     try {
       const response = await fetch('/api/admin/session', {
         method: 'POST',
+        credentials: 'same-origin',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -30,8 +29,9 @@ export default function AdminLoginForm() {
         return;
       }
 
-      router.replace('/admin');
-      router.refresh();
+      window.location.assign('/admin');
+    } catch {
+      setError('Sign-in failed. Please try again.');
     } finally {
       setLoading(false);
     }
