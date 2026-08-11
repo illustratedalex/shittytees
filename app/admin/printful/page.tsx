@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 import { requireAdminSession } from '@/lib/admin/auth';
 import { getCatalogRepository } from '@/lib/catalog';
 import { query } from '@/lib/orders/database';
@@ -191,7 +192,11 @@ async function editProductAction(formData: FormData) {
 }
 
 export default async function AdminPrintfulPage() {
-  await requireAdminSession();
+  try {
+    await requireAdminSession();
+  } catch {
+    redirect('/admin/login');
+  }
 
   const repository = getCatalogRepository();
   const [allProducts, lastSync, productRows, variantRows] = await Promise.all([
