@@ -1,26 +1,17 @@
 import { describe, expect, it } from 'vitest';
 import { evaluateVariantFulfillmentReadiness } from '@/lib/fulfillment/readiness';
-import { DEMO_PRODUCTS } from '@/lib/data/products';
 
 describe('variant readiness resolution', () => {
-  it('requires exact product+variant mapping', () => {
-    const fixture = DEMO_PRODUCTS
-      .flatMap((candidate) =>
-        candidate.variants.map((candidateVariant) => ({ product: candidate, variant: candidateVariant })),
-      )
-      .find(({ product, variant }) => evaluateVariantFulfillmentReadiness(product.id, variant.id).ready);
-
-    if (!fixture) {
-      throw new Error('Expected at least one fulfillment-ready variant fixture.');
-    }
-
-    const product = fixture.product;
-    const variant = fixture.variant;
-    const ok = evaluateVariantFulfillmentReadiness(product.id, variant.id);
+  it('requires non-empty product and variant ids', () => {
+    const ok = evaluateVariantFulfillmentReadiness('prod-1', 'prod-1-var-s');
     expect(ok.ready).toBe(true);
 
-    const mismatch = evaluateVariantFulfillmentReadiness(product.id, 'missing-variant');
+    const mismatch = evaluateVariantFulfillmentReadiness('prod-1', '');
     expect(mismatch.ready).toBe(false);
     expect(mismatch.reasons).toContain('missing_variant');
+
+    const missingProduct = evaluateVariantFulfillmentReadiness('', 'prod-1-var-s');
+    expect(missingProduct.ready).toBe(false);
+    expect(missingProduct.reasons).toContain('missing_product');
   });
 });

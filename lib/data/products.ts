@@ -1,4 +1,7 @@
 import { Collection, Product, ProductVariant } from '../types/product';
+import { ARCHIVE_PRODUCTS } from '@/data/archiveProducts';
+import { PUBLISHED_PRODUCTS } from '@/data/publishedProducts';
+import { getProductStatusOverride } from '@/data/productStatus';
 
 export const COLLECTIONS: Collection[] = [
   {
@@ -37,6 +40,30 @@ export const COLLECTIONS: Collection[] = [
     name: 'Tattoo Culture',
     description: 'Linework-driven graphics with grit and restraint.',
   },
+  {
+    id: 'col-7',
+    slug: 'artists-bench',
+    name: "Artist's Bench",
+    description: 'Original apparel inspired by sketchbooks, shop floors, late nights, and the people who make things by hand.',
+  },
+  {
+    id: 'col-8',
+    slug: 'limited-runs',
+    name: 'Limited Runs',
+    description: 'Short-window graphics and one-off experiments.',
+  },
+  {
+    id: 'col-9',
+    slug: 'holiday-damage',
+    name: 'Holiday Damage',
+    description: 'Seasonal releases for people who avoid polite small talk.',
+  },
+  {
+    id: 'col-10',
+    slug: 'archive',
+    name: 'Archive',
+    description: 'Legacy Printful releases preserved for local storefront merchandising.',
+  },
 ];
 
 type ProductSeed = {
@@ -45,7 +72,7 @@ type ProductSeed = {
   name: string;
   shortDescription: string;
   description: string;
-  collectionSlug: 'dark-humor' | 'blue-collar' | 'tattoo-culture';
+  collectionSlug: 'dark-humor' | 'blue-collar' | 'tattoo-culture' | 'artists-bench';
   category: string;
   color: string;
   colorHex: string;
@@ -53,6 +80,7 @@ type ProductSeed = {
   retailPrice: number;
   tags: string[];
   createdAt: string;
+  publishStatus?: 'published' | 'draft';
 };
 
 const PRODUCT_SEEDS: ProductSeed[] = [
@@ -356,6 +384,102 @@ const PRODUCT_SEEDS: ProductSeed[] = [
     tags: ['drop-001', 'best-seller'],
     createdAt: '2026-06-26',
   },
+  {
+    id: 'draft-artist-bench-1',
+    slug: 'artists-bench',
+    name: "Artist's Bench",
+    shortDescription: 'Workbench geometry, registration marks, and the discipline behind the line.',
+    description: 'A draft concept built from sketchbook structure, bench-top evidence, and restrained maker references.',
+    collectionSlug: 'artists-bench',
+    category: 'T-Shirts',
+    color: 'Bone',
+    colorHex: '#f5f0e6',
+    featured: false,
+    retailPrice: 36,
+    tags: ['artists-bench', 'draft-concept'],
+    createdAt: '2026-08-07',
+    publishStatus: 'draft',
+  },
+  {
+    id: 'draft-artist-bench-2',
+    slug: 'draw-first-regret-later',
+    name: 'Draw First. Regret Later.',
+    shortDescription: 'Construction lines, handwritten type, and the confidence to keep going.',
+    description: 'A draft concept centered on sketchbook typography, erased guide marks, and bench-side urgency.',
+    collectionSlug: 'artists-bench',
+    category: 'T-Shirts',
+    color: 'Charcoal',
+    colorHex: '#36454f',
+    featured: false,
+    retailPrice: 36,
+    tags: ['artists-bench', 'draft-concept'],
+    createdAt: '2026-08-07',
+    publishStatus: 'draft',
+  },
+  {
+    id: 'draft-artist-bench-3',
+    slug: 'built-by-hand',
+    name: 'Built By Hand',
+    shortDescription: 'Industrial lettering shaped by the bench, not the boardroom.',
+    description: 'A draft concept pairing disciplined type with understated hand-tool and maker cues.',
+    collectionSlug: 'artists-bench',
+    category: 'T-Shirts',
+    color: 'Black',
+    colorHex: '#000000',
+    featured: false,
+    retailPrice: 36,
+    tags: ['artists-bench', 'draft-concept'],
+    createdAt: '2026-08-07',
+    publishStatus: 'draft',
+  },
+  {
+    id: 'draft-artist-bench-4',
+    slug: 'lines-matter',
+    name: 'Lines Matter',
+    shortDescription: 'Precision, spacing, and the patience to make a line count.',
+    description: 'A draft concept focused on measured linework, deliberate imperfection, and shop-floor discipline.',
+    collectionSlug: 'artists-bench',
+    category: 'T-Shirts',
+    color: 'Bone',
+    colorHex: '#f5f0e6',
+    featured: false,
+    retailPrice: 36,
+    tags: ['artists-bench', 'draft-concept'],
+    createdAt: '2026-08-07',
+    publishStatus: 'draft',
+  },
+  {
+    id: 'draft-artist-bench-5',
+    slug: 'trust-the-process',
+    name: 'Trust The Process',
+    shortDescription: 'Tracing layers, tape marks, and proof that the work is in progress.',
+    description: 'A draft concept built around stencil rhythm, tracing-paper layers, and practical process marks.',
+    collectionSlug: 'artists-bench',
+    category: 'T-Shirts',
+    color: 'Charcoal',
+    colorHex: '#36454f',
+    featured: false,
+    retailPrice: 36,
+    tags: ['artists-bench', 'draft-concept'],
+    createdAt: '2026-08-07',
+    publishStatus: 'draft',
+  },
+  {
+    id: 'draft-artist-bench-6',
+    slug: 'shop-floor-philosophy',
+    name: 'Shop Floor Philosophy',
+    shortDescription: 'Bench notes, taped reminders, and the working artist mindset.',
+    description: 'A draft concept arranged like ideas pinned above a workstation after a long night.',
+    collectionSlug: 'artists-bench',
+    category: 'T-Shirts',
+    color: 'Black',
+    colorHex: '#000000',
+    featured: false,
+    retailPrice: 36,
+    tags: ['artists-bench', 'draft-concept'],
+    createdAt: '2026-08-07',
+    publishStatus: 'draft',
+  },
 ];
 
 function createImageSvg(name: string, colorHex: string): { src: string; alt: string } {
@@ -385,7 +509,7 @@ function createVariants(seed: ProductSeed): ProductVariant[] {
   }));
 }
 
-export const DEMO_PRODUCTS: Product[] = PRODUCT_SEEDS.map((seed) => {
+const BASE_PRODUCTS: Product[] = PRODUCT_SEEDS.map((seed) => {
   const image = createImageSvg(seed.name, seed.colorHex);
   return {
     id: seed.id,
@@ -396,6 +520,7 @@ export const DEMO_PRODUCTS: Product[] = PRODUCT_SEEDS.map((seed) => {
     category: seed.category,
     collectionSlug: seed.collectionSlug,
     active: true,
+    publishStatus: seed.publishStatus || 'published',
     featured: seed.featured,
     images: [
       {
@@ -414,30 +539,41 @@ export const DEMO_PRODUCTS: Product[] = PRODUCT_SEEDS.map((seed) => {
   };
 });
 
+export const DEMO_PRODUCTS: Product[] = [...BASE_PRODUCTS, ...ARCHIVE_PRODUCTS, ...PUBLISHED_PRODUCTS];
+
+function getEffectiveStatus(product: Product) {
+  return getProductStatusOverride(product.slug) || product.publishStatus;
+}
+
+function isPublicProduct(product: Product): boolean {
+  const status = getEffectiveStatus(product);
+  return product.active && (status === 'published' || status === 'archive');
+}
+
 export function getProductBySlug(slug: string): Product | undefined {
-  return DEMO_PRODUCTS.find((product) => product.slug === slug);
+  return DEMO_PRODUCTS.find((product) => product.slug === slug && isPublicProduct(product));
 }
 
 export function getProductsByCollection(collectionSlug: string): Product[] {
   if (collectionSlug === 'drop-001') {
-    return DEMO_PRODUCTS.filter((product) => product.active && product.tags.includes('drop-001'));
+    return DEMO_PRODUCTS.filter((product) => isPublicProduct(product) && product.tags.includes('drop-001'));
   }
 
   if (collectionSlug === 'new-arrivals') {
     return DEMO_PRODUCTS
-      .filter((product) => product.active && product.tags.includes('new-arrival'))
+      .filter((product) => isPublicProduct(product) && getEffectiveStatus(product) === 'published' && product.tags.includes('new-arrival'))
       .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
   }
 
   if (collectionSlug === 'best-sellers') {
-    return DEMO_PRODUCTS.filter((product) => product.active && product.tags.includes('best-seller'));
+    return DEMO_PRODUCTS.filter((product) => isPublicProduct(product) && getEffectiveStatus(product) === 'published' && product.tags.includes('best-seller'));
   }
 
-  return DEMO_PRODUCTS.filter((product) => product.collectionSlug === collectionSlug && product.active);
+  return DEMO_PRODUCTS.filter((product) => product.collectionSlug === collectionSlug && isPublicProduct(product));
 }
 
 export function getFeaturedProducts(): Product[] {
-  return DEMO_PRODUCTS.filter((product) => product.featured && product.active);
+  return DEMO_PRODUCTS.filter((product) => product.featured && isPublicProduct(product));
 }
 
 export function getCollectionBySlug(slug: string): Collection | undefined {
@@ -448,6 +584,10 @@ export function getAllCollections(): Collection[] {
   return COLLECTIONS;
 }
 
+export function getAllProducts(): Product[] {
+  return DEMO_PRODUCTS;
+}
+
 export function getPublicProducts(): Product[] {
-  return DEMO_PRODUCTS.filter((product) => product.active);
+  return DEMO_PRODUCTS.filter((product) => isPublicProduct(product));
 }

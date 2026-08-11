@@ -1,4 +1,3 @@
-export { default as CampaignBanner } from './CampaignBanner';
 export { default as CampaignHero } from './CampaignHero';
 export { default as CampaignMarquee } from './CampaignMarquee';
 export { default as CollectionBand } from './CollectionBand';

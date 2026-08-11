@@ -111,6 +111,7 @@ All variables in `.env.example` must be set. For development/testing:
 - `NEXT_PUBLIC_DEMO_CHECKOUT`: When `true`, checkout returns a local demo confirmation route
 - `ORDER_REPOSITORY`: `file` or `postgres` (production should use `postgres`)
 - `DATABASE_URL`: required when `ORDER_REPOSITORY=postgres`
+- `PRODUCT_REPOSITORY`: `static` or `postgres` (production should use `postgres`)
 - `ADMIN_DEV_TOKEN`: development-only admin login token
 - `ADMIN_SESSION_SECRET`: signing secret for admin session cookie
 - `PRINTFUL_ENABLE_FULFILLMENT`: Master gate for sending paid orders to Printful
@@ -121,10 +122,38 @@ All variables in `.env.example` must be set. For development/testing:
 ```bash
 npm run printful:inspect
 npm run printful:sync
+npm run products:report
+npm run product:publish -- <slug>
+npm run product:archive -- <slug>
+npm run product:disable -- <slug>
+npm run products:review
 ```
 
 - `printful:inspect` returns a read-only report of local mapping coverage and remote connectivity.
-- `printful:sync` currently performs a dry-run plan output only.
+- `printful:sync` defaults to a read-only dry-run and can write local catalog snapshot data with `--apply`.
+- `db:migrate` applies SQL migrations in `db/migrations` (including catalog tables).
+- `catalog:migrate` copies current static products into PostgreSQL catalog tables.
+- `products:report` lists local publication and fulfillment readiness by slug.
+- `products:review` lists review buckets for new Printful candidates.
+- `product:publish`, `product:archive`, and `product:disable` only modify local publish state.
+
+### New Candidate Pipeline
+
+For brand-new Printful products:
+
+1. Create in Printful and generate mockups.
+2. Run `npm run printful:sync -- --apply`.
+3. Review with `npm run products:review`.
+4. Publish with `npm run product:publish -- <slug>`.
+
+No manual route edits or JSX edits are required for standard candidate imports.
+
+### Archive and Publication Rules
+
+- Legacy Square-era Printful products are imported as local Archive products.
+- Square is not used at runtime.
+- Printful is used for fulfillment mapping and remote product inspection only.
+- Local catalog controls pricing, collections, branding, and publication state.
 
 ## Local Development
 
@@ -138,7 +167,15 @@ npm run test
 
 ```bash
 npm run orders:migrate
+npm run db:migrate
+npm run catalog:migrate
 ```
+
+### Runtime Catalog Sync
+
+- Manual sync: `POST /api/printful/sync` (admin session or `Authorization: Bearer PRINTFUL_SYNC_SECRET`)
+- Sync status: `GET /api/printful/sync/status` (admin session)
+- Hourly automation: `GET /api/cron/printful-sync` via Vercel cron with `Authorization: Bearer PRINTFUL_SYNC_SECRET`
 
 ### Type Checking
 

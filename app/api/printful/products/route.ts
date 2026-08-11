@@ -1,9 +1,13 @@
 import { NextResponse } from 'next/server';
+import { inspectPrintfulCatalog, buildPrintfulSyncPlan } from '@/lib/printful/import';
 
-// Placeholder endpoint for Printful product sync
 export async function GET() {
+  const inspection = await inspectPrintfulCatalog();
+  const plan = await buildPrintfulSyncPlan();
+
   return NextResponse.json({
-    message: 'Printful product sync endpoint',
-    note: 'This would sync products from Printful catalog in production',
+    ...inspection,
+    plan,
+    mode: 'read-only',
   });
 }

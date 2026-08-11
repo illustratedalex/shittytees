@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { BRAND } from '@/data/brand';
 import { DROPS, getDropBySlug } from '@/data/drops';
-import { getPublicProducts } from '@/lib/data/products';
+import { getPublicProducts } from '@/lib/catalog/service';
 import { resolveProductImage } from '@/lib/products/imageResolver';
 import { SiteFooter, SiteHeader } from '@/components/layout';
 import NewsletterSignup from '@/components/common/NewsletterSignup';
@@ -15,6 +15,8 @@ interface Props {
     slug: string;
   }>;
 }
+
+export const dynamic = 'force-dynamic';
 
 export async function generateStaticParams() {
   return DROPS.map((drop) => ({ slug: drop.slug }));
@@ -61,10 +63,11 @@ export default async function DropPage({ params }: Props) {
     notFound();
   }
 
-  const dropProducts = getPublicProducts().filter((product) =>
+  const publicProducts = await getPublicProducts();
+  const dropProducts = publicProducts.filter((product) =>
     drop.featuredProductSlugs.includes(product.slug),
   );
-  const storyProduct = dropProducts[0] || getPublicProducts()[0];
+  const storyProduct = dropProducts[0] || publicProducts[0];
   const storyImage = storyProduct ? resolveProductImage(storyProduct) : undefined;
 
   return (

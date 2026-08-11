@@ -80,8 +80,9 @@ const GALLERY_ROLE_PRIORITY: Record<ProductImageRole, number> = {
 };
 
 function neutralPlaceholder(name: string): string {
-  const encoded = encodeURIComponent(name.toUpperCase());
-  return `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 1000'><rect width='800' height='1000' fill='%23ece8df'/><text x='50%25' y='50%25' text-anchor='middle' dominant-baseline='middle' fill='%23666058' font-family='Arial,sans-serif' font-size='36' letter-spacing='4'>${encoded}</text></svg>`;
+  const encodedName = encodeURIComponent(name.toUpperCase());
+  const encodedFallback = encodeURIComponent('IMAGE COMING SOON');
+  return `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 1000'><rect width='800' height='1000' fill='%23f2e8d5'/><rect x='54' y='54' width='692' height='892' fill='none' stroke='%23c6baa3' stroke-width='4' stroke-dasharray='10 10'/><text x='50%25' y='46%25' text-anchor='middle' dominant-baseline='middle' fill='%23554d41' font-family='Arial,sans-serif' font-size='28' letter-spacing='3'>${encodedFallback}</text><text x='50%25' y='54%25' text-anchor='middle' dominant-baseline='middle' fill='%2372695c' font-family='Arial,sans-serif' font-size='20' letter-spacing='2'>${encodedName}</text></svg>`;
 }
 
 function productAlt(name: string, role: ProductImageRole): string {

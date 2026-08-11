@@ -2,8 +2,6 @@ import Stripe from 'stripe';
 import { getStripe } from './client';
 import { CheckoutLineItem } from '../validation/schemas';
 import { ShippingAddress } from '../types/order';
-import { DEMO_PRODUCTS } from '../data/products';
-import { resolveVariant } from '../fulfillment/resolveVariant';
 
 export interface CreateCheckoutSessionParams {
   items: CheckoutLineItem[];
@@ -23,26 +21,13 @@ export async function createCheckoutSession(
   let subtotalCents = 0;
 
   for (const item of items) {
-    const matchedProduct = DEMO_PRODUCTS.find((product) => product.id === item.productId);
-
-    if (!matchedProduct) {
-      throw new Error(`Product not found: ${item.productId}`);
-    }
-
-    const variant = matchedProduct.variants.find((candidate) => candidate.id === item.variantId);
-    if (!variant) {
-      throw new Error(`Product or variant not found: ${item.productId}/${item.variantId}`);
-    }
-
-    resolveVariant(item);
-
-    const priceCents = Math.round(variant.retailPrice * 100);
+    const priceCents = Math.round(item.unitPrice * 100);
     lineItems.push({
       price_data: {
         currency: 'usd',
         product_data: {
-          name: `${matchedProduct.name} - ${variant.size} ${variant.color}`,
-          images: matchedProduct.images.map((image) => image.src),
+          name: `${item.name} - ${item.size} ${item.color}`,
+          images: [item.image],
         },
         unit_amount: priceCents,
       },

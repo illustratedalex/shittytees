@@ -1,7 +1,5 @@
-import { DEMO_PRODUCTS } from '@/lib/data/products';
-import { resolveVariant } from '@/lib/fulfillment/resolveVariant';
+import { getCatalogRepository } from '@/lib/catalog';
 import { CheckoutLineItem } from '@/lib/validation/schemas';
-import { UnresolvedVariantError } from '@/lib/orders/errors';
 import { StoreOrderItem } from '@/lib/orders/types';
 
 type ValidatedLineItem = CheckoutLineItem & {
@@ -13,7 +11,11 @@ function keyOf(item: CheckoutLineItem): string {
   return `${item.productId}:${item.variantId}`;
 }
 
-export function validateAndNormalizeCheckoutItems(items: CheckoutLineItem[]): ValidatedLineItem[] {
+export async function validateAndNormalizeCheckoutItems(items: CheckoutLineItem[]): Promise<ValidatedLineItem[]> {
+  const repository = getCatalogRepository();
+  const products = await repository.listPublic();
+  const productsById = new Map(products.map((product) => [product.id, product]));
+
   const aggregated = new Map<string, CheckoutLineItem>();
 
   for (const item of items) {
@@ -21,7 +23,7 @@ export function validateAndNormalizeCheckoutItems(items: CheckoutLineItem[]): Va
       throw new Error(`Invalid quantity for ${item.productId}/${item.variantId}`);
     }
 
-    const product = DEMO_PRODUCTS.find((candidate) => candidate.id === item.productId);
+    const product = productsById.get(item.productId);
     if (!product) {
       throw new Error(`Unknown product: ${item.productId}`);
     }
@@ -35,9 +37,16 @@ export function validateAndNormalizeCheckoutItems(items: CheckoutLineItem[]): Va
       throw new Error(`Variant attribute mismatch for ${item.productId}/${item.variantId}`);
     }
 
-    const resolved = resolveVariant(item);
-    if (!resolved.printfulVariantId) {
-      throw new UnresolvedVariantError();
+    if (!variant.printfulVariantId) {
+      throw new Error(`Missing printful variant id for ${item.productId}/${item.variantId}`);
+    }
+
+    if (item.printfulVariantId !== variant.printfulVariantId) {
+      throw new Error(`Printful variant tamper detected for ${item.productId}/${item.variantId}`);
+    }
+
+    if (item.unitPrice !== variant.retailPrice) {
+      throw new Error(`Price mismatch for ${item.productId}/${item.variantId}`);
     }
 
     const canonical: CheckoutLineItem = {
@@ -48,7 +57,7 @@ export function validateAndNormalizeCheckoutItems(items: CheckoutLineItem[]): Va
       image: product.images[0]?.src || item.image,
       size: variant.size,
       color: variant.color,
-      printfulVariantId: `${resolved.printfulVariantId}`,
+      printfulVariantId: variant.printfulVariantId,
     };
 
     const key = keyOf(canonical);
@@ -68,7 +77,7 @@ export function validateAndNormalizeCheckoutItems(items: CheckoutLineItem[]): Va
   }
 
   return [...aggregated.values()].map((item) => {
-    const product = DEMO_PRODUCTS.find((candidate) => candidate.id === item.productId);
+    const product = productsById.get(item.productId);
     const variant = product?.variants.find((candidate) => candidate.id === item.variantId);
     if (!product || !variant) {
       throw new Error(`Unknown product/variant: ${item.productId}/${item.variantId}`);

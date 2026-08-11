@@ -47,9 +47,14 @@ export function resolveCartThumbnail(product: ProductViewModel): string {
   return resolveProductImage(product).src;
 }
 
+function formatLabel(value: string): string {
+  return value.replace(/-/g, ' ');
+}
+
 export default function ProductDetailClient({ product, relatedProducts }: Props) {
   const { addItem } = useCart();
-  const [selectedVariant, setSelectedVariant] = useState(product.variants[0]);
+  const [selectedSize, setSelectedSize] = useState(product.variants[0]?.size || '');
+  const [selectedColor, setSelectedColor] = useState(product.variants[0]?.color || '');
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
   const [addError, setAddError] = useState('');
@@ -59,9 +64,56 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
   const selectedGalleryImage = gallery[selectedImageIndex] || gallery[0];
   const selectedImage = selectedGalleryImage ? toResolvedProductImage(selectedGalleryImage) : resolveProductImage(product);
   const cartImage = resolveCartThumbnail(product);
+  const sizes = useMemo(() => Array.from(new Set(product.variants.map((variant) => variant.size))), [product.variants]);
+  const colors = useMemo(() => Array.from(new Set(product.variants.map((variant) => variant.color))), [product.variants]);
+  const hasColorOptions = colors.length > 1;
+
+  const selectedVariant = useMemo(() => {
+    return product.variants.find((variant) => variant.size === selectedSize && variant.color === selectedColor)
+      || product.variants.find((variant) => variant.size === selectedSize)
+      || product.variants.find((variant) => variant.available)
+      || product.variants[0];
+  }, [product.variants, selectedColor, selectedSize]);
+
+  const collectionLabel = product.collectionSlug ? formatLabel(product.collectionSlug) : '';
+
+  const onSizeSelect = (nextSize: string) => {
+    setSelectedSize(nextSize);
+
+    if (!hasColorOptions) return;
+
+    const exactMatchExists = product.variants.some((variant) => variant.size === nextSize && variant.color === selectedColor);
+    if (exactMatchExists) return;
+
+    const nextColor = product.variants.find((variant) => variant.size === nextSize && variant.available)?.color
+      || product.variants.find((variant) => variant.size === nextSize)?.color;
+
+    if (nextColor) {
+      setSelectedColor(nextColor);
+    }
+  };
+
+  const onColorSelect = (nextColor: string) => {
+    setSelectedColor(nextColor);
+
+    const exactMatchExists = product.variants.some((variant) => variant.size === selectedSize && variant.color === nextColor);
+    if (exactMatchExists) return;
+
+    const nextSize = product.variants.find((variant) => variant.color === nextColor && variant.available)?.size
+      || product.variants.find((variant) => variant.color === nextColor)?.size;
+
+    if (nextSize) {
+      setSelectedSize(nextSize);
+    }
+  };
 
   const handleAddToCart = () => {
     if (!selectedVariant) return;
+
+    if (!selectedVariant.available) {
+      setAddError('This variant is currently unavailable.');
+      return;
+    }
 
     const readiness = evaluateVariantFulfillmentReadiness(product.id, selectedVariant.id);
     if (!readiness.ready) {
@@ -91,78 +143,125 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
   return (
     <>
       <SiteHeader />
-      <main className="min-h-screen bg-[#111111] pt-[4.75rem]">
-        <div className="site-shell section-shell">
-          <Link href="/shop" className="text-[#d5d0c6] hover:text-[#f3efe6] text-sm tracking-[0.04em] font-semibold mb-8 inline-flex items-center gap-2">
+      <main className="min-h-screen bg-[#0b0b0b] pt-[5rem]">
+        <div className="site-shell section-shell pdp-shell">
+          <Link href="/shop" className="text-[#c9beaa] hover:text-[#f2e8d5] text-sm tracking-[0.04em] font-semibold mb-8 inline-flex items-center gap-2 focus-visible-ring rounded-sm">
             ← Back to Shop
           </Link>
 
-          <div className="grid grid-cols-1 lg:grid-cols-[1.12fr_0.88fr] gap-8 lg:gap-12">
-            <div>
-              <div className="mb-5">
+          <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,1fr)] gap-8 lg:gap-10 xl:gap-12">
+            <div className="pdp-media-column">
+              <div className="mb-4 lg:mb-5">
                 <ProductImageStage
                   image={selectedImage}
                   aspect="4/5"
-                  className="w-full"
+                  className="w-full pdp-image-stage"
                   priority
-                  sizes="(max-width: 1023px) 92vw, (max-width: 1279px) 54vw, 720px"
+                  sizes="(max-width: 1023px) 92vw, (max-width: 1439px) 52vw, 760px"
                 />
               </div>
 
               <ProductThumbnailRail images={gallery} selectedIndex={selectedImageIndex} onSelect={setSelectedImageIndex} />
             </div>
 
-            <div className="lg:sticky lg:top-24 self-start bg-[#1b1b1b] border border-[#2f2f2f] rounded-2xl p-6 sm:p-7">
-              <h1 className="text-[#f3efe6] mb-2 text-[1.9rem] sm:text-[2.3rem] leading-[0.96]">{product.name}</h1>
-              <Price amount={selectedVariant?.retailPrice || product.retailPrice} currency={product.currency || 'USD'} className="mb-5 text-[1.6rem] sm:text-[1.8rem] text-[#f3efe6]" />
+            <div className="lg:sticky lg:top-24 self-start pdp-info-panel">
+              <p className="text-[0.68rem] uppercase tracking-[0.22em] text-[#37d5d6]">
+                {product.category}
+                {collectionLabel ? <span className="text-[#9f9787]"> · {collectionLabel}</span> : null}
+              </p>
 
-              <p className="text-[#d5d0c6] text-sm sm:text-base mb-7 leading-relaxed max-w-[44ch]">{product.shortDescription || product.description}</p>
+              <h1 className="text-[#f2e8d5] mt-3 text-[2rem] sm:text-[2.55rem] leading-[0.96] tracking-[0.01em]">{product.name}</h1>
 
-              <Link href="/faq" className="text-sm underline decoration-[#aaa59c] text-[#d5d0c6] hover:text-[#f3efe6] mb-7 inline-block">
-                View size guide
-              </Link>
+              <p className="text-[#c9beaa] text-[1rem] mt-4 leading-relaxed max-w-[38ch]">{product.shortDescription || product.description}</p>
 
-              <div className="mb-6">
-                <label className="block font-semibold text-[#f3efe6] mb-4 text-sm uppercase tracking-[0.1em]">Select Size & Color</label>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                  {product.variants.map((variant) => (
-                    <button
-                      key={variant.id}
-                      onClick={() => setSelectedVariant(variant)}
-                      disabled={!variant.available}
-                      className={`min-h-[52px] p-3 font-semibold text-xs rounded-md border transition-all focus-visible-ring ${
-                        selectedVariant?.id === variant.id
-                          ? 'border-[#f3efe6] bg-[#7f1d1d] text-[#f3efe6]'
-                          : 'border-[#3a3a3a] bg-[#171717] text-[#f3efe6] hover:border-[#aaa59c]'
-                      } ${!variant.available ? 'opacity-50 cursor-not-allowed' : ''}`}
-                    >
-                      <div>{variant.size}</div>
-                      <div className="text-xs opacity-75">{variant.color}</div>
-                    </button>
-                  ))}
+              <Price amount={selectedVariant?.retailPrice || product.retailPrice} currency={product.currency || 'USD'} className="mt-5 text-[1.7rem] sm:text-[1.95rem] text-[#f2e8d5]" />
+
+              <p className="text-[#b9ad97] text-[0.95rem] mt-5 leading-relaxed max-w-[46ch]">{product.description}</p>
+
+              <div className="mt-8 mb-6">
+                <p className="block font-semibold text-[#f2e8d5] mb-3 text-xs uppercase tracking-[0.14em]">Size</p>
+                <div className="grid grid-cols-3 sm:grid-cols-4 gap-2.5">
+                  {sizes.map((size) => {
+                    const sizeMatchesCurrentColor = product.variants.filter((variant) => variant.size === size)
+                      .filter((variant) => !hasColorOptions || variant.color === selectedColor);
+                    const sizeExists = sizeMatchesCurrentColor.length > 0;
+                    const sizeAvailable = sizeMatchesCurrentColor.some((variant) => variant.available);
+
+                    return (
+                      <button
+                        key={size}
+                        type="button"
+                        onClick={() => onSizeSelect(size)}
+                        disabled={!sizeExists || !sizeAvailable}
+                        className={[
+                          'min-h-[48px] px-3 font-semibold text-[0.79rem] rounded-sm border transition-colors focus-visible-ring',
+                          selectedSize === size
+                            ? 'border-[#f2e8d5] bg-[#f2e8d5] text-[#0b0b0b]'
+                            : 'border-[#4d4538] bg-[#101010] text-[#f2e8d5] hover:border-[#ffd75a]',
+                          !sizeExists || !sizeAvailable ? 'opacity-40 cursor-not-allowed hover:border-[#4d4538]' : '',
+                        ].join(' ')}
+                      >
+                        {size}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 
+              {hasColorOptions ? (
+                <div className="mb-6">
+                  <p className="block font-semibold text-[#f2e8d5] mb-3 text-xs uppercase tracking-[0.14em]">Color</p>
+                  <div className="flex flex-wrap gap-2.5">
+                    {colors.map((color) => {
+                      const colorMatchesCurrentSize = product.variants.filter((variant) => variant.color === color && variant.size === selectedSize);
+                      const colorExists = colorMatchesCurrentSize.length > 0;
+                      const colorAvailable = colorMatchesCurrentSize.some((variant) => variant.available);
+
+                      return (
+                        <button
+                          key={color}
+                          type="button"
+                          onClick={() => onColorSelect(color)}
+                          disabled={!colorExists || !colorAvailable}
+                          className={[
+                            'min-h-[44px] px-4 rounded-sm border text-xs uppercase tracking-[0.12em] transition-colors focus-visible-ring',
+                            selectedColor === color
+                              ? 'border-[#f2e8d5] bg-[#f2e8d5] text-[#0b0b0b]'
+                              : 'border-[#4d4538] text-[#f2e8d5] hover:border-[#ff4f9a] hover:text-[#ff4f9a]',
+                            !colorExists || !colorAvailable ? 'opacity-40 cursor-not-allowed hover:border-[#4d4538] hover:text-[#f2e8d5]' : '',
+                          ].join(' ')}
+                        >
+                          {color}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              ) : null}
+
               <div className="mb-6">
-                <label className="block font-semibold text-[#f3efe6] mb-4 text-sm uppercase tracking-[0.1em]">Quantity</label>
+                <label htmlFor="product-quantity" className="block font-semibold text-[#f2e8d5] mb-3 text-xs uppercase tracking-[0.14em]">Quantity</label>
                 <div className="flex gap-2 items-center">
                   <button
+                    type="button"
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="min-h-[48px] min-w-[48px] px-4 py-2 bg-[#242424] hover:bg-[#2e2e2e] font-semibold text-[#f3efe6] rounded-md transition-colors focus-visible-ring"
+                    className="min-h-[48px] min-w-[48px] px-4 py-2 bg-[#171717] hover:bg-[#262626] font-semibold text-[#f2e8d5] rounded-sm border border-[#4d4538] transition-colors focus-visible-ring"
                     aria-label="Decrease quantity"
                   >
                     −
                   </button>
                   <input
+                    id="product-quantity"
                     type="number"
                     value={quantity}
                     onChange={(e) => setQuantity(Math.min(100, Math.max(1, parseInt(e.target.value, 10) || 1)))}
-                    className="min-h-[48px] px-4 py-2 bg-[#141414] border border-[#3a3a3a] text-center text-[#f3efe6] rounded-md w-20"
+                    className="min-h-[48px] px-4 py-2 bg-[#101010] border border-[#4d4538] text-center text-[#f2e8d5] rounded-sm w-20"
                     aria-label="Quantity"
                   />
                   <button
+                    type="button"
                     onClick={() => setQuantity(Math.min(100, quantity + 1))}
-                    className="min-h-[48px] min-w-[48px] px-4 py-2 bg-[#242424] hover:bg-[#2e2e2e] font-semibold text-[#f3efe6] rounded-md transition-colors focus-visible-ring"
+                    className="min-h-[48px] min-w-[48px] px-4 py-2 bg-[#171717] hover:bg-[#262626] font-semibold text-[#f2e8d5] rounded-sm border border-[#4d4538] transition-colors focus-visible-ring"
                     aria-label="Increase quantity"
                   >
                     +
@@ -173,9 +272,9 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
               <Button
                 type="button"
                 onClick={handleAddToCart}
-                className={`w-full px-8 py-4 mb-3 ${added ? 'bg-[#2d6d4a] text-white hover:bg-[#286342] border-transparent' : ''}`}
+                className={`w-full px-8 py-4 mb-3 text-[0.82rem] tracking-[0.14em] ${added ? 'bg-[#2d6d4a] text-white hover:bg-[#286342] border-transparent' : ''}`}
               >
-                {added ? 'Added to Cart' : 'Add to Cart'}
+                {added ? 'Added to Cart' : 'ADD TO CART'}
               </Button>
 
               {addError ? <p className="text-sm text-[#e7b2b2] mb-3">{addError}</p> : null}
@@ -184,23 +283,29 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
                 View Cart
               </Button>
 
-              <div className="mt-9 pt-6 border-t border-[#2f2f2f] space-y-3">
-                <details className="group border border-[#2f2f2f] rounded-md px-4 py-3">
-                  <summary className="cursor-pointer text-sm uppercase tracking-[0.14em] text-[#f3efe6] font-semibold">Details</summary>
-                  <p className="text-sm text-[#d5d0c6] mt-3">{product.description}</p>
+              <div className="mt-7 grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs uppercase tracking-[0.12em] text-[#b6aa95]">
+                <p className="border border-[#3a342a] rounded-sm px-3 py-2">Printed to order</p>
+                <p className="border border-[#3a342a] rounded-sm px-3 py-2">Ships direct</p>
+                <p className="border border-[#3a342a] rounded-sm px-3 py-2">No warehouse excess</p>
+              </div>
+
+              <div className="mt-9 pt-6 border-t border-[#2f2a22] space-y-3">
+                <details className="group border border-[#3a342a] rounded-sm px-4 py-3">
+                  <summary className="cursor-pointer text-sm uppercase tracking-[0.14em] text-[#f2e8d5] font-semibold">Description</summary>
+                  <p className="text-sm text-[#c9beaa] mt-3 leading-relaxed">{product.description}</p>
                 </details>
-                <details className="group border border-[#2f2f2f] rounded-md px-4 py-3">
-                  <summary className="cursor-pointer text-sm uppercase tracking-[0.14em] text-[#f3efe6] font-semibold">Shipping</summary>
-                  <p className="text-sm text-[#d5d0c6] mt-3">Orders are printed on demand and ship after production.</p>
+                <details className="group border border-[#3a342a] rounded-sm px-4 py-3">
+                  <summary className="cursor-pointer text-sm uppercase tracking-[0.14em] text-[#f2e8d5] font-semibold">Shipping</summary>
+                  <p className="text-sm text-[#c9beaa] mt-3 leading-relaxed">Orders are fulfilled through our print-on-demand partner and ship directly after production.</p>
                 </details>
-                <details className="group border border-[#2f2f2f] rounded-md px-4 py-3">
-                  <summary className="cursor-pointer text-sm uppercase tracking-[0.14em] text-[#f3efe6] font-semibold">Returns</summary>
-                  <p className="text-sm text-[#d5d0c6] mt-3">Returns are accepted according to our published returns policy.</p>
+                <details className="group border border-[#3a342a] rounded-sm px-4 py-3">
+                  <summary className="cursor-pointer text-sm uppercase tracking-[0.14em] text-[#f2e8d5] font-semibold">Returns</summary>
+                  <p className="text-sm text-[#c9beaa] mt-3 leading-relaxed">Returns are accepted according to our published returns policy.</p>
                 </details>
                 <div className="pt-2">
-                  <p className="text-xs uppercase tracking-[0.14em] text-[#aaa59c] mb-2">Collection</p>
-                  <Link href="/collections" className="text-sm text-[#d5d0c6] hover:text-[#f3efe6] underline decoration-[#7f1d1d]">
-                    {product.collectionSlug.replace(/-/g, ' ')}
+                  <p className="text-xs uppercase tracking-[0.14em] text-[#9f9787] mb-2">Collection</p>
+                  <Link href="/collections" className="text-sm text-[#f2e8d5] hover:text-[#ffd75a] underline decoration-[#ff4f9a]">
+                    {collectionLabel || 'Shop all collections'}
                   </Link>
                 </div>
               </div>
@@ -208,7 +313,8 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
           </div>
 
           <section className="mt-16">
-            <h2 className="text-[#f3efe6] text-2xl mb-6">Related Products</h2>
+            <p className="text-[0.68rem] uppercase tracking-[0.22em] text-[#37d5d6] mb-2">Keep Going</p>
+            <h2 className="text-[#f2e8d5] text-[1.8rem] sm:text-[2.2rem] mb-7">MORE BAD DECISIONS</h2>
             <ProductRail products={relatedProducts} title="Related products" />
           </section>
         </div>

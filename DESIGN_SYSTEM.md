@@ -167,7 +167,25 @@ Use collection bands for:
 - drop page cross-navigation
 - collection landing context
 
-## 13) Homepage Assembly
+Theme handling:
+
+- The banner card supports `data-theme` values from collection config (`black`, `bone`, `charcoal`, `oxblood`).
+- Theme source of truth remains in [data/collections.ts](data/collections.ts).
+
+## 13) Product Presentation Data Layer
+
+Presentation mappings are stored in [data/productPresentation.ts](data/productPresentation.ts).
+
+Use this layer for display-only concerns:
+
+- front/back image preference
+- garment color mapping
+- artwork placement
+- mockup fallback artwork text
+
+Do not put pricing, inventory, checkout, or API behavior in this file.
+
+## 14) Homepage Assembly
 
 Homepage route: [app/page.tsx](app/page.tsx)
 
@@ -182,7 +200,7 @@ Assembly order:
 7. NewsletterSignup
 8. SiteFooter
 
-## 14) Adding Drop 002
+## 15) Adding Drop 002
 
 1. Add a new object in [data/drops.ts](data/drops.ts) with a unique slug.
 2. Reuse existing product slugs in featuredProductSlugs.
@@ -190,19 +208,19 @@ Assembly order:
 4. Confirm route renders at /drops/[slug] via [app/drops/[slug]/page.tsx](app/drops/[slug]/page.tsx).
 5. Optionally add a homepage feature reference in [data/campaigns.ts](data/campaigns.ts).
 
-## 15) Adding a Real Garment PNG
+## 16) Adding a Real Garment PNG
 
 1. Provide transparent PNG asset path.
 2. Pass it via artworkImage to GarmentMockup.
 3. Keep color and background values for tone consistency.
 4. Tune artworkPlacement, scale, and rotation only as needed.
 
-## 16) Replacing Text Artwork with Image Artwork
+## 17) Replacing Text Artwork with Image Artwork
 
 - Switch from artworkText to artworkImage.
 - Keep fallback text available in data for non-image contexts.
 
-## 17) Accessibility Rules
+## 18) Accessibility Rules
 
 - one h1 per page
 - keyboard-visible focus states
@@ -211,7 +229,7 @@ Assembly order:
 - reduced-motion respected by marquee and transitions
 - no color-only meaning for product state
 
-## 18) Responsive Rules
+## 19) Responsive Rules
 
 Review at minimum:
 
@@ -229,7 +247,7 @@ Must pass:
 - nav and menu usable by keyboard and touch
 - product rail usable on mobile and desktop
 
-## 19) Prohibited Patterns
+## 20) Prohibited Patterns
 
 Do not add:
 
@@ -239,12 +257,26 @@ Do not add:
 - unvalidated claims not present in real data
 - duplicate one-off JSX blocks that bypass reusable components
 
-## 20) Centralized Data Files
+## 21) Centralized Data Files
 
 - Brand: [data/brand.ts](data/brand.ts)
 - Navigation: [data/navigation.ts](data/navigation.ts)
 - Campaigns: [data/campaigns.ts](data/campaigns.ts)
 - Collections: [data/collections.ts](data/collections.ts)
 - Drops: [data/drops.ts](data/drops.ts)
+- Product presentation: [data/productPresentation.ts](data/productPresentation.ts)
 
 Use these data files as the first configuration layer before page-level edits.
+
+## 22) Validation Workflow
+
+Before release, run the full quality sequence:
+
+1. `rm -rf .next`
+2. `rm -f tsconfig.tsbuildinfo`
+3. `npm run lint`
+4. `npm run typecheck`
+5. `npm test`
+6. `npm run build`
+
+Keep this order so lint/type/test regressions are isolated before build output noise.

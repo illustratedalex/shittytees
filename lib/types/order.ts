@@ -18,7 +18,9 @@ export interface OrderItem {
   size: string;
   color: string;
   unitPrice: number;
+  image: string;
   printfulVariantId: string;
+  printfulSyncProductId?: string;
 }
 
 export interface ShippingAddress {

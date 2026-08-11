@@ -1,10 +1,11 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useCart } from '@/lib/hooks/useCart';
 import { NAVIGATION } from '@/data/navigation';
-import { LogoLockup } from '@/components/brand';
+import { Wordmark } from '@/components/brand';
 import MobileMenu from './MobileMenu';
 
 interface SiteHeaderProps {
@@ -12,6 +13,7 @@ interface SiteHeaderProps {
 }
 
 export default function SiteHeader({ transparentOnTop = false }: SiteHeaderProps) {
+  const pathname = usePathname();
   const { itemCount } = useCart();
   const [scrolled, setScrolled] = useState(false);
 
@@ -23,25 +25,50 @@ export default function SiteHeader({ transparentOnTop = false }: SiteHeaderProps
   }, []);
 
   const shellClass = transparentOnTop && !scrolled
-    ? 'bg-transparent border-b border-transparent'
-    : 'bg-[#0a0a0a]/96 border-b border-[#1f1f1f]';
+    ? 'bg-[#0b0b0be6] border-b border-transparent'
+    : 'bg-[#0b0b0bf2] border-b border-[#3a3329]';
+
+  const mainLinks = NAVIGATION.header.filter((link) => link.href !== '/cart');
+  const headerLinks = mainLinks.map((link) => link.href === '/drops/drop-001'
+    ? { ...link, label: 'Drops' }
+    : link);
 
   return (
-    <header className={`fixed top-0 inset-x-0 z-50 transition-colors duration-300 ${shellClass}`}>
-      <div className="max-w-[96rem] mx-auto px-5 sm:px-8 lg:px-12 py-4 flex items-center justify-between">
-        <Link href="/" aria-label="Go to homepage">
-          <LogoLockup variant="light" layout="compact" />
+    <header className={`fixed top-0 inset-x-0 z-50 transition-colors duration-300 ${shellClass} header-shell`}>
+      <div className="site-shell min-h-[4.35rem] flex items-center justify-between gap-4">
+        <Link href="/" aria-label="Go to homepage" className="min-h-[44px] inline-flex items-center focus-visible-ring rounded-sm">
+          <Wordmark
+            variant="light"
+            size="display"
+            showMark={false}
+            className="header-wordmark"
+            as="span"
+          />
         </Link>
 
-        <nav className="hidden md:flex items-center gap-7 text-[11px] uppercase tracking-[0.17em] text-[#c7baa4]">
-          {NAVIGATION.header.map((link) => (
-            <Link key={link.href} href={link.href} className="hover:text-[#f0ebdf]">
+        <nav className="hidden md:flex items-center gap-1 text-[0.8rem] uppercase tracking-[0.11em] text-[#f2e8d5]" aria-label="Primary">
+          {headerLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={`min-h-[44px] px-3.5 inline-flex items-center rounded-sm transition-colors hover:text-[#0b0b0b] hover:bg-[#ffd75a] focus-visible-ring ${pathname === link.href ? 'text-[#0b0b0b] bg-[#f2e8d5]' : ''}`}
+              aria-current={pathname === link.href ? 'page' : undefined}
+            >
               {link.label}
             </Link>
           ))}
         </nav>
 
-        <MobileMenu links={NAVIGATION.header} cartCount={itemCount} />
+        <div className="flex items-center gap-2">
+          <Link
+            href="/cart"
+            className={`min-h-[44px] px-4 inline-flex items-center rounded-sm border text-[0.76rem] uppercase tracking-[0.11em] transition-colors focus-visible-ring ${pathname === '/cart' ? 'text-[#0b0b0b] border-[#f2e8d5] bg-[#f2e8d5]' : 'text-[#f2e8d5] border-[#5b5244] hover:border-[#ffd75a] hover:text-[#0b0b0b] hover:bg-[#ffd75a]'}`}
+            aria-current={pathname === '/cart' ? 'page' : undefined}
+          >
+            Cart ({itemCount})
+          </Link>
+          <MobileMenu links={headerLinks} cartCount={itemCount} />
+        </div>
       </div>
     </header>
   );

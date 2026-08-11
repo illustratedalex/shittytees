@@ -2,6 +2,7 @@ import type { Product } from '@/lib/types/product';
 import { BrandPattern } from '@/components/brand';
 import HeroCTA from '@/components/common/HeroCTA';
 import GarmentMockup from '@/components/product/GarmentMockup';
+import { getProductPresentation } from '@/data/productPresentation';
 
 interface CampaignHeroProps {
   eyebrow: string;
@@ -41,18 +42,19 @@ export default function CampaignHero({
 }: CampaignHeroProps) {
   const isDark = theme === 'dark';
   const lines = headline.split('\n');
+  const presentation = product ? getProductPresentation(product.slug) : undefined;
 
   return (
-    <section className={`relative min-h-[82vh] sm:min-h-[84vh] lg:min-h-[86vh] pt-20 sm:pt-24 ${isDark ? 'bg-[#0a0a0a]' : 'bg-[#f0ebdf]'}`}>
+    <section className={`relative min-h-[72vh] sm:min-h-[76vh] lg:min-h-[78vh] pt-[7rem] sm:pt-[7.5rem] lg:pt-24 ${isDark ? 'bg-[#0a0a0a]' : 'bg-[#f0ebdf]'}`}>
       <div className="absolute inset-0">
-        <BrandPattern variant={isDark ? 'light' : 'dark'} className="absolute inset-0 opacity-60" />
-        <div className={`absolute inset-0 ${isDark ? 'bg-[radial-gradient(circle_at_72%_14%,#262523_0%,#141414_49%,#0a0a0a_100%)]' : 'bg-[radial-gradient(circle_at_72%_14%,#f0ebdf_0%,#d7cfbf_49%,#c4baa8_100%)]'}`}></div>
+        <BrandPattern variant={isDark ? 'light' : 'dark'} className="absolute inset-0 opacity-0 sm:opacity-15" />
+        <div className={`absolute inset-0 ${isDark ? 'bg-[radial-gradient(circle_at_76%_24%,#3a342e_0%,#1e1b18_46%,#0a0a0a_100%)]' : 'bg-[radial-gradient(circle_at_72%_14%,#f0ebdf_0%,#d7cfbf_49%,#c4baa8_100%)]'}`}></div>
       </div>
 
-      <div className="relative z-10 max-w-[96rem] mx-auto px-5 sm:px-8 lg:px-12 min-h-[74vh] flex items-start lg:items-end pt-14 sm:pt-16 lg:pt-0 pb-14 sm:pb-16 md:pb-20">
-        <div className="max-w-[30rem] sm:max-w-[31rem] md:max-w-[32rem] lg:max-w-[37rem]">
+      <div className="relative z-10 max-w-[84rem] mx-auto px-5 sm:px-8 lg:px-10 min-h-[66vh] grid lg:grid-cols-[minmax(0,34rem)_minmax(18rem,1fr)] items-center gap-8 lg:gap-12 pt-24 sm:pt-16 lg:pt-14 pb-10 sm:pb-14 md:pb-16">
+        <div className="max-w-[34rem] pt-2 sm:pt-0">
           <p className={`type-kicker mb-4 ${isDark ? 'text-[#b6a98f]' : 'text-[#564c40]'}`}>{eyebrow}</p>
-          <h1 className={`type-display-xl mb-7 max-w-[11.6ch] ${isDark ? 'text-[#f0ebdf]' : 'text-[#121110]'}`}>
+          <h1 className={`type-display-xl mb-5 max-w-[10.8ch] sm:max-w-[12.2ch] ${isDark ? 'text-[#f0ebdf]' : 'text-[#121110]'}`}>
             {lines.map((line, index) => (
               <span key={`${line}-${index}`}>
                 {line}
@@ -60,8 +62,8 @@ export default function CampaignHero({
               </span>
             ))}
           </h1>
-          <p className={`text-sm sm:text-base max-w-lg mb-9 ${isDark ? 'text-[#d5cab6]' : 'text-[#302a24]'}`}>{body}</p>
-          {campaignLabel ? <p className={`text-[10px] sm:text-[11px] uppercase tracking-[0.2em] mb-7 ${isDark ? 'text-[#aa9e8a]' : 'text-[#4f463d]'}`}>{campaignLabel}</p> : null}
+          <p className={`text-base sm:text-[1.02rem] max-w-[34ch] mb-8 ${isDark ? 'text-[#d5cab6]' : 'text-[#302a24]'}`}>{body}</p>
+          {campaignLabel ? <p className={`text-[12px] sm:text-[13px] uppercase tracking-[0.12em] mb-7 ${isDark ? 'text-[#aa9e8a]' : 'text-[#4f463d]'}`}>{campaignLabel}</p> : null}
           <HeroCTA
             primaryHref={primaryCtaHref}
             secondaryHref={secondaryCtaHref}
@@ -69,19 +71,20 @@ export default function CampaignHero({
             secondaryLabel={secondaryCtaLabel}
           />
         </div>
-      </div>
 
-      <div className="absolute right-[2%] sm:right-[3%] md:right-[5%] lg:right-[7%] bottom-[5%] sm:bottom-[6%] w-[70%] sm:w-[52%] md:w-[47%] lg:w-[44%] xl:w-[40%] max-w-[42rem] min-h-[16rem] sm:min-h-[20rem] md:min-h-[24rem] lg:min-h-[31rem] pointer-events-none">
-        <GarmentMockup
-          color={colorForProduct(product)}
-          artworkText={product?.name || 'Shitty Tees'}
-          artworkImage={mediaAsset}
-          background={isDark ? 'charcoal' : 'bone'}
-          scale="hero"
-          rotation={1.2}
-          className="h-full w-full"
-          decorative
-        />
+        <div className="relative w-full min-h-[18rem] sm:min-h-[22rem] md:min-h-[26rem] lg:min-h-[32rem] pointer-events-none lg:justify-self-end">
+          <GarmentMockup
+            color={presentation?.garmentColor || colorForProduct(product)}
+            artworkText={presentation?.artworkDisplayText || product?.name || 'Shitty Tees'}
+            artworkPlacement={presentation?.artworkPlacement || 'center'}
+            artworkImage={mediaAsset}
+            background={isDark ? 'bone' : 'bone'}
+            scale="hero"
+            rotation={1.1}
+            className="h-full w-full"
+            decorative
+          />
+        </div>
       </div>
     </section>
   );

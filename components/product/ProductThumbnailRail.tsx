@@ -13,17 +13,17 @@ export default function ProductThumbnailRail({ images, selectedIndex, onSelect }
   }
 
   return (
-    <div className="grid grid-cols-4 sm:grid-cols-5 gap-3 sm:gap-4">
+    <div className="grid grid-cols-4 sm:grid-cols-5 gap-3 sm:gap-3.5">
       {images.map((image, index) => (
         <button
           key={`${image.url}-${image.role}`}
           type="button"
           onClick={() => onSelect(index)}
           className={[
-            'relative min-h-[4.4rem] aspect-square overflow-hidden rounded-[0.7rem] border bg-[#f0ece3] transition-colors focus-visible-ring',
+            'relative min-h-[4.4rem] aspect-square overflow-hidden rounded-[0.2rem] border bg-[#f2e8d5] transition-colors focus-visible-ring',
             selectedIndex === index
-              ? 'border-[#111111] ring-1 ring-[#111111]'
-              : 'border-[#d9d3c8] hover:border-[#aaa59c]',
+              ? 'border-[#0b0b0b] ring-2 ring-[#ff4f9a]'
+              : 'border-[#d9d3c8] hover:border-[#ffd75a]',
           ].join(' ')}
           aria-label={`Show ${image.alt}`}
           aria-pressed={selectedIndex === index}

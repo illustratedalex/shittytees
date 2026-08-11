@@ -1,8 +1,11 @@
 import { MetadataRoute } from 'next';
-import { DEMO_PRODUCTS, getAllCollections } from '@/lib/data/products';
+import { getAllCollections, getPublicProducts } from '@/lib/catalog/service';
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export const dynamic = 'force-dynamic';
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://shittytees.com';
+  const products = await getPublicProducts();
 
   // Static pages
   const staticPages: MetadataRoute.Sitemap = [
@@ -63,7 +66,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   // Product pages
-  const productPages: MetadataRoute.Sitemap = DEMO_PRODUCTS.filter((p) => p.active).map((product) => ({
+  const productPages: MetadataRoute.Sitemap = products.filter((p) => p.active).map((product) => ({
     url: `${baseUrl}/shittytees/shop/${product.slug}`,
     lastModified: new Date(product.updatedAt),
     changeFrequency: 'weekly' as const,

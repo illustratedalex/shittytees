@@ -1,0 +1,1897 @@
+[
+  {
+    "printfulSyncProductId": 260260882,
+    "externalProductId": "UWH363YOMS43DEVJS2DGLD22",
+    "proposedSlug": "not-a-bitch-women-s-relaxed-t-shirt",
+    "title": "Not A Bitch Women's Relaxed T-Shirt",
+    "variants": [
+      {
+        "printfulSyncVariantId": 3041378074,
+        "printfulVariantId": 10235,
+        "sku": "61C338A827E5F_10235",
+        "size": "S",
+        "color": "Navy",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041378075,
+        "printfulVariantId": 10236,
+        "sku": "61C338A827E5F_10236",
+        "size": "M",
+        "color": "Navy",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041378076,
+        "printfulVariantId": 10237,
+        "sku": "61C338A827E5F_10237",
+        "size": "L",
+        "color": "Navy",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041378077,
+        "printfulVariantId": 10238,
+        "sku": "61C338A827E5F_10238",
+        "size": "XL",
+        "color": "Navy",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041378078,
+        "printfulVariantId": 10239,
+        "sku": "61C338A827E5F_10239",
+        "size": "2XL",
+        "color": "Navy",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041378079,
+        "printfulVariantId": 10187,
+        "sku": "61C338A827E5F_10187",
+        "size": "S",
+        "color": "Black",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041378080,
+        "printfulVariantId": 10188,
+        "sku": "61C338A827E5F_10188",
+        "size": "M",
+        "color": "Black",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041378081,
+        "printfulVariantId": 10189,
+        "sku": "61C338A827E5F_10189",
+        "size": "L",
+        "color": "Black",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041378082,
+        "printfulVariantId": 10190,
+        "sku": "61C338A827E5F_10190",
+        "size": "XL",
+        "color": "Black",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041378083,
+        "printfulVariantId": 10191,
+        "sku": "61C338A827E5F_10191",
+        "size": "2XL",
+        "color": "Black",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041378084,
+        "printfulVariantId": 10193,
+        "sku": "61C338A827E5F_10193",
+        "size": "S",
+        "color": "Dark Grey Heather",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041378085,
+        "printfulVariantId": 10194,
+        "sku": "61C338A827E5F_10194",
+        "size": "M",
+        "color": "Dark Grey Heather",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041378086,
+        "printfulVariantId": 10195,
+        "sku": "61C338A827E5F_10195",
+        "size": "L",
+        "color": "Dark Grey Heather",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041378087,
+        "printfulVariantId": 10196,
+        "sku": "61C338A827E5F_10196",
+        "size": "XL",
+        "color": "Dark Grey Heather",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041378088,
+        "printfulVariantId": 10197,
+        "sku": "61C338A827E5F_10197",
+        "size": "2XL",
+        "color": "Dark Grey Heather",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041378089,
+        "printfulVariantId": 13156,
+        "sku": "61C338A827E5F_13156",
+        "size": "S",
+        "color": "Poppy",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041378090,
+        "printfulVariantId": 13157,
+        "sku": "61C338A827E5F_13157",
+        "size": "M",
+        "color": "Poppy",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041378091,
+        "printfulVariantId": 13158,
+        "sku": "61C338A827E5F_13158",
+        "size": "L",
+        "color": "Poppy",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041378092,
+        "printfulVariantId": 13159,
+        "sku": "61C338A827E5F_13159",
+        "size": "XL",
+        "color": "Poppy",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041378093,
+        "printfulVariantId": 13160,
+        "sku": "61C338A827E5F_13160",
+        "size": "2XL",
+        "color": "Poppy",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041378094,
+        "printfulVariantId": 10205,
+        "sku": "61C338A827E5F_10205",
+        "size": "S",
+        "color": "Heather Mauve",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041378095,
+        "printfulVariantId": 10206,
+        "sku": "61C338A827E5F_10206",
+        "size": "M",
+        "color": "Heather Mauve",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041378096,
+        "printfulVariantId": 10207,
+        "sku": "61C338A827E5F_10207",
+        "size": "L",
+        "color": "Heather Mauve",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041378097,
+        "printfulVariantId": 10208,
+        "sku": "61C338A827E5F_10208",
+        "size": "XL",
+        "color": "Heather Mauve",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041378098,
+        "printfulVariantId": 10209,
+        "sku": "61C338A827E5F_10209",
+        "size": "2XL",
+        "color": "Heather Mauve",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041378099,
+        "printfulVariantId": 10241,
+        "sku": "61C338A827E5F_10241",
+        "size": "S",
+        "color": "Pink",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041378100,
+        "printfulVariantId": 10242,
+        "sku": "61C338A827E5F_10242",
+        "size": "M",
+        "color": "Pink",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041378101,
+        "printfulVariantId": 10243,
+        "sku": "61C338A827E5F_10243",
+        "size": "L",
+        "color": "Pink",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041378102,
+        "printfulVariantId": 10244,
+        "sku": "61C338A827E5F_10244",
+        "size": "XL",
+        "color": "Pink",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041378103,
+        "printfulVariantId": 10245,
+        "sku": "61C338A827E5F_10245",
+        "size": "2XL",
+        "color": "Pink",
+        "active": true,
+        "retailPrice": 19.99
+      }
+    ],
+    "mockups": {
+      "front": "https://files.cdn.printful.com/files/56f/56f6e61dc542e065ba081d4ad277f073_preview.png",
+      "alternate": [
+        "https://files.cdn.printful.com/files/00c/00c00850928ce9dd979178ad7f5b4e83_preview.png",
+        "https://files.cdn.printful.com/files/0da/0da48702ede733e50875a3a7ec19ff79_preview.png",
+        "https://files.cdn.printful.com/files/a6f/a6f2bb3c1182c718821000ee22c1ef4d_preview.png",
+        "https://files.cdn.printful.com/files/cd3/cd39fdccb05ea079e4a11a131c12d0ee_preview.png",
+        "https://files.cdn.printful.com/files/dde/dde319e1e8760182daffbc75e0e3f740_preview.png",
+        "https://files.cdn.printful.com/files/deb/deb5cf68fb3f6e4c1fa336842881a4da_preview.png"
+      ]
+    },
+    "importedAt": "2026-08-07T03:02:52.173Z",
+    "readiness": "missing-variant"
+  },
+  {
+    "printfulSyncProductId": 454547341,
+    "externalProductId": "OJRTGZ2BR4WX635NX74KYWC5",
+    "proposedSlug": "professionally-unsupervised",
+    "title": "Professionally Unsupervised",
+    "variants": [
+      {
+        "printfulSyncVariantId": 5430703373,
+        "printfulVariantId": 9527,
+        "sku": "6A75529EE991F_9527",
+        "size": "XS",
+        "color": "Black",
+        "active": true,
+        "retailPrice": 19.5
+      },
+      {
+        "printfulSyncVariantId": 5430703374,
+        "printfulVariantId": 4016,
+        "sku": "6A75529EE991F_4016",
+        "size": "S",
+        "color": "Black",
+        "active": true,
+        "retailPrice": 19.5
+      },
+      {
+        "printfulSyncVariantId": 5430703375,
+        "printfulVariantId": 4017,
+        "sku": "6A75529EE991F_4017",
+        "size": "M",
+        "color": "Black",
+        "active": true,
+        "retailPrice": 19.5
+      },
+      {
+        "printfulSyncVariantId": 5430703376,
+        "printfulVariantId": 4018,
+        "sku": "6A75529EE991F_4018",
+        "size": "L",
+        "color": "Black",
+        "active": true,
+        "retailPrice": 19.5
+      },
+      {
+        "printfulSyncVariantId": 5430703377,
+        "printfulVariantId": 4019,
+        "sku": "6A75529EE991F_4019",
+        "size": "XL",
+        "color": "Black",
+        "active": true,
+        "retailPrice": 19.5
+      },
+      {
+        "printfulSyncVariantId": 5430703378,
+        "printfulVariantId": 4020,
+        "sku": "6A75529EE991F_4020",
+        "size": "2XL",
+        "color": "Black",
+        "active": true,
+        "retailPrice": 22
+      },
+      {
+        "printfulSyncVariantId": 5430703379,
+        "printfulVariantId": 5295,
+        "sku": "6A75529EE991F_5295",
+        "size": "3XL",
+        "color": "Black",
+        "active": true,
+        "retailPrice": 24
+      },
+      {
+        "printfulSyncVariantId": 5430703380,
+        "printfulVariantId": 5310,
+        "sku": "6A75529EE991F_5310",
+        "size": "4XL",
+        "color": "Black",
+        "active": true,
+        "retailPrice": 26
+      },
+      {
+        "printfulSyncVariantId": 5430703381,
+        "printfulVariantId": 12871,
+        "sku": "6A75529EE991F_12871",
+        "size": "5XL",
+        "color": "Black",
+        "active": true,
+        "retailPrice": 28.5
+      },
+      {
+        "printfulSyncVariantId": 5430703382,
+        "printfulVariantId": 21593,
+        "sku": "6A75529EE991F_21593",
+        "size": "XS",
+        "color": "Vintage Black",
+        "active": true,
+        "retailPrice": 19.5
+      },
+      {
+        "printfulSyncVariantId": 5430703383,
+        "printfulVariantId": 21594,
+        "sku": "6A75529EE991F_21594",
+        "size": "S",
+        "color": "Vintage Black",
+        "active": true,
+        "retailPrice": 19.5
+      },
+      {
+        "printfulSyncVariantId": 5430703384,
+        "printfulVariantId": 21595,
+        "sku": "6A75529EE991F_21595",
+        "size": "M",
+        "color": "Vintage Black",
+        "active": true,
+        "retailPrice": 19.5
+      },
+      {
+        "printfulSyncVariantId": 5430703385,
+        "printfulVariantId": 21596,
+        "sku": "6A75529EE991F_21596",
+        "size": "L",
+        "color": "Vintage Black",
+        "active": true,
+        "retailPrice": 19.5
+      },
+      {
+        "printfulSyncVariantId": 5430703386,
+        "printfulVariantId": 21597,
+        "sku": "6A75529EE991F_21597",
+        "size": "XL",
+        "color": "Vintage Black",
+        "active": true,
+        "retailPrice": 19.5
+      },
+      {
+        "printfulSyncVariantId": 5430703387,
+        "printfulVariantId": 21598,
+        "sku": "6A75529EE991F_21598",
+        "size": "2XL",
+        "color": "Vintage Black",
+        "active": true,
+        "retailPrice": 22
+      },
+      {
+        "printfulSyncVariantId": 5430703388,
+        "printfulVariantId": 17202,
+        "sku": "6A75529EE991F_17202",
+        "size": "XS",
+        "color": "Military Green",
+        "active": true,
+        "retailPrice": 19.5
+      },
+      {
+        "printfulSyncVariantId": 5430703389,
+        "printfulVariantId": 17203,
+        "sku": "6A75529EE991F_17203",
+        "size": "S",
+        "color": "Military Green",
+        "active": true,
+        "retailPrice": 19.5
+      },
+      {
+        "printfulSyncVariantId": 5430703390,
+        "printfulVariantId": 17204,
+        "sku": "6A75529EE991F_17204",
+        "size": "M",
+        "color": "Military Green",
+        "active": true,
+        "retailPrice": 19.5
+      },
+      {
+        "printfulSyncVariantId": 5430703391,
+        "printfulVariantId": 17205,
+        "sku": "6A75529EE991F_17205",
+        "size": "L",
+        "color": "Military Green",
+        "active": true,
+        "retailPrice": 19.5
+      },
+      {
+        "printfulSyncVariantId": 5430703392,
+        "printfulVariantId": 17206,
+        "sku": "6A75529EE991F_17206",
+        "size": "XL",
+        "color": "Military Green",
+        "active": true,
+        "retailPrice": 19.5
+      },
+      {
+        "printfulSyncVariantId": 5430703393,
+        "printfulVariantId": 17209,
+        "sku": "6A75529EE991F_17209",
+        "size": "2XL",
+        "color": "Military Green",
+        "active": true,
+        "retailPrice": 22
+      },
+      {
+        "printfulSyncVariantId": 5430703394,
+        "printfulVariantId": 17208,
+        "sku": "6A75529EE991F_17208",
+        "size": "3XL",
+        "color": "Military Green",
+        "active": true,
+        "retailPrice": 24
+      },
+      {
+        "printfulSyncVariantId": 5430703395,
+        "printfulVariantId": 17207,
+        "sku": "6A75529EE991F_17207",
+        "size": "4XL",
+        "color": "Military Green",
+        "active": true,
+        "retailPrice": 26
+      },
+      {
+        "printfulSyncVariantId": 5430703396,
+        "printfulVariantId": 14681,
+        "sku": "6A75529EE991F_14681",
+        "size": "XS",
+        "color": "Natural",
+        "active": true,
+        "retailPrice": 19.5
+      },
+      {
+        "printfulSyncVariantId": 5430703397,
+        "printfulVariantId": 14682,
+        "sku": "6A75529EE991F_14682",
+        "size": "S",
+        "color": "Natural",
+        "active": true,
+        "retailPrice": 19.5
+      },
+      {
+        "printfulSyncVariantId": 5430703398,
+        "printfulVariantId": 14683,
+        "sku": "6A75529EE991F_14683",
+        "size": "M",
+        "color": "Natural",
+        "active": true,
+        "retailPrice": 19.5
+      },
+      {
+        "printfulSyncVariantId": 5430703399,
+        "printfulVariantId": 14684,
+        "sku": "6A75529EE991F_14684",
+        "size": "L",
+        "color": "Natural",
+        "active": true,
+        "retailPrice": 19.5
+      },
+      {
+        "printfulSyncVariantId": 5430703400,
+        "printfulVariantId": 14685,
+        "sku": "6A75529EE991F_14685",
+        "size": "XL",
+        "color": "Natural",
+        "active": true,
+        "retailPrice": 19.5
+      },
+      {
+        "printfulSyncVariantId": 5430703401,
+        "printfulVariantId": 14686,
+        "sku": "6A75529EE991F_14686",
+        "size": "2XL",
+        "color": "Natural",
+        "active": true,
+        "retailPrice": 22
+      },
+      {
+        "printfulSyncVariantId": 5430703402,
+        "printfulVariantId": 14687,
+        "sku": "6A75529EE991F_14687",
+        "size": "3XL",
+        "color": "Natural",
+        "active": true,
+        "retailPrice": 24
+      },
+      {
+        "printfulSyncVariantId": 5430703403,
+        "printfulVariantId": 14688,
+        "sku": "6A75529EE991F_14688",
+        "size": "4XL",
+        "color": "Natural",
+        "active": true,
+        "retailPrice": 26
+      },
+      {
+        "printfulSyncVariantId": 5430703404,
+        "printfulVariantId": 9526,
+        "sku": "6A75529EE991F_9526",
+        "size": "XS",
+        "color": "White",
+        "active": true,
+        "retailPrice": 19.5
+      },
+      {
+        "printfulSyncVariantId": 5430703405,
+        "printfulVariantId": 4011,
+        "sku": "6A75529EE991F_4011",
+        "size": "S",
+        "color": "White",
+        "active": true,
+        "retailPrice": 19.5
+      },
+      {
+        "printfulSyncVariantId": 5430703406,
+        "printfulVariantId": 4012,
+        "sku": "6A75529EE991F_4012",
+        "size": "M",
+        "color": "White",
+        "active": true,
+        "retailPrice": 19.5
+      },
+      {
+        "printfulSyncVariantId": 5430703407,
+        "printfulVariantId": 4013,
+        "sku": "6A75529EE991F_4013",
+        "size": "L",
+        "color": "White",
+        "active": true,
+        "retailPrice": 19.5
+      },
+      {
+        "printfulSyncVariantId": 5430703408,
+        "printfulVariantId": 4014,
+        "sku": "6A75529EE991F_4014",
+        "size": "XL",
+        "color": "White",
+        "active": true,
+        "retailPrice": 19.5
+      },
+      {
+        "printfulSyncVariantId": 5430703409,
+        "printfulVariantId": 4015,
+        "sku": "6A75529EE991F_4015",
+        "size": "2XL",
+        "color": "White",
+        "active": true,
+        "retailPrice": 22
+      },
+      {
+        "printfulSyncVariantId": 5430703410,
+        "printfulVariantId": 5294,
+        "sku": "6A75529EE991F_5294",
+        "size": "3XL",
+        "color": "White",
+        "active": true,
+        "retailPrice": 24
+      },
+      {
+        "printfulSyncVariantId": 5430703411,
+        "printfulVariantId": 5309,
+        "sku": "6A75529EE991F_5309",
+        "size": "4XL",
+        "color": "White",
+        "active": true,
+        "retailPrice": 26
+      },
+      {
+        "printfulSyncVariantId": 5430703412,
+        "printfulVariantId": 12872,
+        "sku": "6A75529EE991F_12872",
+        "size": "5XL",
+        "color": "White",
+        "active": true,
+        "retailPrice": 28.5
+      }
+    ],
+    "mockups": {
+      "front": "https://files.cdn.printful.com/files/05b/05be9964c0f87baca74b29b9658261c3_preview.png",
+      "back": "https://files.cdn.printful.com/files/20f/20fd4e1c2117356ed8e98e40951c52ef_preview.png",
+      "alternate": [
+        "https://files.cdn.printful.com/files/646/64691012cef45209f2839854991badd0_preview.png",
+        "https://files.cdn.printful.com/files/830/830055eff9eeb7131415f8e3f4eec9fc_preview.png",
+        "https://files.cdn.printful.com/files/909/9093f6a5543d4c3d7beb0b770082879d_preview.png",
+        "https://files.cdn.printful.com/files/bca/bca0c2c0203c9244edb2c65208c2086e_preview.png",
+        "https://files.cdn.printful.com/files/cf5/cf559de2381fd51732cb8eb486f61198_preview.png"
+      ]
+    },
+    "importedAt": "2026-08-07T03:40:25.569Z",
+    "readiness": "ambiguous"
+  },
+  {
+    "printfulSyncProductId": 260260091,
+    "externalProductId": "EGOLNBS6ITNH2DBZJ7YEDHFI",
+    "proposedSlug": "rented-hooker-short-sleeve-unisex-t-shirt",
+    "title": "Rented Hooker Short-Sleeve Unisex T-Shirt",
+    "variants": [
+      {
+        "printfulSyncVariantId": 3041366103,
+        "printfulVariantId": 9575,
+        "sku": "61C3321A9C973_9575",
+        "size": "XS",
+        "color": "Black Heather",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366104,
+        "printfulVariantId": 8923,
+        "sku": "61C3321A9C973_8923",
+        "size": "S",
+        "color": "Black Heather",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366105,
+        "printfulVariantId": 8924,
+        "sku": "61C3321A9C973_8924",
+        "size": "M",
+        "color": "Black Heather",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366106,
+        "printfulVariantId": 8925,
+        "sku": "61C3321A9C973_8925",
+        "size": "L",
+        "color": "Black Heather",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366107,
+        "printfulVariantId": 8926,
+        "sku": "61C3321A9C973_8926",
+        "size": "XL",
+        "color": "Black Heather",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366108,
+        "printfulVariantId": 8927,
+        "sku": "61C3321A9C973_8927",
+        "size": "2XL",
+        "color": "Black Heather",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366109,
+        "printfulVariantId": 8928,
+        "sku": "61C3321A9C973_8928",
+        "size": "3XL",
+        "color": "Black Heather",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366110,
+        "printfulVariantId": 8929,
+        "sku": "61C3321A9C973_8929",
+        "size": "4XL",
+        "color": "Black Heather",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366111,
+        "printfulVariantId": 12878,
+        "sku": "61C3321A9C973_12878",
+        "size": "5XL",
+        "color": "Black Heather",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366112,
+        "printfulVariantId": 9527,
+        "sku": "61C3321A9C973_9527",
+        "size": "XS",
+        "color": "Black",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366113,
+        "printfulVariantId": 4016,
+        "sku": "61C3321A9C973_4016",
+        "size": "S",
+        "color": "Black",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366114,
+        "printfulVariantId": 4017,
+        "sku": "61C3321A9C973_4017",
+        "size": "M",
+        "color": "Black",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366115,
+        "printfulVariantId": 4018,
+        "sku": "61C3321A9C973_4018",
+        "size": "L",
+        "color": "Black",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366116,
+        "printfulVariantId": 4019,
+        "sku": "61C3321A9C973_4019",
+        "size": "XL",
+        "color": "Black",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366117,
+        "printfulVariantId": 4020,
+        "sku": "61C3321A9C973_4020",
+        "size": "2XL",
+        "color": "Black",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366118,
+        "printfulVariantId": 5295,
+        "sku": "61C3321A9C973_5295",
+        "size": "3XL",
+        "color": "Black",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366119,
+        "printfulVariantId": 5310,
+        "sku": "61C3321A9C973_5310",
+        "size": "4XL",
+        "color": "Black",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366120,
+        "printfulVariantId": 12871,
+        "sku": "61C3321A9C973_12871",
+        "size": "5XL",
+        "color": "Black",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366121,
+        "printfulVariantId": 9740,
+        "sku": "61C3321A9C973_9740",
+        "size": "S",
+        "color": "Oxblood Black",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366122,
+        "printfulVariantId": 9741,
+        "sku": "61C3321A9C973_9741",
+        "size": "M",
+        "color": "Oxblood Black",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366123,
+        "printfulVariantId": 9742,
+        "sku": "61C3321A9C973_9742",
+        "size": "L",
+        "color": "Oxblood Black",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366124,
+        "printfulVariantId": 9743,
+        "sku": "61C3321A9C973_9743",
+        "size": "XL",
+        "color": "Oxblood Black",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366125,
+        "printfulVariantId": 9744,
+        "sku": "61C3321A9C973_9744",
+        "size": "2XL",
+        "color": "Oxblood Black",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366126,
+        "printfulVariantId": 9745,
+        "sku": "61C3321A9C973_9745",
+        "size": "3XL",
+        "color": "Oxblood Black",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366127,
+        "printfulVariantId": 9746,
+        "sku": "61C3321A9C973_9746",
+        "size": "4XL",
+        "color": "Oxblood Black",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366128,
+        "printfulVariantId": 9546,
+        "sku": "61C3321A9C973_9546",
+        "size": "XS",
+        "color": "Navy",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366129,
+        "printfulVariantId": 4111,
+        "sku": "61C3321A9C973_4111",
+        "size": "S",
+        "color": "Navy",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366130,
+        "printfulVariantId": 4112,
+        "sku": "61C3321A9C973_4112",
+        "size": "M",
+        "color": "Navy",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366131,
+        "printfulVariantId": 4113,
+        "sku": "61C3321A9C973_4113",
+        "size": "L",
+        "color": "Navy",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366132,
+        "printfulVariantId": 4114,
+        "sku": "61C3321A9C973_4114",
+        "size": "XL",
+        "color": "Navy",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366133,
+        "printfulVariantId": 4115,
+        "sku": "61C3321A9C973_4115",
+        "size": "2XL",
+        "color": "Navy",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366134,
+        "printfulVariantId": 12874,
+        "sku": "61C3321A9C973_12874",
+        "size": "3XL",
+        "color": "Navy",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366135,
+        "printfulVariantId": 12875,
+        "sku": "61C3321A9C973_12875",
+        "size": "4XL",
+        "color": "Navy",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366136,
+        "printfulVariantId": 12873,
+        "sku": "61C3321A9C973_12873",
+        "size": "5XL",
+        "color": "Navy",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366137,
+        "printfulVariantId": 9552,
+        "sku": "61C3321A9C973_9552",
+        "size": "XS",
+        "color": "Red",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366138,
+        "printfulVariantId": 4141,
+        "sku": "61C3321A9C973_4141",
+        "size": "S",
+        "color": "Red",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366139,
+        "printfulVariantId": 4142,
+        "sku": "61C3321A9C973_4142",
+        "size": "M",
+        "color": "Red",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366140,
+        "printfulVariantId": 4143,
+        "sku": "61C3321A9C973_4143",
+        "size": "L",
+        "color": "Red",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366141,
+        "printfulVariantId": 4144,
+        "sku": "61C3321A9C973_4144",
+        "size": "XL",
+        "color": "Red",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366142,
+        "printfulVariantId": 4145,
+        "sku": "61C3321A9C973_4145",
+        "size": "2XL",
+        "color": "Red",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366143,
+        "printfulVariantId": 5304,
+        "sku": "61C3321A9C973_5304",
+        "size": "3XL",
+        "color": "Red",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366144,
+        "printfulVariantId": 5319,
+        "sku": "61C3321A9C973_5319",
+        "size": "4XL",
+        "color": "Red",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366145,
+        "printfulVariantId": 12877,
+        "sku": "61C3321A9C973_12877",
+        "size": "5XL",
+        "color": "Red",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366146,
+        "printfulVariantId": 4041,
+        "sku": "61C3321A9C973_4041",
+        "size": "S",
+        "color": "Berry",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366147,
+        "printfulVariantId": 4042,
+        "sku": "61C3321A9C973_4042",
+        "size": "M",
+        "color": "Berry",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366148,
+        "printfulVariantId": 4043,
+        "sku": "61C3321A9C973_4043",
+        "size": "L",
+        "color": "Berry",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366149,
+        "printfulVariantId": 4044,
+        "sku": "61C3321A9C973_4044",
+        "size": "XL",
+        "color": "Berry",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366150,
+        "printfulVariantId": 4045,
+        "sku": "61C3321A9C973_4045",
+        "size": "2XL",
+        "color": "Berry",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366151,
+        "printfulVariantId": 5298,
+        "sku": "61C3321A9C973_5298",
+        "size": "3XL",
+        "color": "Berry",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041366152,
+        "printfulVariantId": 5313,
+        "sku": "61C3321A9C973_5313",
+        "size": "4XL",
+        "color": "Berry",
+        "active": true,
+        "retailPrice": 19.99
+      }
+    ],
+    "mockups": {
+      "front": "https://files.cdn.printful.com/files/29a/29a11d0187d2d1eb7a4432050177ebcb_preview.png",
+      "alternate": [
+        "https://files.cdn.printful.com/files/03e/03e1059992fe32e9cb06b88d89c7f135_preview.png",
+        "https://files.cdn.printful.com/files/1f1/1f1302915194b48a93e650744023bed3_preview.png",
+        "https://files.cdn.printful.com/files/665/6658d0aa9852b33648d01b43b932e1dd_preview.png",
+        "https://files.cdn.printful.com/files/6c6/6c6b13e640f6631d8244cdc20f5aebe6_preview.png",
+        "https://files.cdn.printful.com/files/b48/b4833c5f6f6566e8b8c189645525477a_preview.png",
+        "https://files.cdn.printful.com/files/eac/eac7eefac157ea71f5f012bf1efbc706_preview.png"
+      ]
+    },
+    "importedAt": "2026-08-07T03:02:52.173Z",
+    "readiness": "missing-variant"
+  },
+  {
+    "printfulSyncProductId": 260279886,
+    "externalProductId": "5ZWKMWF2K6CKJAK57J2BR7DH",
+    "proposedSlug": "santa-knows-bitch-short-sleeve-unisex-t-shirt",
+    "title": "Santa Knows Bitch Short-Sleeve Unisex T-Shirt",
+    "variants": [
+      {
+        "printfulSyncVariantId": 3041525360,
+        "printfulVariantId": 9575,
+        "sku": "61C367D0CE6FE_9575",
+        "size": "XS",
+        "color": "Black Heather",
+        "active": true,
+        "retailPrice": 19.95
+      },
+      {
+        "printfulSyncVariantId": 3041525361,
+        "printfulVariantId": 8923,
+        "sku": "61C367D0CE6FE_8923",
+        "size": "S",
+        "color": "Black Heather",
+        "active": true,
+        "retailPrice": 19.95
+      },
+      {
+        "printfulSyncVariantId": 3041525362,
+        "printfulVariantId": 8924,
+        "sku": "61C367D0CE6FE_8924",
+        "size": "M",
+        "color": "Black Heather",
+        "active": true,
+        "retailPrice": 19.95
+      },
+      {
+        "printfulSyncVariantId": 3041525363,
+        "printfulVariantId": 8925,
+        "sku": "61C367D0CE6FE_8925",
+        "size": "L",
+        "color": "Black Heather",
+        "active": true,
+        "retailPrice": 19.95
+      },
+      {
+        "printfulSyncVariantId": 3041525364,
+        "printfulVariantId": 8926,
+        "sku": "61C367D0CE6FE_8926",
+        "size": "XL",
+        "color": "Black Heather",
+        "active": true,
+        "retailPrice": 19.95
+      },
+      {
+        "printfulSyncVariantId": 3041525365,
+        "printfulVariantId": 8927,
+        "sku": "61C367D0CE6FE_8927",
+        "size": "2XL",
+        "color": "Black Heather",
+        "active": true,
+        "retailPrice": 19.95
+      },
+      {
+        "printfulSyncVariantId": 3041525366,
+        "printfulVariantId": 9740,
+        "sku": "61C367D0CE6FE_9740",
+        "size": "S",
+        "color": "Oxblood Black",
+        "active": true,
+        "retailPrice": 19.95
+      },
+      {
+        "printfulSyncVariantId": 3041525367,
+        "printfulVariantId": 9741,
+        "sku": "61C367D0CE6FE_9741",
+        "size": "M",
+        "color": "Oxblood Black",
+        "active": true,
+        "retailPrice": 19.95
+      },
+      {
+        "printfulSyncVariantId": 3041525368,
+        "printfulVariantId": 9742,
+        "sku": "61C367D0CE6FE_9742",
+        "size": "L",
+        "color": "Oxblood Black",
+        "active": true,
+        "retailPrice": 19.95
+      },
+      {
+        "printfulSyncVariantId": 3041525369,
+        "printfulVariantId": 9743,
+        "sku": "61C367D0CE6FE_9743",
+        "size": "XL",
+        "color": "Oxblood Black",
+        "active": true,
+        "retailPrice": 19.95
+      },
+      {
+        "printfulSyncVariantId": 3041525370,
+        "printfulVariantId": 9744,
+        "sku": "61C367D0CE6FE_9744",
+        "size": "2XL",
+        "color": "Oxblood Black",
+        "active": true,
+        "retailPrice": 19.95
+      },
+      {
+        "printfulSyncVariantId": 3041525371,
+        "printfulVariantId": 8451,
+        "sku": "61C367D0CE6FE_8451",
+        "size": "S",
+        "color": "Forest",
+        "active": true,
+        "retailPrice": 19.95
+      },
+      {
+        "printfulSyncVariantId": 3041525372,
+        "printfulVariantId": 8452,
+        "sku": "61C367D0CE6FE_8452",
+        "size": "M",
+        "color": "Forest",
+        "active": true,
+        "retailPrice": 19.95
+      },
+      {
+        "printfulSyncVariantId": 3041525373,
+        "printfulVariantId": 8453,
+        "sku": "61C367D0CE6FE_8453",
+        "size": "L",
+        "color": "Forest",
+        "active": true,
+        "retailPrice": 19.95
+      },
+      {
+        "printfulSyncVariantId": 3041525374,
+        "printfulVariantId": 8454,
+        "sku": "61C367D0CE6FE_8454",
+        "size": "XL",
+        "color": "Forest",
+        "active": true,
+        "retailPrice": 19.95
+      },
+      {
+        "printfulSyncVariantId": 3041525375,
+        "printfulVariantId": 8455,
+        "sku": "61C367D0CE6FE_8455",
+        "size": "2XL",
+        "color": "Forest",
+        "active": true,
+        "retailPrice": 19.95
+      },
+      {
+        "printfulSyncVariantId": 3041525376,
+        "printfulVariantId": 4121,
+        "sku": "61C367D0CE6FE_4121",
+        "size": "S",
+        "color": "Olive",
+        "active": true,
+        "retailPrice": 19.95
+      },
+      {
+        "printfulSyncVariantId": 3041525377,
+        "printfulVariantId": 4122,
+        "sku": "61C367D0CE6FE_4122",
+        "size": "M",
+        "color": "Olive",
+        "active": true,
+        "retailPrice": 19.95
+      },
+      {
+        "printfulSyncVariantId": 3041525378,
+        "printfulVariantId": 4123,
+        "sku": "61C367D0CE6FE_4123",
+        "size": "L",
+        "color": "Olive",
+        "active": true,
+        "retailPrice": 19.95
+      },
+      {
+        "printfulSyncVariantId": 3041525379,
+        "printfulVariantId": 4124,
+        "sku": "61C367D0CE6FE_4124",
+        "size": "XL",
+        "color": "Olive",
+        "active": true,
+        "retailPrice": 19.95
+      },
+      {
+        "printfulSyncVariantId": 3041525380,
+        "printfulVariantId": 4125,
+        "sku": "61C367D0CE6FE_4125",
+        "size": "2XL",
+        "color": "Olive",
+        "active": true,
+        "retailPrice": 19.95
+      }
+    ],
+    "mockups": {
+      "front": "https://files.cdn.printful.com/files/7aa/7aaeed05e9f5b15133e8cd30b8ad1aaa_preview.png",
+      "alternate": [
+        "https://files.cdn.printful.com/files/12b/12b292ad911a0080fe65fa8aaf69d6b4_preview.png",
+        "https://files.cdn.printful.com/files/3f7/3f7a118a7e7602d9beddb68578eba883_preview.png",
+        "https://files.cdn.printful.com/files/af2/af2f3701775875758599ef3dcc5aae27_preview.png",
+        "https://files.cdn.printful.com/files/c28/c28035617f14efb43200d098f3a0bdac_preview.png"
+      ]
+    },
+    "importedAt": "2026-08-07T03:02:52.173Z",
+    "readiness": "missing-variant"
+  },
+  {
+    "printfulSyncProductId": 260259583,
+    "externalProductId": "MHIMKX4ZCGSZY5TZTOG672CD",
+    "proposedSlug": "smells-like-slut-short-sleeve-unisex-t-shirt",
+    "title": "Smells Like Slut Short-Sleeve Unisex T-Shirt",
+    "variants": [
+      {
+        "printfulSyncVariantId": 3041357148,
+        "printfulVariantId": 9575,
+        "sku": "61C32E71CFD3E_9575",
+        "size": "XS",
+        "color": "Black Heather",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357149,
+        "printfulVariantId": 8923,
+        "sku": "61C32E71CFD3E_8923",
+        "size": "S",
+        "color": "Black Heather",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357150,
+        "printfulVariantId": 8924,
+        "sku": "61C32E71CFD3E_8924",
+        "size": "M",
+        "color": "Black Heather",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357151,
+        "printfulVariantId": 8925,
+        "sku": "61C32E71CFD3E_8925",
+        "size": "L",
+        "color": "Black Heather",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357152,
+        "printfulVariantId": 8926,
+        "sku": "61C32E71CFD3E_8926",
+        "size": "XL",
+        "color": "Black Heather",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357153,
+        "printfulVariantId": 8927,
+        "sku": "61C32E71CFD3E_8927",
+        "size": "2XL",
+        "color": "Black Heather",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357154,
+        "printfulVariantId": 8928,
+        "sku": "61C32E71CFD3E_8928",
+        "size": "3XL",
+        "color": "Black Heather",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357155,
+        "printfulVariantId": 8929,
+        "sku": "61C32E71CFD3E_8929",
+        "size": "4XL",
+        "color": "Black Heather",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357156,
+        "printfulVariantId": 12878,
+        "sku": "61C32E71CFD3E_12878",
+        "size": "5XL",
+        "color": "Black Heather",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357157,
+        "printfulVariantId": 9527,
+        "sku": "61C32E71CFD3E_9527",
+        "size": "XS",
+        "color": "Black",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357158,
+        "printfulVariantId": 4016,
+        "sku": "61C32E71CFD3E_4016",
+        "size": "S",
+        "color": "Black",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357159,
+        "printfulVariantId": 4017,
+        "sku": "61C32E71CFD3E_4017",
+        "size": "M",
+        "color": "Black",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357160,
+        "printfulVariantId": 4018,
+        "sku": "61C32E71CFD3E_4018",
+        "size": "L",
+        "color": "Black",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357161,
+        "printfulVariantId": 4019,
+        "sku": "61C32E71CFD3E_4019",
+        "size": "XL",
+        "color": "Black",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357162,
+        "printfulVariantId": 4020,
+        "sku": "61C32E71CFD3E_4020",
+        "size": "2XL",
+        "color": "Black",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357163,
+        "printfulVariantId": 5295,
+        "sku": "61C32E71CFD3E_5295",
+        "size": "3XL",
+        "color": "Black",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357164,
+        "printfulVariantId": 5310,
+        "sku": "61C32E71CFD3E_5310",
+        "size": "4XL",
+        "color": "Black",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357165,
+        "printfulVariantId": 12871,
+        "sku": "61C32E71CFD3E_12871",
+        "size": "5XL",
+        "color": "Black",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357166,
+        "printfulVariantId": 9552,
+        "sku": "61C32E71CFD3E_9552",
+        "size": "XS",
+        "color": "Red",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357167,
+        "printfulVariantId": 4141,
+        "sku": "61C32E71CFD3E_4141",
+        "size": "S",
+        "color": "Red",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357168,
+        "printfulVariantId": 4142,
+        "sku": "61C32E71CFD3E_4142",
+        "size": "M",
+        "color": "Red",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357169,
+        "printfulVariantId": 4143,
+        "sku": "61C32E71CFD3E_4143",
+        "size": "L",
+        "color": "Red",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357170,
+        "printfulVariantId": 4144,
+        "sku": "61C32E71CFD3E_4144",
+        "size": "XL",
+        "color": "Red",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357171,
+        "printfulVariantId": 4145,
+        "sku": "61C32E71CFD3E_4145",
+        "size": "2XL",
+        "color": "Red",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357172,
+        "printfulVariantId": 5304,
+        "sku": "61C32E71CFD3E_5304",
+        "size": "3XL",
+        "color": "Red",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357173,
+        "printfulVariantId": 5319,
+        "sku": "61C32E71CFD3E_5319",
+        "size": "4XL",
+        "color": "Red",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357174,
+        "printfulVariantId": 12877,
+        "sku": "61C32E71CFD3E_12877",
+        "size": "5XL",
+        "color": "Red",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357175,
+        "printfulVariantId": 4171,
+        "sku": "61C32E71CFD3E_4171",
+        "size": "S",
+        "color": "True Royal",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357176,
+        "printfulVariantId": 4172,
+        "sku": "61C32E71CFD3E_4172",
+        "size": "M",
+        "color": "True Royal",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357177,
+        "printfulVariantId": 4173,
+        "sku": "61C32E71CFD3E_4173",
+        "size": "L",
+        "color": "True Royal",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357178,
+        "printfulVariantId": 4174,
+        "sku": "61C32E71CFD3E_4174",
+        "size": "XL",
+        "color": "True Royal",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357179,
+        "printfulVariantId": 4175,
+        "sku": "61C32E71CFD3E_4175",
+        "size": "2XL",
+        "color": "True Royal",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357180,
+        "printfulVariantId": 5307,
+        "sku": "61C32E71CFD3E_5307",
+        "size": "3XL",
+        "color": "True Royal",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357181,
+        "printfulVariantId": 5322,
+        "sku": "61C32E71CFD3E_5322",
+        "size": "4XL",
+        "color": "True Royal",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357182,
+        "printfulVariantId": 8523,
+        "sku": "61C32E71CFD3E_8523",
+        "size": "S",
+        "color": "Heather Raspberry",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357183,
+        "printfulVariantId": 8524,
+        "sku": "61C32E71CFD3E_8524",
+        "size": "M",
+        "color": "Heather Raspberry",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357184,
+        "printfulVariantId": 8525,
+        "sku": "61C32E71CFD3E_8525",
+        "size": "L",
+        "color": "Heather Raspberry",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357185,
+        "printfulVariantId": 8526,
+        "sku": "61C32E71CFD3E_8526",
+        "size": "XL",
+        "color": "Heather Raspberry",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357186,
+        "printfulVariantId": 8527,
+        "sku": "61C32E71CFD3E_8527",
+        "size": "2XL",
+        "color": "Heather Raspberry",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357187,
+        "printfulVariantId": 8528,
+        "sku": "61C32E71CFD3E_8528",
+        "size": "3XL",
+        "color": "Heather Raspberry",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357188,
+        "printfulVariantId": 8529,
+        "sku": "61C32E71CFD3E_8529",
+        "size": "4XL",
+        "color": "Heather Raspberry",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357189,
+        "printfulVariantId": 9578,
+        "sku": "61C32E71CFD3E_9578",
+        "size": "XS",
+        "color": "Heather Prism Lilac",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357190,
+        "printfulVariantId": 9374,
+        "sku": "61C32E71CFD3E_9374",
+        "size": "S",
+        "color": "Heather Prism Lilac",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357191,
+        "printfulVariantId": 9375,
+        "sku": "61C32E71CFD3E_9375",
+        "size": "M",
+        "color": "Heather Prism Lilac",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357192,
+        "printfulVariantId": 9376,
+        "sku": "61C32E71CFD3E_9376",
+        "size": "L",
+        "color": "Heather Prism Lilac",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357193,
+        "printfulVariantId": 9377,
+        "sku": "61C32E71CFD3E_9377",
+        "size": "XL",
+        "color": "Heather Prism Lilac",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357194,
+        "printfulVariantId": 9378,
+        "sku": "61C32E71CFD3E_9378",
+        "size": "2XL",
+        "color": "Heather Prism Lilac",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357195,
+        "printfulVariantId": 9379,
+        "sku": "61C32E71CFD3E_9379",
+        "size": "3XL",
+        "color": "Heather Prism Lilac",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357196,
+        "printfulVariantId": 9380,
+        "sku": "61C32E71CFD3E_9380",
+        "size": "4XL",
+        "color": "Heather Prism Lilac",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357197,
+        "printfulVariantId": 9561,
+        "sku": "61C32E71CFD3E_9561",
+        "size": "XS",
+        "color": "Athletic Heather",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357198,
+        "printfulVariantId": 6948,
+        "sku": "61C32E71CFD3E_6948",
+        "size": "S",
+        "color": "Athletic Heather",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357199,
+        "printfulVariantId": 6949,
+        "sku": "61C32E71CFD3E_6949",
+        "size": "M",
+        "color": "Athletic Heather",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357200,
+        "printfulVariantId": 6950,
+        "sku": "61C32E71CFD3E_6950",
+        "size": "L",
+        "color": "Athletic Heather",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357201,
+        "printfulVariantId": 6951,
+        "sku": "61C32E71CFD3E_6951",
+        "size": "XL",
+        "color": "Athletic Heather",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357202,
+        "printfulVariantId": 6952,
+        "sku": "61C32E71CFD3E_6952",
+        "size": "2XL",
+        "color": "Athletic Heather",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357203,
+        "printfulVariantId": 6953,
+        "sku": "61C32E71CFD3E_6953",
+        "size": "3XL",
+        "color": "Athletic Heather",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357204,
+        "printfulVariantId": 6954,
+        "sku": "61C32E71CFD3E_6954",
+        "size": "4XL",
+        "color": "Athletic Heather",
+        "active": true,
+        "retailPrice": 19.99
+      },
+      {
+        "printfulSyncVariantId": 3041357205,
+        "printfulVariantId": 12876,
+        "sku": "61C32E71CFD3E_12876",
+        "size": "5XL",
+        "color": "Athletic Heather",
+        "active": true,
+        "retailPrice": 19.99
+      }
+    ],
+    "mockups": {
+      "front": "https://files.cdn.printful.com/files/c32/c324703a6f125e17c07e19c14327081d_preview.png",
+      "alternate": [
+        "https://files.cdn.printful.com/files/2ff/2ffa0c9e65923f087298f8dcc75c4fb3_preview.png",
+        "https://files.cdn.printful.com/files/61d/61d3e7cb9f7acbfc2f682e732f46b95f_preview.png",
+        "https://files.cdn.printful.com/files/643/6434414d052f9e7ba13547f5e1e65e47_preview.png",
+        "https://files.cdn.printful.com/files/87f/87fbf7deef46a0611e94de0f5c5a41dd_preview.png",
+        "https://files.cdn.printful.com/files/b03/b0391591918cd6b86a21869d6294a446_preview.png",
+        "https://files.cdn.printful.com/files/b42/b421cbb28aaa800182635d0597c2ce36_preview.png",
+        "https://files.cdn.printful.com/files/b62/b622b9f2098471b10e0e0aeba2760111_preview.png"
+      ]
+    },
+    "importedAt": "2026-08-07T03:02:52.173Z",
+    "readiness": "missing-variant"
+  }
+]

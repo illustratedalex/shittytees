@@ -40,7 +40,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
-      <body className={`${displayFont.variable} ${bodyFont.variable} bg-[#0e0d0c] text-[#f2ecde]`}>
+      <body className={`${displayFont.variable} ${bodyFont.variable} bg-[#111111] text-[#f3efe6]`}>
         <Providers>{children}</Providers>
       </body>
     </html>

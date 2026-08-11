@@ -1,5 +1,7 @@
-import Link from 'next/link';
-import { getProductBySlug, getFeaturedProducts } from '@/lib/data/products';
+import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+import { getFeaturedProducts, getPublicProductBySlug } from '@/lib/catalog/service';
+import type { Product } from '@/lib/types/product';
 import ProductDetailClient, { ProductViewModel } from './ProductDetailClient';
 
 interface Props {
@@ -8,7 +10,7 @@ interface Props {
   }>;
 }
 
-function toProductViewModel(product: ReturnType<typeof getProductBySlug> extends infer T ? Exclude<T, undefined> : never): ProductViewModel {
+function toProductViewModel(product: Product): ProductViewModel {
   return {
     id: product.id,
     slug: product.slug,
@@ -18,6 +20,7 @@ function toProductViewModel(product: ReturnType<typeof getProductBySlug> extends
     category: product.category,
     collectionSlug: product.collectionSlug,
     retailPrice: product.retailPrice,
+    currency: product.currency,
     images: product.images.map((image) => ({
       id: image.id,
       src: image.src,
@@ -34,24 +37,49 @@ function toProductViewModel(product: ReturnType<typeof getProductBySlug> extends
   };
 }
 
-export default async function ProductPage({ params }: Props) {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getPublicProductBySlug(slug);
 
   if (!product) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-[#0e0d0c]">
-        <div className="text-center">
-          <h1 className="text-3xl font-bold text-[#f2ecde] mb-4">Product Not Found</h1>
-          <Link href="/shop" className="text-[#d4cdbc] hover:text-[#f2ecde] font-semibold">
-            Back to Shop
-          </Link>
-        </div>
-      </div>
-    );
+    return {
+      title: 'Product Not Found | ShittyTees',
+      description: 'The requested product could not be found.',
+    };
   }
 
-  const relatedProducts = getFeaturedProducts().filter((item) => item.slug !== slug).slice(0, 3);
+  const title = `${product.name} | ShittyTees`;
+  const description = product.description;
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: `/shop/${product.slug}`,
+    },
+    openGraph: {
+      title,
+      description,
+      type: 'website',
+      url: `https://shittytees.com/shop/${product.slug}`,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+    },
+  };
+}
+
+export default async function ProductPage({ params }: Props) {
+  const { slug } = await params;
+  const product = await getPublicProductBySlug(slug);
+
+  if (!product) {
+    notFound();
+  }
+
+  const relatedProducts = (await getFeaturedProducts()).filter((item) => item.slug !== slug).slice(0, 3);
 
   return <ProductDetailClient product={toProductViewModel(product)} relatedProducts={relatedProducts.map(toProductViewModel)} />;
 }

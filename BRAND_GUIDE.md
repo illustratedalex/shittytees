@@ -71,6 +71,20 @@ Use [components/product/GarmentMockup.tsx](components/product/GarmentMockup.tsx)
 - placement-aware artwork
 - restrained hover lift
 
+Use [data/productPresentation.ts](data/productPresentation.ts) for any per-product display overrides so card, hero, and PDP visuals stay consistent.
+
+## Front/Back Presentation Rules
+
+- If real imagery exists, prefer real front/back shots.
+- If real imagery is unavailable, use garment mockups with explicit front/back view controls.
+- Keep descriptive copy honest: do not imply studio photography where there is none.
+
+## Accessibility Baseline
+
+- Decorative garment and branding SVG elements should remain `aria-hidden`.
+- Informational marks and mockups should expose explicit labels.
+- Navigation links should use `aria-current` for active route context.
+
 ## Campaign Direction
 
 Campaign sections should feel editorial, not ad-spam:
@@ -79,6 +93,29 @@ Campaign sections should feel editorial, not ad-spam:
 - one concise supporting paragraph
 - one primary and one secondary action
 - product focus first
+
+## Artist's Bench
+
+Artist's Bench is the brand's permanent collection for tattoo-shop craft, sketchbook process, workstation discipline, and the people who make things by hand.
+
+What belongs:
+
+- registration marks
+- tracing paper layers
+- crop lines
+- masking tape details
+- sketchbook notation
+- bench-top geometry
+- restrained maker/editorial typography
+
+What does not belong:
+
+- generic tattoo clip art
+- novelty skull/rose filler
+- fake claims about handmade garment production
+- loud flash-sheet parody graphics
+
+The tone should stay premium, useful, and observant rather than decorative.
 
 ## Acceptable Copy Examples
 

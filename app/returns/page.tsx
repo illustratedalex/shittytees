@@ -21,9 +21,9 @@ export default function ReturnsPage() {
             <h2 className="text-2xl font-bold text-black mb-4">Process</h2>
             <ol className="list-decimal list-inside space-y-2 text-gray-700">
               <li>Contact us at contact@shittytees.com with your order number</li>
-              <li>We'll provide a return shipping label</li>
+              <li>We&apos;ll provide a return shipping label</li>
               <li>Ship the item back to us</li>
-              <li>We'll process your refund within 7 business days of receiving it</li>
+              <li>We&apos;ll process your refund within 7 business days of receiving it</li>
             </ol>
           </section>
 
@@ -37,7 +37,7 @@ export default function ReturnsPage() {
           <section>
             <h2 className="text-2xl font-bold text-black mb-4">Defects</h2>
             <p className="leading-relaxed">
-              If you receive a defective item, contact us immediately with photos. We'll send a replacement or full refund.
+              If you receive a defective item, contact us immediately with photos. We&apos;ll send a replacement or full refund.
             </p>
           </section>
 

@@ -1,5 +1,3 @@
-import { DEMO_PRODUCTS } from '@/lib/data/products';
-
 export type DropTheme = 'black' | 'bone' | 'charcoal' | 'oxblood';
 
 export type Drop = {
@@ -16,10 +14,8 @@ export type Drop = {
   status: 'active' | 'archived' | 'upcoming';
 };
 
-const productSlugSet = new Set(DEMO_PRODUCTS.map((product) => product.slug));
-
 function filterValidProductSlugs(slugs: string[]): string[] {
-  return slugs.filter((slug) => productSlugSet.has(slug));
+  return slugs;
 }
 
 export const DROPS: Drop[] = [

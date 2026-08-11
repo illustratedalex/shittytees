@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
+import GarmentMockup from '@/components/product/GarmentMockup';
 
 type CampaignCollectionKey =
   | 'dark-humor'
@@ -15,6 +16,7 @@ interface CampaignBannerProps {
   description: ReactNode;
   href?: string;
   eyebrow?: string;
+  theme?: 'black' | 'bone' | 'charcoal' | 'oxblood';
   className?: string;
 }
 
@@ -24,20 +26,43 @@ export default function CampaignBanner({
   description,
   href = '/collections',
   eyebrow = 'Campaign Lane',
+  theme,
   className,
 }: CampaignBannerProps) {
+  const displayColor = collection === 'tattoo-culture'
+    ? 'bone'
+    : collection === 'blue-collar'
+      ? 'charcoal'
+      : collection === 'holiday-damage'
+        ? 'oxblood'
+        : 'black';
+
   return (
     <Link
       href={href}
       className={['collection-banner group', className].filter(Boolean).join(' ')}
       data-collection={collection}
+      data-theme={theme}
     >
       <div className="collection-banner-content">
-        <div className="max-w-3xl">
-          <p className="section-kicker mb-2 opacity-90">{eyebrow}</p>
-          <h3 className="text-[1.45rem] sm:text-[1.9rem] md:text-[2.25rem] mb-2 text-current">{title}</h3>
-          <p className="text-sm sm:text-base text-current/80 mb-3">{description}</p>
-          <span className="text-[11px] uppercase tracking-[0.16em] text-current/72">Explore Collection →</span>
+        <div className="grid h-full gap-6 lg:grid-cols-[1.1fr_0.9fr] items-center">
+          <div className="max-w-xl self-end lg:self-auto">
+            <p className="section-kicker mb-3 opacity-90">{eyebrow}</p>
+            <h3 className="text-[1.5rem] sm:text-[1.8rem] md:text-[2rem] mb-3 text-current">{title}</h3>
+            <p className="text-sm sm:text-base text-current/82 mb-4 max-w-[34ch]">{description}</p>
+            <span className="text-[12px] uppercase tracking-[0.12em] text-current/75">Shop Collection →</span>
+          </div>
+
+          <div className="hidden sm:block min-h-[12.5rem] lg:min-h-[14rem]">
+            <GarmentMockup
+              color={displayColor}
+              artworkText={title}
+              background={theme === 'bone' ? 'bone' : 'charcoal'}
+              scale="medium"
+              className="h-full w-full"
+              decorative
+            />
+          </div>
         </div>
       </div>
     </Link>

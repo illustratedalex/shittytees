@@ -28,8 +28,8 @@ export default function FAQPage() {
         </div>
 
         <div className="mt-12 p-6 bg-gray-50 border border-gray-200 rounded-lg">
-          <h3 className="font-semibold text-black mb-2">Can't find what you're looking for?</h3>
-          <p className="text-gray-600 mb-4">Reach out and we'll get back to you.</p>
+          <h3 className="font-semibold text-black mb-2">Can&apos;t find what you&apos;re looking for?</h3>
+          <p className="text-gray-600 mb-4">Reach out and we&apos;ll get back to you.</p>
           <Link href="/contact" className="text-red-900 hover:text-red-950 font-semibold">
             Contact us →
           </Link>

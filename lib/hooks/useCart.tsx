@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { CartItem, Cart } from '../types/cart';
 
 interface CartContextType {
@@ -11,40 +11,59 @@ interface CartContextType {
   clear: () => void;
   subtotal: number;
   itemCount: number;
+  isHydrated: boolean;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 const CART_STORAGE_KEY = 'shittytees_cart';
 
+function loadInitialItems(): CartItem[] {
+  if (typeof window === 'undefined') {
+    return [];
+  }
+
+  const stored = localStorage.getItem(CART_STORAGE_KEY);
+  if (!stored) {
+    return [];
+  }
+
+  try {
+    const cart: Cart = JSON.parse(stored);
+    return cart.items;
+  } catch (error) {
+    console.error('Failed to load cart from localStorage:', error);
+    return [];
+  }
+}
+
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
-  const [mounted, setMounted] = useState(false);
+  const [isHydrated, setIsHydrated] = useState(false);
 
-  // Load cart from localStorage on mount
+  // Restore local cart state after mount so the server and first client render are deterministic.
   useEffect(() => {
-    const stored = localStorage.getItem(CART_STORAGE_KEY);
-    if (stored) {
-      try {
-        const cart: Cart = JSON.parse(stored);
-        setItems(cart.items);
-      } catch (error) {
-        console.error('Failed to load cart from localStorage:', error);
-      }
-    }
-    setMounted(true);
+    const restoredItems = loadInitialItems();
+    const frameId = window.requestAnimationFrame(() => {
+      setItems(restoredItems);
+      setIsHydrated(true);
+    });
+
+    return () => window.cancelAnimationFrame(frameId);
   }, []);
 
   // Save cart to localStorage whenever items change
   useEffect(() => {
-    if (mounted) {
-      const cart: Cart = {
-        items,
-        updatedAt: Date.now(),
-      };
-      localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+    if (!isHydrated) {
+      return;
     }
-  }, [items, mounted]);
+
+    const cart: Cart = {
+      items,
+      updatedAt: Date.now(),
+    };
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+  }, [items, isHydrated]);
 
   const addItem = (item: CartItem) => {
     setItems((prev) => {
@@ -81,7 +100,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
-    <CartContext.Provider value={{ items, addItem, removeItem, updateQuantity, clear, subtotal, itemCount }}>
+    <CartContext.Provider value={{ items, addItem, removeItem, updateQuantity, clear, subtotal, itemCount, isHydrated }}>
       {children}
     </CartContext.Provider>
   );

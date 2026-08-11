@@ -14,7 +14,7 @@ export default function TermsPage() {
 
           <section>
             <h2 className="text-2xl font-bold text-black mb-4">Acceptance</h2>
-            <p className="leading-relaxed">By using ShittyTees, you agree to these terms. If you don't agree, don't shop here.</p>
+            <p className="leading-relaxed">By using ShittyTees, you agree to these terms. If you don&apos;t agree, don&apos;t shop here.</p>
           </section>
 
           <section>

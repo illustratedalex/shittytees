@@ -1,6 +1,11 @@
+export type ProductPublishStatus = 'published' | 'draft' | 'archive' | 'disabled';
+
 export interface ProductVariant {
   id: string;
   printfulVariantId: string;
+  printfulSyncVariantId?: string;
+  printfulCatalogVariantId?: string;
+  printfulVariantExternalId?: string;
   name: string;
   size: string;
   color: string;
@@ -13,6 +18,7 @@ export interface ProductVariant {
 export interface Product {
   id: string;
   printfulProductId?: string;
+  printfulExternalId?: string;
   slug: string;
   name: string;
   description: string;
@@ -20,6 +26,7 @@ export interface Product {
   category: string;
   collectionSlug: string;
   active: boolean;
+  publishStatus: ProductPublishStatus;
   featured: boolean;
   images: {
     id: string;

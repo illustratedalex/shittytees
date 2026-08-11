@@ -16,10 +16,10 @@ interface GarmentStageProps {
 }
 
 const BACKGROUND_CLASS: Record<StageBackground, string> = {
-  black: 'bg-[radial-gradient(circle_at_66%_20%,#2a2926_0%,#161514_48%,#0d0d0c_100%)]',
-  bone: 'bg-[radial-gradient(circle_at_66%_20%,#f3ecdc_0%,#e1d9c9_48%,#cfc5b2_100%)]',
-  charcoal: 'bg-[radial-gradient(circle_at_66%_20%,#2d2c2a_0%,#1b1a18_48%,#111110_100%)]',
-  oxblood: 'bg-[radial-gradient(circle_at_66%_20%,#63171d_0%,#431116_48%,#210d10_100%)]',
+  black: 'bg-[radial-gradient(circle_at_68%_20%,#2c2a27_0%,#1a1816_46%,#0f0f0e_100%)]',
+  bone: 'bg-[radial-gradient(circle_at_68%_20%,#f3ecdc_0%,#dfd6c7_46%,#ccc0ad_100%)]',
+  charcoal: 'bg-[radial-gradient(circle_at_68%_20%,#312f2d_0%,#1f1d1b_46%,#131311_100%)]',
+  oxblood: 'bg-[radial-gradient(circle_at_68%_20%,#672127_0%,#48171c_46%,#231013_100%)]',
   transparent: 'bg-transparent',
 };
 
@@ -41,15 +41,23 @@ export default function GarmentStage({
 }: GarmentStageProps) {
   return (
     <div className={[
-      'relative overflow-hidden rounded-[0.7rem] border border-[#f2ecde14]',
+      'relative overflow-hidden rounded-[0.7rem] border border-[#f2ecde12]',
       BACKGROUND_CLASS[background],
       SCALE_CLASS[scale],
       interactive ? 'mockup-hover' : '',
       className,
     ].filter(Boolean).join(' ')}>
-      <div className="absolute inset-0 bg-[linear-gradient(135deg,transparent_18%,#f0ebdf_50%,transparent_84%)] opacity-[0.06]" aria-hidden="true" />
+      <div className="absolute inset-0 bg-[linear-gradient(135deg,transparent_16%,#f0ebdf_50%,transparent_86%)] opacity-[0.05]" aria-hidden="true" />
       <div className="absolute -left-8 top-[16%] h-36 w-36 rounded-full bg-[#f0ebdf]/10 blur-3xl" aria-hidden="true" />
-      <div className="absolute -right-8 top-[18%] h-40 w-40 rounded-full bg-[#6f1118]/16 blur-3xl" aria-hidden="true" />
+      <div className="absolute -right-8 top-[18%] h-40 w-40 rounded-full bg-[#6f1118]/14 blur-3xl" aria-hidden="true" />
+      <div
+        className="absolute inset-0 opacity-[0.09] mix-blend-overlay"
+        aria-hidden="true"
+        style={{
+          backgroundImage:
+            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='2' /%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.48'/%3E%3C/svg%3E\")",
+        }}
+      />
 
       {badge ? (
         <span className="badge absolute top-4 left-4 z-20">{badge}</span>

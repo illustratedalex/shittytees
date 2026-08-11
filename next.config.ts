@@ -5,6 +5,15 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   compress: true,
   poweredByHeader: false,
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'files.cdn.printful.com',
+        pathname: '/files/**',
+      },
+    ],
+  },
   turbopack: {
     root: path.resolve(__dirname),
   },

@@ -13,7 +13,15 @@
     "test:watch": "vitest",
     "printful:inspect": "tsx scripts/inspect-printful-store.ts",
     "printful:sync": "tsx scripts/sync-printful.ts",
-    "orders:migrate": "tsx scripts/migrate-file-orders-to-database.ts"
+    "db:migrate": "tsx scripts/run-db-migrations.ts",
+    "catalog:migrate": "tsx scripts/migrate-products-to-database.ts --apply",
+    "orders:migrate": "tsx scripts/migrate-file-orders-to-database.ts",
+    "product:publish": "tsx scripts/product-publish.ts",
+    "product:archive": "tsx scripts/product-archive.ts",
+    "product:disable": "tsx scripts/product-disable.ts",
+    "product:images": "tsx scripts/product-images.ts",
+    "products:report": "tsx scripts/products-report.ts",
+    "products:review": "tsx scripts/products-review.ts"
   },
   "dependencies": {
     "next": "16.2.9",

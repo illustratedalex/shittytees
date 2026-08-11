@@ -1,14 +1,9 @@
+import crypto from 'crypto';
+import { getPrintfulEnv } from './env';
+import { PrintfulError, isRetryablePrintfulStatus } from './errors';
+import { parseRetryAfter, withRetry } from './retry';
+
 const API_BASE = 'https://api.printful.com';
-const TOKEN = process.env.PRINTFUL_API_TOKEN;
-const STORE_ID = process.env.PRINTFUL_STORE_ID;
-
-if (!TOKEN && process.env.NODE_ENV === 'production') {
-  console.error('Missing PRINTFUL_API_TOKEN in environment');
-}
-
-if (!STORE_ID && process.env.NODE_ENV === 'production') {
-  console.error('Missing PRINTFUL_STORE_ID in environment');
-}
 
 export interface PrintfulResponse<T> {
   code: number;
@@ -23,65 +18,67 @@ export interface PrintfulErrorResponse {
   };
 }
 
-export async function printfulRequest<T>(
-  endpoint: string,
-  options: RequestInit = {}
-): Promise<PrintfulResponse<T>> {
-  if (!TOKEN) {
-    throw new Error('PRINTFUL_API_TOKEN not configured');
+function buildHeaders(initHeaders?: HeadersInit): Headers {
+  const env = getPrintfulEnv();
+  if (!env.apiToken || !env.storeId) {
+    throw new PrintfulError('PRINTFUL_API_TOKEN and PRINTFUL_STORE_ID must be configured');
   }
 
-  const url = `${API_BASE}${endpoint}`;
-  const headers = new Headers(options.headers || {});
-
-  headers.set('Authorization', `Bearer ${TOKEN}`);
+  const headers = new Headers(initHeaders || {});
+  headers.set('Authorization', `Bearer ${env.apiToken}`);
   headers.set('Content-Type', 'application/json');
+  headers.set('X-PF-Store-Id', env.storeId);
+  headers.set('X-Store-Id', env.storeId);
+  return headers;
+}
 
-  if (STORE_ID) {
-    headers.set('X-Store-Id', STORE_ID);
+async function parseResponse<T>(endpoint: string, response: Response): Promise<PrintfulResponse<T>> {
+  const payload = (await response.json()) as PrintfulResponse<T> | PrintfulErrorResponse;
+  if (!response.ok) {
+    const errorPayload = payload as PrintfulErrorResponse;
+    const message =
+      errorPayload.result?.error ||
+      (errorPayload.result?.errors ? JSON.stringify(errorPayload.result.errors) : 'Unknown Printful error');
+    throw new PrintfulError(`Printful API error (${response.status}) on ${endpoint}: ${message}`, {
+      status: response.status,
+      code: errorPayload.code,
+      retryAfterMs: parseRetryAfter(response.headers.get('retry-after')),
+    });
   }
 
-  try {
-    const response = await fetch(url, {
+  return payload as PrintfulResponse<T>;
+}
+
+export async function printfulRequest<T>(endpoint: string, options: RequestInit = {}): Promise<PrintfulResponse<T>> {
+  return withRetry(async () => {
+    const response = await fetch(`${API_BASE}${endpoint}`, {
       ...options,
-      headers,
-      signal: AbortSignal.timeout(30000), // 30s timeout
+      headers: buildHeaders(options.headers),
+      signal: AbortSignal.timeout(30000),
     });
 
-    const data = (await response.json()) as PrintfulResponse<T> | PrintfulErrorResponse;
-
-    if (!response.ok) {
-      const errorData = data as PrintfulErrorResponse;
-      const errorMessage =
-        errorData.result?.error || JSON.stringify(errorData.result?.errors) || 'Unknown error';
-      throw new Error(`Printful API error (${response.status}): ${errorMessage}`);
+    if (!response.ok && !isRetryablePrintfulStatus(response.status)) {
+      return parseResponse<T>(endpoint, response);
     }
 
-    return data as PrintfulResponse<T>;
-  } catch (error) {
-    if (error instanceof TypeError && error.name === 'AbortError') {
-      throw new Error('Printful API request timeout');
-    }
-    throw error;
-  }
+    return parseResponse<T>(endpoint, response);
+  });
 }
 
 export function validatePrintfulWebhook(body: string, signature: string): boolean {
-  const secret = process.env.PRINTFUL_WEBHOOK_SECRET;
+  const { webhookSecret } = getPrintfulEnv();
 
-  if (!secret) {
-    console.warn('PRINTFUL_WEBHOOK_SECRET not configured; webhook validation disabled');
-    return true;
-  }
-
-  // Basic HMAC-SHA256 validation example
-  // Note: Verify the exact implementation with Printful documentation
-  try {
-    const crypto = require('crypto');
-    const hash = crypto.createHmac('sha256', secret).update(body).digest('hex');
-    return hash === signature;
-  } catch (error) {
-    console.error('Webhook signature validation failed:', error);
+  if (!webhookSecret) {
     return false;
   }
+
+  const expected = crypto.createHmac('sha256', webhookSecret).update(body).digest('hex');
+  const expectedBuffer = Buffer.from(expected);
+  const signatureBuffer = Buffer.from(signature);
+
+  if (expectedBuffer.length !== signatureBuffer.length) {
+    return false;
+  }
+
+  return crypto.timingSafeEqual(expectedBuffer, signatureBuffer);
 }

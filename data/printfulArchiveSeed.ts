@@ -1,0 +1,6 @@
+export const LEGACY_ARCHIVE_SYNC_PRODUCT_IDS = [
+  260279886,
+  260260882,
+  260260091,
+  260259583,
+] as const;

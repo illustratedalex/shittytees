@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
     // Validate request format
     const validated = CheckoutRequestSchema.parse(body);
 
-    const normalized = validateAndNormalizeCheckoutItems(validated.items);
+    const normalized = await validateAndNormalizeCheckoutItems(validated.items);
     const orderId = randomUUID();
     const orderAccessToken = generatePublicAccessToken();
 

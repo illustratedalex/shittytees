@@ -25,6 +25,10 @@ Use product slugs that already exist in [lib/data/products.ts](lib/data/products
 
 Do not create new product IDs/slugs in drop config.
 
+Archive products imported from legacy Printful data must stay in the `archive` collection and should not be mixed into active drop definitions.
+
+After mapping products, update [data/productPresentation.ts](data/productPresentation.ts) so drop hero, grid, and PDP share one display source.
+
 ## 3) Make a Drop Active
 
 Set `status: "active"` in [data/drops.ts](data/drops.ts).
@@ -42,6 +46,17 @@ Update:
 - [data/campaigns.ts](data/campaigns.ts) for hero and marquee messaging
 - [data/collections.ts](data/collections.ts) for collection band language
 - [data/brand.ts](data/brand.ts) for brand-level copy refreshes
+
+## Artist's Bench Drafts
+
+Artist's Bench concepts can be created locally before any Printful product exists.
+
+Rules:
+
+1. Keep concept products in draft status.
+2. Do not add them to active drop definitions.
+3. Do not expose them in public shop routes until a mapped Printful product is ready.
+4. When the real product exists, map it to the established draft slug instead of minting a duplicate local concept.
 
 ## 6) Verify Routes
 
@@ -64,6 +79,14 @@ Run:
 5. `npm test`
 6. `npm run build`
 
+Expected test coverage areas:
+
+- product data integrity
+- drop lookup behavior (`getDropBySlug`)
+- branding primitives (`Wordmark`, `LogoMark`)
+- garment rendering (`GarmentMockup`)
+- catalog card rendering (`ProductTile`)
+
 ## 8) Deploy Safety
 
 Before deployment, confirm:
@@ -80,3 +103,5 @@ Before deployment, confirm:
 - introducing hardcoded one-off page JSX instead of reusable components
 - adding animated behavior without reduced-motion fallback
 - using fake scarcity/review copy
+- bypassing `data/productPresentation.ts` with one-off route-level artwork overrides
+- auto-publishing newly imported Printful products without running `npm run products:report`

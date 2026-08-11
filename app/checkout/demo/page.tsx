@@ -19,7 +19,7 @@ export default function DemoCheckoutPage() {
 
           <div className="space-y-4 text-lg leading-relaxed mb-8 text-gray-700">
             <p>
-              Welcome to ShittyTees. We're putting the finishing touches on our store.
+              Welcome to ShittyTees. We&apos;re putting the finishing touches on our store.
             </p>
 
             <p className="font-semibold text-red-900">
@@ -27,8 +27,8 @@ export default function DemoCheckoutPage() {
             </p>
 
             <p>
-              We're finalizing our payment processing and fulfillment systems. 
-              Your cart is ready, but we're not accepting orders at this moment.
+              We&apos;re finalizing our payment processing and fulfillment systems.
+              Your cart is ready, but we&apos;re not accepting orders at this moment.
             </p>
 
             <p className="text-sm text-gray-600">
@@ -38,7 +38,7 @@ export default function DemoCheckoutPage() {
 
           {/* Next Steps */}
           <div className="bg-white border border-gray-300 p-6 mb-8 rounded-lg">
-            <h2 className="text-xl font-bold text-black mb-4">What's Ready</h2>
+            <h2 className="text-xl font-bold text-black mb-4">What&apos;s Ready</h2>
             <ul className="space-y-2 text-gray-700">
               <li>✓ Your cart is saved and ready</li>
               <li>✓ All prices have been verified server-side</li>

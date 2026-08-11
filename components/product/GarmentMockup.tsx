@@ -92,18 +92,18 @@ const PALETTE: Record<GarmentColor, Palette> = {
 };
 
 const SCALE_CLASS: Record<GarmentScale, string> = {
-  small: 'w-[68%] h-[68%]',
-  medium: 'w-[78%] h-[78%]',
-  large: 'w-[84%] h-[84%]',
-  hero: 'w-[90%] h-[90%]',
+  small: 'w-[66%] h-[66%]',
+  medium: 'w-[76%] h-[76%]',
+  large: 'w-[83%] h-[83%]',
+  hero: 'w-[89%] h-[89%]',
 };
 
 const ARTWORK_PLACEMENT_CLASS: Record<ArtworkPlacement, string> = {
-  center: 'left-1/2 top-[56%] -translate-x-1/2 -translate-y-1/2 w-[46%]',
-  'left-chest': 'left-[42%] top-[46%] -translate-x-1/2 -translate-y-1/2 w-[24%]',
-  'oversized-center': 'left-1/2 top-[58%] -translate-x-1/2 -translate-y-1/2 w-[58%]',
-  back: 'left-1/2 top-[54%] -translate-x-1/2 -translate-y-1/2 w-[50%]',
-  sleeve: 'left-[74%] top-[46%] -translate-x-1/2 -translate-y-1/2 w-[20%]',
+  center: 'left-1/2 top-[56%] -translate-x-1/2 -translate-y-1/2 w-[40%] max-w-[11rem]',
+  'left-chest': 'left-[41%] top-[46%] -translate-x-1/2 -translate-y-1/2 w-[20%] max-w-[6.5rem]',
+  'oversized-center': 'left-1/2 top-[58%] -translate-x-1/2 -translate-y-1/2 w-[52%] max-w-[14rem]',
+  back: 'left-1/2 top-[54%] -translate-x-1/2 -translate-y-1/2 w-[44%] max-w-[12rem]',
+  sleeve: 'left-[73%] top-[46%] -translate-x-1/2 -translate-y-1/2 w-[17%] max-w-[5rem]',
 };
 
 function resolveColor(color?: GarmentColor, legacyHex?: string): GarmentColor {
@@ -171,9 +171,9 @@ export default function GarmentMockup({
   const fitClass = garmentFit === 'cover' ? 'object-cover' : 'object-contain';
 
   const frontPath =
-    'M256 76c-31 0-58 8-84 22l-38 20-38-24-52 66 46 34 30-28 10 270h252l10-270 30 28 46-34-52-66-38 24-38-20c-26-14-53-22-84-22z';
+    'M256 72c-34 0-64 9-93 25l-39 21-37-21-49 64 43 32 32-26 14 268c1 22 20 39 42 39h194c22 0 41-17 42-39l14-268 32 26 43-32-49-64-37 21-39-21c-29-16-59-25-93-25z';
   const backPath =
-    'M256 80c-30 0-56 8-82 22l-36 18-40-22-50 62 44 34 30-28 12 266h244l12-266 30 28 44-34-50-62-40 22-36-18c-26-14-52-22-82-22z';
+    'M256 76c-32 0-61 9-89 24l-35 19-39-20-48 61 43 34 30-26 14 265c1 22 19 39 41 39h166c22 0 40-17 41-39l14-265 30 26 43-34-48-61-39 20-35-19c-28-15-57-24-89-24z';
 
   const artworkPlacementClass = ARTWORK_PLACEMENT_CLASS[
     view === 'back' && artworkPlacement === 'center' ? 'back' : artworkPlacement
@@ -211,33 +211,40 @@ export default function GarmentMockup({
           </defs>
 
           <path d={view === 'front' ? frontPath : backPath} fill={`url(#${shirtBodyId})`} />
-          <path d="M164 154l-44-28-30 34 40 30 34-36z" fill={`url(#${shirtRimId})`} opacity="0.84" />
-          <path d="M348 154l44-28 30 34-40 30-34-36z" fill={`url(#${shirtRimId})`} opacity="0.84" />
+          <path d="M170 152l-46-28-32 36 42 30 36-38z" fill={`url(#${shirtRimId})`} opacity="0.84" />
+          <path d="M342 152l46-28 32 36-42 30-36-38z" fill={`url(#${shirtRimId})`} opacity="0.84" />
 
           <path
             d={view === 'front'
-              ? 'M256 96c-20 0-38 6-52 16l20 26c9-5 18-9 32-9s23 4 32 9l20-26c-14-10-32-16-52-16z'
-              : 'M256 102c-22 0-40 7-54 20l18 20c10-8 22-12 36-12s26 4 36 12l18-20c-14-13-32-20-54-20z'}
+              ? 'M256 92c-22 0-42 7-56 19l21 26c8-6 20-9 35-9s27 3 35 9l21-26c-14-12-34-19-56-19z'
+              : 'M256 98c-24 0-44 8-60 22l20 22c11-8 24-12 40-12s29 4 40 12l20-22c-16-14-36-22-60-22z'}
             fill="#0f0f0f"
-            opacity="0.42"
+            opacity="0.38"
           />
 
-          <path d="M182 172c-6 34-10 72-10 132" stroke="#000" strokeOpacity="0.14" strokeWidth="3" fill="none" />
-          <path d="M330 172c6 34 10 72 10 132" stroke="#000" strokeOpacity="0.14" strokeWidth="3" fill="none" />
+          <path d="M186 174c-7 36-11 70-11 130" stroke="#000" strokeOpacity="0.16" strokeWidth="3" fill="none" />
+          <path d="M326 174c7 36 11 70 11 130" stroke="#000" strokeOpacity="0.16" strokeWidth="3" fill="none" />
+          <path d="M132 164c16 10 28 22 32 44" stroke="#000" strokeOpacity="0.14" strokeWidth="2" fill="none" />
+          <path d="M380 164c-16 10-28 22-32 44" stroke="#000" strokeOpacity="0.14" strokeWidth="2" fill="none" />
 
-          <path d="M192 198c20 12 42 18 64 18s44-6 64-18" stroke="#fff" strokeOpacity="0.11" strokeWidth="3" fill="none" />
+          <path d="M192 198c20 12 42 18 64 18s44-6 64-18" stroke="#fff" strokeOpacity="0.1" strokeWidth="3" fill="none" />
           <path d="M204 220c18 10 34 14 52 14s34-4 52-14" stroke="#fff" strokeOpacity="0.08" strokeWidth="2" fill="none" />
+          <path d="M170 430c28 18 62 26 86 26s58-8 86-26" stroke="#000" strokeOpacity="0.2" strokeWidth="2.5" fill="none" />
+          <path d="M170 434c28 17 62 25 86 25s58-8 86-25" stroke="#fff" strokeOpacity="0.08" strokeWidth="1.4" fill="none" />
 
-          <path d={view === 'front' ? 'M156 198h200v222H156z' : 'M160 202h192v216H160z'} fill={`url(#${shirtFoldId})`} opacity="0.22" />
+          <path d={view === 'front' ? 'M156 194h200v232H156z' : 'M160 198h192v228H160z'} fill={`url(#${shirtFoldId})`} opacity="0.24" />
+          <path d="M202 252c8 26 8 86 0 132" stroke="#fff" strokeOpacity="0.07" strokeWidth="2" fill="none" />
+          <path d="M310 252c-8 26-8 86 0 132" stroke="#fff" strokeOpacity="0.07" strokeWidth="2" fill="none" />
+          <path d="M256 238v172" stroke="#000" strokeOpacity="0.11" strokeWidth="1.7" fill="none" />
         </svg>
 
-        {artworkSrc ? (
-          <img src={artworkSrc} alt={imageAlt || 'Garment artwork'} className={`absolute ${artworkPlacementClass} ${fitClass}`} />
-        ) : (
-          <div className={`absolute ${artworkPlacementClass}`} style={{ color: palette.artwork }}>
-            <GarmentArtwork text={artworkText} className="text-current" />
-          </div>
-        )}
+        <div className={`absolute ${artworkPlacementClass}`} style={{ color: palette.artwork }}>
+          <GarmentArtwork
+            text={artworkText}
+            image={artworkSrc}
+            className={artworkSrc ? fitClass : 'text-current'}
+          />
+        </div>
       </div>
     </GarmentStage>
   );

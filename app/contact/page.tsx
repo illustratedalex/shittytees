@@ -44,7 +44,7 @@ export default function ContactPage() {
 
         {status === 'success' && (
           <div className="bg-green-50 text-green-900 p-4 rounded-lg mb-8 border border-green-200">
-            Thanks for your message. We'll get back to you soon.
+            Thanks for your message. We&apos;ll get back to you soon.
           </div>
         )}
 

@@ -1,5 +1,4 @@
 import crypto from 'crypto';
-import { DEMO_PRODUCTS } from '@/lib/data/products';
 import { logOrderEvent } from '@/lib/orders/logging';
 import { generatePublicAccessToken, hashPublicAccessToken } from '@/lib/orders/publicAccess';
 import { OrderRepository } from '@/lib/orders/repository';
@@ -30,12 +29,12 @@ export type StripeEventShape = {
   };
 };
 
-function parseCartItems(metadata?: Record<string, string | undefined>): StoreOrderItem[] {
+async function parseCartItems(metadata?: Record<string, string | undefined>): Promise<StoreOrderItem[]> {
   const raw = metadata?.cartItems;
   if (!raw) return [];
 
   const parsed = JSON.parse(raw) as CheckoutLineItem[];
-  const normalized = validateAndNormalizeCheckoutItems(parsed);
+  const normalized = await validateAndNormalizeCheckoutItems(parsed);
   return toStoreOrderItems(normalized);
 }
 
@@ -86,7 +85,7 @@ export async function processStripeEvent(
       }
 
       const metadata = session.metadata || {};
-      const items = parseCartItems(metadata);
+      const items = await parseCartItems(metadata);
       const token = metadata.orderAccessToken || generatePublicAccessToken();
       const orderId = metadata.orderId || crypto.randomUUID();
 
@@ -211,8 +210,4 @@ export async function processPrintfulEvent(repository: OrderRepository, event: P
     default:
       return;
   }
-}
-
-export function buildCheckoutDisplayItems(orderId: string) {
-  return DEMO_PRODUCTS.find((item) => item.id === orderId);
 }

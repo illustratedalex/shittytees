@@ -2,6 +2,9 @@ export type PrintfulFile = {
   id?: number;
   type?: string;
   url?: string;
+  preview_url?: string;
+  thumbnail_url?: string;
+  filename?: string;
   visible?: boolean;
   options?: Record<string, string | number | boolean>;
 };
@@ -27,6 +30,31 @@ export type PrintfulSyncProduct = {
   files?: PrintfulFile[];
 };
 
+export type PrintfulPaging = {
+  total: number;
+  offset: number;
+  limit: number;
+};
+
+export type PrintfulStoreProduct = {
+  id: number;
+  external_id?: string;
+  name: string;
+  synced?: number;
+  thumbnail_url?: string;
+  is_ignored?: boolean;
+};
+
+export type PrintfulStoreProductsPage = {
+  result: PrintfulStoreProduct[];
+  paging: PrintfulPaging;
+};
+
+export type PrintfulStoreProductDetail = {
+  sync_product: PrintfulSyncProduct;
+  sync_variants: PrintfulSyncVariant[];
+};
+
 export type PrintfulSyncProductDetail = {
   sync_product: PrintfulSyncProduct;
   sync_variants: PrintfulSyncVariant[];
@@ -38,17 +66,29 @@ export type PrintfulSyncVariant = {
   variant_id?: number;
   sync_product_id: number;
   name: string;
-  sku: string;
-  size: string;
-  color: string;
+  sku?: string;
+  size?: string;
+  color?: string;
   color_code?: string;
-  price?: number;
-  retail_price?: number;
+  price?: number | string;
+  retail_price?: number | string;
   available?: boolean;
   is_ignored?: boolean;
   is_discontinued?: boolean;
+  availability_status?: 'active' | 'discontinued' | 'out_of_stock' | 'temporary_out_of_stock' | string;
+  product?: {
+    variant_id?: number;
+    product_id?: number;
+    image?: string;
+    name?: string;
+  };
   files?: PrintfulFile[];
   mockup_url?: string;
+};
+
+export type PrintfulSyncVariantInfo = {
+  sync_variant: PrintfulSyncVariant;
+  sync_product: PrintfulSyncProduct;
 };
 
 export type PrintfulWebhook = {

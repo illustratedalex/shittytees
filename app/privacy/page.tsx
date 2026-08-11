@@ -16,7 +16,7 @@ export default function PrivacyPage() {
             <h2 className="text-2xl font-bold text-black mb-4">Overview</h2>
             <p className="leading-relaxed">
               We collect information about you when you place an order or contact us. This is your personal data.
-              We don't sell it. We use it to process orders and communicate with you.
+              We don&apos;t sell it. We use it to process orders and communicate with you.
             </p>
           </section>
 

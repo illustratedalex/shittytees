@@ -22,16 +22,19 @@ function sessionSecret(): string {
   return process.env.ADMIN_SESSION_SECRET || 'dev-only-session-secret';
 }
 
+function hasConfiguredSessionSecret(): boolean {
+  if (process.env.NODE_ENV !== 'production') {
+    return true;
+  }
+  return Boolean(process.env.ADMIN_SESSION_SECRET);
+}
+
 function signSession(token: string): string {
   return crypto.createHmac('sha256', sessionSecret()).update(token).digest('hex');
 }
 
-function isDevAdminAllowed(): boolean {
-  return process.env.NODE_ENV !== 'production';
-}
-
 export function adminAuthMode(): 'disabled' | 'dev' {
-  if (!isDevAdminAllowed() || !adminDevToken()) {
+  if (!adminDevToken() || !hasConfiguredSessionSecret()) {
     return 'disabled';
   }
   return 'dev';
@@ -62,7 +65,7 @@ export function verifyAdminSessionValue(value: string): boolean {
 
 export async function requireAdminSession(): Promise<void> {
   if (adminAuthMode() !== 'dev') {
-    throw new Error('Real admin authentication is required in production');
+    throw new Error('Admin authentication is not configured');
   }
 
   const store = await cookies();
