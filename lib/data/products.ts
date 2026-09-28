@@ -505,7 +505,7 @@ function createVariants(seed: ProductSeed): ProductVariant[] {
     colorHex: seed.colorHex,
     sku: `${seed.slug.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 10)}-${size}`,
     retailPrice: seed.retailPrice,
-    available: true,
+    available: !seed.id.startsWith('prod-') && true,
   }));
 }
 
