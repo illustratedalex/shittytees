@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "PRINTFUL_PREVIEW_STORE_CHECK=true npm run printful:preview-store-check && npm run typecheck && next build",
     "start": "next start",
     "lint": "eslint app components data lib tests --max-warnings=0",
     "typecheck": "tsc --noEmit",
@@ -15,14 +15,15 @@
     "printful:sync": "tsx scripts/sync-printful.ts",
     "db:migrate": "tsx scripts/run-db-migrations.ts",
     "catalog:migrate": "tsx scripts/migrate-products-to-database.ts --apply",
-    "orders:migrate": "tsx scripts/migrate-file-orders-to-database.ts",
+    "orders:migrate": "tsx scripts/migrate-file-orders.ts",
     "product:publish": "tsx scripts/product-publish.ts",
     "product:archive": "tsx scripts/product-archive.ts",
     "product:disable": "tsx scripts/product-disable.ts",
     "product:images": "tsx scripts/product-images.ts",
     "products:report": "tsx scripts/products-report.ts",
     "products:review": "tsx scripts/products-review.ts",
-    "printful:audit": "tsx scripts/audit-printful-mappings.ts"
+    "printful:audit": "tsx scripts/audit-printful-mappings.ts",
+    "printful:preview-store-check": "tsx scripts/printful-preview-store-check.ts"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
@@ -41,14 +42,13 @@
     "@types/pg": "^8.15.5",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@vitejs/plugin-react": "^5.1.0",
     "eslint": "^9",
     "eslint-config-next": "16.2.9",
     "jsdom": "^27.0.1",
     "postcss": "^8.5.25",
     "tailwindcss": "^4",
-    "tsx": "^4.19.2",
     "typescript": "^5",
+    "tsx": "^4.19.2",
     "vitest": "^3.2.4"
   }
 }
