@@ -115,7 +115,5 @@ export async function runPrintfulMappingAudit() {
     rows,
   };
 
-  console.log(JSON.stringify(report, null, 2));
-}
-
+  return report;
 }
