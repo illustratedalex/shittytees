@@ -94,9 +94,20 @@ export async function runAudit() {
 
   const syncProducts = await listSyncProducts();
   const details = new Map<number, { sync_product: SyncProduct; sync_variants: SyncVariant[] }>();
+  const invalidSyncProducts: Array<{ id: number; status: number; code?: number; message: string }> = [];
 
   for (const product of syncProducts) {
-    details.set(product.id, await getSyncProduct(product.id));
+    try {
+      details.set(product.id, await getSyncProduct(product.id));
+    } catch (error) {
+      const diagnostic = diagnosticFromError(error);
+      invalidSyncProducts.push({
+        id: product.id,
+        status: diagnostic.status,
+        code: diagnostic.code,
+        message: diagnostic.message,
+      });
+    }
   }
 
   const rows: AuditRow[] = [];
@@ -122,7 +133,11 @@ export async function runAudit() {
           size: variant.size,
           color: variant.color,
           status: 'unavailable',
-          reason: matches.length ? 'No verified Printful Sync Variant matches size/color' : 'No exact Printful Sync Product name match',
+          reason: matches.length
+            ? (matches.some((candidate) => invalidSyncProducts.some((invalid) => invalid.id === candidate.id))
+                ? 'Matching Printful Sync Product is invalid or inaccessible; no verified variants available'
+                : 'No verified Printful Sync Variant matches size/color')
+            : 'No exact Printful Sync Product name match',
         });
         continue;
       }
@@ -152,6 +167,7 @@ export async function runAudit() {
     verified: rows.filter((row) => row.status === 'verified').length,
     unavailable: rows.filter((row) => row.status === 'unavailable').length,
     rows,
+    invalidSyncProducts,
     printfulStoreAccess: storeAccess,
   };
 
