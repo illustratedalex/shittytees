@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm run printful:stores-probe && npm run typecheck && next build",
     "start": "next start",
     "lint": "eslint app components data lib tests --max-warnings=0",
     "typecheck": "tsc --noEmit",
@@ -22,7 +22,8 @@
     "product:images": "tsx scripts/product-images.ts",
     "products:report": "tsx scripts/products-report.ts",
     "products:review": "tsx scripts/products-review.ts",
-    "printful:audit": "tsx scripts/audit-printful-mappings.ts"
+    "printful:audit": "tsx scripts/audit-printful-mappings.ts",
+    "printful:stores-probe": "tsx scripts/printful-stores-build-probe.ts"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
