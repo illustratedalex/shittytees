@@ -21,7 +21,8 @@
     "product:disable": "tsx scripts/product-disable.ts",
     "product:images": "tsx scripts/product-images.ts",
     "products:report": "tsx scripts/products-report.ts",
-    "products:review": "tsx scripts/products-review.ts"
+    "products:review": "tsx scripts/products-review.ts",
+    "printful:audit": "tsx scripts/audit-printful-mappings.ts"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
