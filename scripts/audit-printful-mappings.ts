@@ -65,8 +65,11 @@ export function diagnosticFromError(error: unknown): PrintfulDiagnostic {
 
 async function verifyStoreAccess(): Promise<{ accessible: boolean; intendedStoreMatched: boolean }> {
   const env = getPrintfulEnv();
-  const response = await printfulRequest<StoreSummary>('/store', { method: 'GET' });
-  return { accessible: true, intendedStoreMatched: String(response.result.id) === env.storeId };
+  const response = await printfulRequest<StoreSummary[]>('/stores', { method: 'GET' });
+  return {
+    accessible: true,
+    intendedStoreMatched: response.result.some((store) => String(store.id) === env.storeId),
+  };
 }
 
 async function listSyncProducts(): Promise<SyncProduct[]> {
