@@ -160,12 +160,42 @@ export async function runAudit() {
     }
   }
 
+  const listingSummary = core.map((product) => ({
+    productId: product.id,
+    slug: product.slug,
+    name: product.name,
+    variants: rows
+      .filter((row) => row.productId === product.id)
+      .map((row) => ({
+        size: row.size,
+        color: row.color,
+        status: row.status,
+        reason: row.reason,
+        syncProductId: row.syncProductId,
+        syncProductName: row.syncProductName,
+        syncVariantId: row.syncVariantId,
+        catalogVariantId: row.catalogVariantId,
+        sku: row.sku,
+      })),
+  }));
+
   const report = {
     generatedAt: new Date().toISOString(),
     coreListings: core.length,
+    expectedSizesPerListing: ['S', 'M', 'L', 'XL'],
     variants: rows.length,
     verified: rows.filter((row) => row.status === 'verified').length,
     unavailable: rows.filter((row) => row.status === 'unavailable').length,
+    totalsBySize: Object.fromEntries(
+      ['S', 'M', 'L', 'XL'].map((size) => [
+        size,
+        {
+          verified: rows.filter((row) => row.size === size && row.status === 'verified').length,
+          unavailable: rows.filter((row) => row.size === size && row.status === 'unavailable').length,
+        },
+      ]),
+    ),
+    listingSummary,
     rows,
     invalidSyncProducts,
     printfulStoreAccess: storeAccess,
