@@ -1,6 +1,5 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "npx tsx scripts/seed-preview-core-catalog.ts && npm run build",
   "crons": [
     {
       "path": "/api/cron/printful-sync",
