@@ -20,7 +20,12 @@ export async function GET() {
     return NextResponse.json(report, {
       headers: { 'Cache-Control': 'no-store' },
     });
-  } catch {
-    return NextResponse.json({ error: 'Printful audit failed' }, { status: 500 });
+  } catch (error) {
+    const printfulError = error as { name?: string; status?: number; code?: number; message?: string };
+    const safeError =
+      printfulError.name === 'PrintfulError'
+        ? { error: 'Printful audit failed', upstreamStatus: printfulError.status ?? null, upstreamCode: printfulError.code ?? null }
+        : { error: 'Printful audit failed' };
+    return NextResponse.json(safeError, { status: 500, headers: { 'Cache-Control': 'no-store' } });
   }
 }
