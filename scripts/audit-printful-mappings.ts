@@ -37,7 +37,7 @@ function normalize(value: string): string {
 }
 
 async function listSyncProducts(): Promise<SyncProduct[]> {
-  const response = await printfulRequest<SyncProduct[]>('/store/products?status=all&limit=100', { method: 'GET' });
+  const response = await printfulRequest<SyncProduct[]>('/store/products?status=all', { method: 'GET' });
   return response.result;
 }
 
