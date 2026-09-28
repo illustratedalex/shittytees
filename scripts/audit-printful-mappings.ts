@@ -78,7 +78,7 @@ async function listSyncProducts(): Promise<SyncProduct[]> {
 }
 
 async function getSyncProduct(id: number): Promise<{ sync_product: SyncProduct; sync_variants: SyncVariant[] }> {
-  return (await printfulRequest<{ sync_product: SyncProduct; sync_variants: SyncVariant[] }>(`/store/products/${id}`, { method: 'GET' })).result;
+  return (await printfulRequest<{ sync_product: SyncProduct; sync_variants: SyncVariant[] }>(`/sync/products/${id}`, { method: 'GET' })).result;
 }
 
 export async function runAudit() {
