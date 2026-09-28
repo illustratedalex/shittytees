@@ -17,6 +17,7 @@ export async function GET() {
 
   try {
     const report = await runPrintfulMappingAudit();
+    console.log(JSON.stringify({ stagingPrintfulAudit: report }));
     return NextResponse.json(report, {
       headers: { 'Cache-Control': 'no-store' },
     });
