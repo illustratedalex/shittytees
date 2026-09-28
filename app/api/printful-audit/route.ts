@@ -1,12 +1,1 @@
-import { NextResponse } from 'next/server';
-import { diagnosticFromError, runAudit } from '@/scripts/audit-printful-mappings';
-
-export const dynamic = 'force-dynamic';
-
-export async function GET() {
-  try {
-    return NextResponse.json(await runAudit());
-  } catch (error) {
-    return NextResponse.json({ printfulError: diagnosticFromError(error) }, { status: 502 });
-  }
-}
+import { NextResponse } from 'next/server';\nimport { getPrintfulEnv } from '@/lib/printful/env';\n\nexport const dynamic = 'force-dynamic';\n\nfunction sanitize(value: string): string {\n  return value.replace(/Bearer\\s+[^\\s]+/gi, 'Bearer [REDACTED]').replace(/[A-Za-z0-9_-]{32,}/g, '[REDACTED]').slice(0, 500);\n}\n\nasync function request(path: string) {\n  const env = getPrintfulEnv();\n  if (!env.apiToken || !env.storeId) throw new Error('Printful credentials are not configured');\n  const response = await fetch('https://api.printful.com' + path, {\n    headers: { Authorization: 'Bearer ' + env.apiToken, 'X-PF-Store-Id': env.storeId, 'X-Store-Id': env.storeId },\n    cache: 'no-store',\n  });\n  const payload = await response.json().catch(() => null);\n  if (!response.ok) {\n    const result = payload?.result;\n    const message = typeof result?.error === 'string' ? result.error : typeof result === 'string' ? result : 'Unknown Printful error';\n    return { ok: false, status: response.status, code: payload?.code, message: sanitize(message) };\n  }\n  return { ok: true, status: response.status, payload };\n}\n\nexport async function GET() {\n  const stores = await request('/stores');\n  if (!stores.ok) return NextResponse.json({ storeAccess: stores }, { status: 502 });\n  const env = getPrintfulEnv();\n  const matched = Array.isArray(stores.payload?.result) && stores.payload.result.some((s: { id?: number }) => String(s.id) === env.storeId);\n  const products = await request('/store/products?status=all');\n  if (!products.ok) return NextResponse.json({ storeAccess: { ok: true, intendedStoreMatched: matched }, products }, { status: 502 });\n  return NextResponse.json({ storeAccess: { ok: true, intendedStoreMatched: matched }, products: { ok: true, status: products.status, code: products.payload?.code, count: Array.isArray(products.payload?.result) ? products.payload.result.length : 0, paging: products.payload?.paging } });\n}
