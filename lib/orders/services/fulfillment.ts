@@ -1,4 +1,4 @@
-import { createPrintfulDraftOrder } from '@/lib/printful/orders';
+import { confirmPrintfulOrder, createPrintfulDraftOrder } from '@/lib/printful/orders';
 import { FulfillmentDisabledError, PaymentNotConfirmedError, PrintfulDraftMissingError, UnresolvedVariantError } from '@/lib/orders/errors';
 import { OrderRepository } from '@/lib/orders/repository';
 import { StoreOrder } from '@/lib/orders/types';
@@ -64,6 +64,8 @@ export async function submitOrderToFulfillment(repository: OrderRepository, orde
     throw new PrintfulDraftMissingError();
   }
 
+  const confirmed = await confirmPrintfulOrder(order.printfulOrderId);
+
   return repository.transitionStatus(
     order.id,
     ['printful_draft_created', 'paid'],
@@ -71,7 +73,9 @@ export async function submitOrderToFulfillment(repository: OrderRepository, orde
     source,
     'Submitted to fulfillment',
     {
-      fulfilled: true,
+      fulfilled: confirmed.status !== 'draft',
+      printfulOrderId: confirmed.id,
+      printfulExternalOrderId: String(confirmed.external_id || order.id),
     },
   );
 }
