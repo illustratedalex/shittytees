@@ -52,7 +52,7 @@ function sanitizeMessage(message: string): string {
     .slice(0, 500);
 }
 
-function diagnosticFromError(error: unknown): PrintfulDiagnostic {
+export function diagnosticFromError(error: unknown): PrintfulDiagnostic {
   if (error instanceof PrintfulError) {
     return {
       status: error.status ?? 0,
