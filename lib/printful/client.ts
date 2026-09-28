@@ -28,7 +28,6 @@ function buildHeaders(initHeaders?: HeadersInit): Headers {
   headers.set('Authorization', `Bearer ${env.apiToken}`);
   headers.set('Content-Type', 'application/json');
   headers.set('X-PF-Store-Id', env.storeId);
-  headers.set('X-Store-Id', env.storeId);
   return headers;
 }
 
