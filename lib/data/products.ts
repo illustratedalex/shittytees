@@ -59,6 +59,12 @@ export const COLLECTIONS: Collection[] = [
     description: 'Seasonal releases for people who avoid polite small talk.',
   },
   {
+    id: 'col-shitty-politics',
+    slug: 'shitty-politics',
+    name: 'Shitty Politics',
+    description: 'Campaign promises, political theater, and questionable leadership. Original political satire tees. First designs coming soon.',
+  },
+  {
     id: 'col-10',
     slug: 'archive',
     name: 'Archive',
@@ -72,7 +78,7 @@ type ProductSeed = {
   name: string;
   shortDescription: string;
   description: string;
-  collectionSlug: 'dark-humor' | 'blue-collar' | 'tattoo-culture' | 'artists-bench';
+  collectionSlug: 'dark-humor' | 'blue-collar' | 'tattoo-culture' | 'artists-bench' | 'shitty-politics';
   category: string;
   color: string;
   colorHex: string;
