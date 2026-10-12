@@ -1,4 +1,5 @@
 import { printfulRequest } from './client';
+import { getPrintfulEnv } from './env';
 import {
   PrintfulStoreInfo,
   PrintfulStoreProduct,
@@ -10,7 +11,13 @@ import {
 } from './types';
 
 export async function getStoreInfo(): Promise<PrintfulStoreInfo> {
-  return (await printfulRequest<PrintfulStoreInfo>('/store', { method: 'GET' })).result;
+  const { storeId } = getPrintfulEnv();
+  const stores = (await printfulRequest<PrintfulStoreInfo[]>('/stores', { method: 'GET' })).result;
+  const store = stores.find((candidate) => String(candidate.id) === String(storeId));
+  if (!store) {
+    throw new Error('Configured Printful store is not accessible to this connection');
+  }
+  return store;
 }
 
 export async function getSyncProducts(): Promise<PrintfulSyncProduct[]> {
