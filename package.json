@@ -22,7 +22,8 @@
     "product:images": "tsx scripts/product-images.ts",
     "products:report": "tsx scripts/products-report.ts",
     "products:review": "tsx scripts/products-review.ts",
-    "printful:audit": "tsx scripts/audit-printful-mappings.ts"
+    "printful:audit": "tsx scripts/audit-printful-mappings.ts",
+    "prebuild": "node scripts/printful-connection-check.mjs"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
