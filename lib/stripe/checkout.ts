@@ -9,16 +9,16 @@ export interface CreateCheckoutSessionParams {
   baseUrl: string;
   orderId: string;
   orderAccessToken: string;
+  shipping: number;
 }
 
 export async function createCheckoutSession(
   params: CreateCheckoutSessionParams
-): Promise<string> {
+): Promise<Stripe.Checkout.Session> {
   const stripe = getStripe();
-  const { items, shippingAddress, baseUrl, orderId, orderAccessToken } = params;
+  const { items, shippingAddress, baseUrl, orderId, orderAccessToken, shipping } = params;
 
   const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
-  let subtotalCents = 0;
 
   for (const item of items) {
     const priceCents = Math.round(item.unitPrice * 100);
@@ -27,59 +27,36 @@ export async function createCheckoutSession(
         currency: 'usd',
         product_data: {
           name: `${item.name} - ${item.size} ${item.color}`,
-          images: [item.image],
+          images: [new URL(item.image, baseUrl).href],
         },
         unit_amount: priceCents,
       },
       quantity: item.quantity,
     });
-    subtotalCents += priceCents * item.quantity;
   }
 
-  const shippingDollars = Number(process.env.STRIPE_STANDARD_SHIPPING_RATE || '10');
-  const shippingCents = Math.round(shippingDollars * 100);
-
-  lineItems.push({
-    price_data: {
-      currency: 'usd',
-      product_data: {
-        name: 'Standard Shipping (US)',
-      },
-      unit_amount: shippingCents,
-    },
-    quantity: 1,
-  });
-
   const session = await stripe.checkout.sessions.create({
-    payment_method_types: ['card'],
+    payment_method_types: process.env.STRIPE_ENABLE_CASH_APP === 'true' ? ['card', 'cashapp'] : ['card'],
     mode: 'payment',
     line_items: lineItems,
     customer_email: shippingAddress.email,
     billing_address_collection: 'required',
-    shipping_address_collection: {
-      allowed_countries: ['US'],
-    },
+    shipping_options: [{ shipping_rate_data: { type: 'fixed_amount', fixed_amount: { amount: Math.round(shipping * 100), currency: 'usd' }, display_name: 'Standard shipping' } }],
+    custom_text: { submit: { message: `Ships to: ${shippingAddress.firstName} ${shippingAddress.lastName}, ${shippingAddress.address}${shippingAddress.addressLine2 ? ', ' + shippingAddress.addressLine2 : ''}, ${shippingAddress.city}, ${shippingAddress.state} ${shippingAddress.postalCode}. Return to cart to change this address.` } },
     success_url: `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}&order_id=${encodeURIComponent(orderId)}&token=${encodeURIComponent(orderAccessToken)}`,
     cancel_url: `${baseUrl}/checkout/cancel`,
     metadata: {
       orderId,
       orderAccessToken,
-      shippingFirstName: shippingAddress.firstName,
-      shippingLastName: shippingAddress.lastName,
-      shippingAddress: shippingAddress.address,
-      shippingCity: shippingAddress.city,
-      shippingState: shippingAddress.state,
-      shippingPostalCode: shippingAddress.postalCode,
-      shippingCountry: shippingAddress.country,
-      cartItems: JSON.stringify(items),
+      checkoutVersion: '2',
     },
-  });
+  }, { idempotencyKey: `checkout:${orderId}` });
 
   if (!session.url) {
     throw new Error('Failed to create Stripe Checkout Session');
   }
 
-  return session.url;
+  return session;
 }
 
 export async function getCheckoutSession(sessionId: string): Promise<Stripe.Checkout.Session> {

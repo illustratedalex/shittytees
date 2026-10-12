@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { validateAndNormalizeCheckoutItems } from '@/lib/orders/services/checkoutSecurity';
 import { DEMO_PRODUCTS } from '@/lib/data/products';
 
@@ -11,6 +11,8 @@ const mappedFixture = DEMO_PRODUCTS
 if (!mappedFixture) {
   throw new Error('Expected at least one fulfillment-ready product variant fixture.');
 }
+
+vi.mock('@/lib/catalog', () => ({ getCatalogRepository: () => ({ listPublic: async () => [product] }) }));
 
 const product = mappedFixture.product;
 const variant = mappedFixture.variant;

@@ -7,7 +7,6 @@ import { CheckoutRequestSchema } from '@/lib/validation/schemas';
 import { evaluateCartFulfillmentReadiness } from '@/lib/fulfillment/readiness';
 import { SiteHeader } from '@/components/layout';
 
-const SHIPPING_COST = 10;
 
 export default function CartPage() {
   const { items, removeItem, updateQuantity, clear, subtotal, isHydrated } = useCart();
@@ -26,8 +25,6 @@ export default function CartPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const tax = subtotal * 0.08;
-  const total = subtotal + SHIPPING_COST + tax;
 
   const handleCheckout = async () => {
     if (!shippingAddress.firstName || !shippingAddress.email || !shippingAddress.address) {
@@ -188,15 +185,15 @@ export default function CartPage() {
                 </div>
                 <div className="flex justify-between text-[#aaa59c]">
                   <span>Shipping</span>
-                  <span className="font-semibold text-[#f3efe6]">${SHIPPING_COST.toFixed(2)}</span>
+                  <span className="font-semibold text-[#f3efe6]">Calculated at checkout</span>
                 </div>
                 <div className="flex justify-between text-[#aaa59c]">
                   <span>Tax</span>
-                  <span className="font-semibold text-[#f3efe6]">${tax.toFixed(2)}</span>
+                  <span className="font-semibold text-[#f3efe6]">Shown at checkout</span>
                 </div>
                 <div className="border-t border-[#2f2f2f] pt-4 flex justify-between font-bold text-[#f3efe6] text-lg">
-                  <span>Total</span>
-                  <span>${total.toFixed(2)}</span>
+                  <span>Items total</span>
+                  <span>${subtotal.toFixed(2)}</span>
                 </div>
               </div>
 

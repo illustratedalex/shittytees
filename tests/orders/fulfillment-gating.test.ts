@@ -3,6 +3,7 @@ import { createInMemoryRepository } from './helpers/inMemoryRepo';
 import { hashPublicAccessToken } from '@/lib/orders/publicAccess';
 
 vi.mock('@/lib/printful/orders', () => ({
+  confirmPrintfulOrder: vi.fn(async () => ({ id: 90210, status: 'pending', external_id: 'ext_1' })),
   createPrintfulDraftOrder: vi.fn(async () => ({ id: 90210, external_id: 'ext_1' })),
 }));
 
@@ -50,6 +51,18 @@ function baseOrder(status: 'paid' | 'printful_draft_created' = 'paid') {
 }
 
 describe('fulfillment gating', () => {
+  it('permits test drafts without permitting test fulfillment', async () => {
+    process.env.PRINTFUL_ENABLE_FULFILLMENT = 'false';
+    process.env.PRINTFUL_ENABLE_TEST_ORDERS = 'true';
+    const repository = createInMemoryRepository();
+    await repository.create({ ...baseOrder(), stripeCheckoutSessionId: 'cs_test_draft' });
+    const draft = await createDraftForOrder(repository, 'ord_gate', 'stripe_webhook', true);
+    expect(draft.status).toBe('printful_draft_created');
+    process.env.PRINTFUL_ENABLE_FULFILLMENT = 'true';
+    await expect(submitOrderToFulfillment(repository, 'ord_gate', 'admin_action')).rejects.toThrow('Test payments');
+    delete process.env.PRINTFUL_ENABLE_TEST_ORDERS;
+  });
+
   it('blocks draft creation when fulfillment disabled', async () => {
     process.env.PRINTFUL_ENABLE_FULFILLMENT = 'false';
     const repository = createInMemoryRepository();
