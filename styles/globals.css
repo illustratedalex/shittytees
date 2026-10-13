@@ -13,7 +13,448 @@ html {
 body {
   background: #0b0b0b;
   color: #f2e8d5;
-  font-family: var(--font-body), "Segoe UI", sans-ser…3145 tokens truncated…acity: 0.22;
+  font-family: var(--font-body), "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+}
+
+@layer base {
+  :root {
+    /* Color tokens */
+    --color-ink: #0b0b0b;
+    --color-ink-soft: #141414;
+    --color-charcoal: #1c1c1c;
+    --color-smoke: #2b2b2b;
+    --color-bone: #f2e8d5;
+    --color-bone-muted: #c9beaa;
+    --color-bone-soft: #9f9787;
+    --color-oxblood: #b74246;
+    --color-oxblood-strong: #cf4f53;
+    --color-metal: #a99f8c;
+    --color-hot-pink: #ff4f9a;
+    --color-cyan: #37d5d6;
+    --color-safety-yellow: #ffd75a;
+
+    /* Spacing scale */
+    --space-0: 0;
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.25rem;
+    --space-6: 1.5rem;
+    --space-8: 2rem;
+    --space-10: 2.5rem;
+    --space-12: 3rem;
+    --space-16: 4rem;
+    --space-20: 5rem;
+
+    /* Typography scale */
+    --text-xs: 0.75rem;
+    --text-sm: 0.875rem;
+    --text-md: 1rem;
+    --text-lg: 1.125rem;
+    --text-xl: 1.25rem;
+    --text-2xl: clamp(1.5rem, 3.4vw, 2.5rem);
+    --text-3xl: clamp(2rem, 5.5vw, 4rem);
+    --text-hero: clamp(1.34rem, 4vw, 4rem);
+
+    /* Radius tokens */
+    --radius-sm: 0.35rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.7rem;
+    --radius-xl: 1rem;
+    --radius-pill: 999px;
+
+    /* Shadow system */
+    --shadow-xs: 0 1px 0 rgba(255, 255, 255, 0.08) inset;
+    --shadow-sm: 0 8px 24px rgba(0, 0, 0, 0.24);
+    --shadow-md: 0 14px 32px rgba(0, 0, 0, 0.34);
+    --shadow-lg: 0 24px 45px rgba(0, 0, 0, 0.45);
+    --shadow-glow: 0 0 40px rgba(111, 17, 24, 0.24);
+
+    /* Motion tokens */
+    --ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-snappy: cubic-bezier(0.2, 0.9, 0.2, 1);
+    --dur-fast: 140ms;
+    --dur-base: 220ms;
+    --dur-slow: 420ms;
+  }
+
+  h1 {
+    font-family: var(--font-display), "Arial Narrow", sans-serif;
+    font-weight: 700;
+    font-size: var(--text-3xl);
+    letter-spacing: -0.01em;
+    line-height: 1.04;
+    text-transform: uppercase;
+  }
+
+  h2 {
+    font-family: var(--font-display), "Arial Narrow", sans-serif;
+    font-weight: 600;
+    font-size: var(--text-2xl);
+    letter-spacing: 0.01em;
+    line-height: 1.1;
+    text-transform: uppercase;
+  }
+
+  h3 {
+    font-family: var(--font-display), "Arial Narrow", sans-serif;
+    font-size: clamp(1.1rem, 2.4vw, 1.5rem);
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  h4, h5, h6 {
+    font-family: var(--font-display), "Arial Narrow", sans-serif;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+  }
+
+  p {
+    line-height: 1.68;
+    color: var(--color-bone-muted);
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+@layer components {
+  .type-display-xl {
+    font-family: var(--font-display), "Arial Narrow", sans-serif;
+    font-size: var(--text-hero);
+    font-weight: 700;
+    line-height: 0.9;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 639px) {
+    .type-display-xl {
+      line-height: 0.94;
+      letter-spacing: -0.005em;
+    }
+  }
+
+  .type-heading-lg {
+    font-family: var(--font-display), "Arial Narrow", sans-serif;
+    font-size: var(--text-2xl);
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+  }
+
+  .type-kicker {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-weight: 600;
+    color: var(--color-metal);
+  }
+
+  .wordmark {
+    font-family: var(--font-display), "Arial Narrow", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+  }
+
+  .wordmark-mark {
+    color: var(--color-metal);
+    margin-left: 0.3rem;
+    font-size: 0.7em;
+    vertical-align: top;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center font-semibold uppercase;
+    gap: var(--space-2);
+    min-height: 2.875rem;
+    padding: 0.9rem 1.5rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    border-radius: var(--radius-sm);
+    transition:
+      transform var(--dur-base) var(--ease-standard),
+      background-color var(--dur-base) var(--ease-standard),
+      border-color var(--dur-base) var(--ease-standard),
+      color var(--dur-base) var(--ease-standard),
+      box-shadow var(--dur-base) var(--ease-standard);
+    will-change: transform;
+  }
+
+  .btn--sm {
+    min-height: 2.5rem;
+    padding: 0.7rem 1rem;
+    font-size: 0.72rem;
+  }
+
+  .btn--lg {
+    min-height: 3.125rem;
+    padding: 1rem 1.875rem;
+    font-size: 0.84rem;
+  }
+
+  .btn--primary {
+    background: var(--color-bone);
+    color: var(--color-ink);
+    border: 1px solid rgba(242, 232, 213, 0.9);
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.35);
+  }
+
+  .btn--primary:hover {
+    background: var(--color-hot-pink);
+    border-color: var(--color-hot-pink);
+    color: var(--color-ink);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .btn--secondary {
+    background: transparent;
+    color: var(--color-bone);
+    border: 1px solid rgba(242, 232, 213, 0.62);
+  }
+
+  .btn--secondary:hover {
+    background: rgba(255, 215, 90, 0.94);
+    color: #0b0b0b;
+    border-color: #ffd75a;
+    transform: translateY(-1px);
+  }
+
+  .btn--ghost {
+    background: transparent;
+    color: var(--color-bone-soft);
+    border: 1px solid rgba(242, 236, 222, 0.2);
+  }
+
+  .btn--ghost:hover {
+    color: var(--color-bone);
+    border-color: rgba(242, 236, 222, 0.45);
+  }
+
+  /* Backward compatible aliases */
+  .btn-primary {
+    @apply inline-flex items-center justify-center font-semibold uppercase;
+    gap: var(--space-2);
+    min-height: 2.875rem;
+    padding: 0.9rem 1.5rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    border-radius: var(--radius-sm);
+    transition:
+      transform var(--dur-base) var(--ease-standard),
+      background-color var(--dur-base) var(--ease-standard),
+      border-color var(--dur-base) var(--ease-standard),
+      color var(--dur-base) var(--ease-standard),
+      box-shadow var(--dur-base) var(--ease-standard);
+    background: var(--color-oxblood);
+    color: var(--color-bone);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: var(--shadow-xs);
+  }
+
+  .btn-primary:hover {
+    background: var(--color-oxblood-strong);
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center font-semibold uppercase;
+    gap: var(--space-2);
+    min-height: 2.875rem;
+    padding: 0.9rem 1.5rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    border-radius: var(--radius-sm);
+    transition:
+      transform var(--dur-base) var(--ease-standard),
+      background-color var(--dur-base) var(--ease-standard),
+      border-color var(--dur-base) var(--ease-standard),
+      color var(--dur-base) var(--ease-standard),
+      box-shadow var(--dur-base) var(--ease-standard);
+    background: transparent;
+    color: var(--color-bone);
+    border: 1px solid rgba(242, 236, 222, 0.7);
+  }
+
+  .btn-secondary:hover {
+    background: rgba(242, 236, 222, 0.12);
+    transform: translateY(-1px);
+  }
+
+  .btn-primary-oxblood {
+    @apply inline-flex items-center justify-center font-semibold uppercase;
+    gap: var(--space-2);
+    min-height: 2.875rem;
+    padding: 0.9rem 1.5rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    border-radius: var(--radius-sm);
+    transition:
+      transform var(--dur-base) var(--ease-standard),
+      background-color var(--dur-base) var(--ease-standard),
+      border-color var(--dur-base) var(--ease-standard),
+      color var(--dur-base) var(--ease-standard),
+      box-shadow var(--dur-base) var(--ease-standard);
+    background: var(--color-oxblood);
+    color: var(--color-bone);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: var(--shadow-xs);
+  }
+
+  .btn-primary-oxblood:hover {
+    background: #6f171d;
+    transform: translateY(-1px);
+  }
+
+  .product-card {
+    @apply block;
+    border-radius: var(--radius-lg);
+    padding: var(--space-3);
+    border: 1px solid rgba(242, 236, 222, 0.1);
+    background:
+      linear-gradient(180deg, rgba(28, 26, 24, 0.72), rgba(19, 18, 16, 0.84));
+    transition:
+      transform var(--dur-base) var(--ease-snappy),
+      border-color var(--dur-base) var(--ease-standard),
+      box-shadow var(--dur-base) var(--ease-standard);
+  }
+
+  .product-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(242, 236, 222, 0.22);
+    box-shadow: var(--shadow-md);
+  }
+
+  .product-image {
+    @apply relative aspect-square overflow-hidden mb-4;
+    border-radius: var(--radius-md);
+    background: radial-gradient(circle at 68% 30%, #3b332d 2%, #221f1b 30%, #131210 70%);
+    border: 1px solid rgba(242, 236, 222, 0.08);
+  }
+
+  .product-image img {
+    @apply w-full h-full object-cover;
+    position: relative;
+    z-index: 12;
+    transition: transform var(--dur-slow) var(--ease-standard), filter var(--dur-base) var(--ease-standard);
+    filter: contrast(1.05) saturate(0.92) brightness(0.95);
+  }
+
+  .product-card:hover .product-image img {
+    transform: scale(1.045);
+    filter: contrast(1.08) saturate(0.96) brightness(0.98);
+  }
+
+  /* Premium product presentation framework */
+  .premium-product-card {
+    @apply block h-full;
+    border-radius: var(--radius-lg);
+    padding: var(--space-4);
+    border: 1px solid rgba(242, 236, 222, 0.08);
+    background: linear-gradient(180deg, rgba(28, 25, 23, 0.92), rgba(21, 19, 17, 0.97));
+    transition:
+      transform var(--dur-base) var(--ease-snappy),
+      border-color var(--dur-base) var(--ease-standard),
+      box-shadow var(--dur-base) var(--ease-standard);
+  }
+
+  .premium-product-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(242, 236, 222, 0.18);
+    box-shadow: 0 20px 38px rgba(0, 0, 0, 0.28);
+  }
+
+  .premium-product-media {
+    @apply relative aspect-square overflow-hidden mb-5;
+    border-radius: 0.9rem;
+    background: radial-gradient(circle at 50% 28%, #4f4740 0%, #312b26 38%, #221f1b 100%);
+    border: 1px solid rgba(242, 236, 222, 0.06);
+  }
+
+  .premium-product-artwork {
+    @apply w-full h-full object-contain;
+    position: relative;
+    z-index: 14;
+    padding: 7% 8% 9%;
+    filter: brightness(1.08) contrast(1.08) drop-shadow(0 26px 34px rgba(0, 0, 0, 0.26));
+  }
+
+  .premium-product-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #a59c8d;
+  }
+
+  .badge {
+    @apply inline-block text-[10px] tracking-[0.18em] font-semibold uppercase px-2 py-1;
+    border-radius: var(--radius-pill);
+    color: var(--color-bone);
+    background: rgba(91, 18, 22, 0.82);
+    border: 1px solid rgba(242, 236, 222, 0.28);
+  }
+
+  .badge--soft {
+    background: rgba(143, 135, 121, 0.18);
+    border-color: rgba(143, 135, 121, 0.35);
+    color: var(--color-bone-muted);
+  }
+
+  .campaign-mockup {
+    @apply relative overflow-hidden;
+    border-radius: var(--radius-lg);
+    background: radial-gradient(circle at 68% 30%, #3b332d 2%, #221f1b 30%, #131210 70%);
+    border: 1px solid rgba(242, 236, 222, 0.08);
+  }
+
+  .campaign-mockup::before {
+    content: "";
+    position: absolute;
+    inset: 11% 24% 19% 24%;
+    border-radius: 46% 46% 38% 38%;
+    background: linear-gradient(180deg, rgba(12, 11, 10, 0.95), rgba(24, 23, 21, 0.9));
+    box-shadow: var(--shadow-lg);
+    opacity: 0.75;
+    pointer-events: none;
+  }
+
+  .campaign-mockup::after {
+    content: "SHITTYTEES";
+    position: absolute;
+    bottom: 10%;
+    right: 10%;
+    font-family: var(--font-display), "Arial Narrow", sans-serif;
+    letter-spacing: 0.12em;
+    font-size: 0.64rem;
+    color: rgba(242, 236, 222, 0.46);
+    pointer-events: none;
+  }
+
+  /* Complete garment mockup framework for future transparent PNG assets */
+  .mockup-frame {
+    @apply relative overflow-hidden;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(242, 236, 222, 0.1);
+    background: radial-gradient(circle at 64% 22%, #49423b 0%, #2c2722 46%, #171513 100%);
+    box-shadow: var(--shadow-md);
+  }
+
+  .mockup-frame::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    background: linear-gradient(135deg, transparent 22%, rgba(242, 236, 222, 0.16) 52%, transparent 84%);
+    opacity: 0.22;
     pointer-events: none;
   }
 
