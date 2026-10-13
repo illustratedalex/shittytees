@@ -1147,6 +1147,8 @@ textarea {
 .storefront{background:#f3f0e8;color:#171717;padding-top:80px;overflow-x:clip}
 .storefront h1,.storefront h2,.storefront h3{color:inherit}
 .store-eyebrow{font-size:11px;font-weight:600;letter-spacing:.15em;text-transform:uppercase}
+.storefront .store-eyebrow{color:#59554c}
+.header-shell nav[aria-label="Primary"]{gap:24px}
 .store-hero{display:grid;grid-template-columns:1.05fr 1fr;gap:40px;padding-top:60px;padding-bottom:70px;align-items:center}
 .store-hero h1{font-size:clamp(58px,7.9vw,112px);line-height:.95;letter-spacing:-.04em;margin:24px 0;font-weight:700}
 .store-hero h1 span{color:#cf4525}
@@ -1183,6 +1185,7 @@ textarea {
 .design-copy details p{margin:10px 0;line-height:1.6}
 .design-copy details a{text-decoration:underline}
 .politics-banner{background:#d34b2b;color:#f6efe2;display:grid;grid-template-columns:1.2fr 1fr;gap:50px;align-items:center;padding:60px!important;margin-bottom:65px}
+.storefront .politics-banner .store-eyebrow{color:#f6efe2}
 .politics-banner h2{font-size:clamp(38px,4.9vw,70px);letter-spacing:-.035em;line-height:1;margin-top:20px}
 .politics-banner p:not(.store-eyebrow){max-width:40ch;font-size:15px;line-height:1.7;margin:23px 0}
 .politics-seal{border:3px solid currentColor;outline:1px solid currentColor;outline-offset:9px;border-radius:50%;width:290px;height:290px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;margin:auto;transform:rotate(-9deg);font-family:var(--font-display);font-size:38px;line-height:1.1}
