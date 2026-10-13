@@ -14,6 +14,8 @@ export type ProductPresentation = {
 };
 
 export const PRODUCT_PRESENTATIONS: ProductPresentation[] = [
+  {slug:'elected-not-housebroken',frontImage:'/images/designs/elected-printful-front.png',garmentColor:'black',source:'local'},
+  {slug:'campaign-promises-batteries-not-included',frontImage:'/images/designs/campaign-printful-front.png',garmentColor:'black',source:'local'},
   {
     slug: 'professionally-unsupervised',
     garmentColor: 'charcoal',
