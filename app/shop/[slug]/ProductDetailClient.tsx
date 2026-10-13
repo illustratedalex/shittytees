@@ -146,7 +146,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
   return (
     <>
       <SiteHeader />
-      <main className="min-h-screen bg-[#0b0b0b] pt-[5rem]">
+      <main className="store-product">
         <div className="site-shell section-shell pdp-shell">
           <Link href="/shop" className="text-[#c9beaa] hover:text-[#f2e8d5] text-sm tracking-[0.04em] font-semibold mb-8 inline-flex items-center gap-2 focus-visible-ring rounded-sm">
             ← Back to Shop

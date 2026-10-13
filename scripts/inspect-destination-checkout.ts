@@ -8,7 +8,8 @@ if(process.env.VERCEL_ENV!=='preview'||process.env.VERCEL_GIT_COMMIT_REF!=='stri
 async function main(){
  const stripe=getStripe();
  if((await stripe.accounts.retrieve()).id!=='acct_1UPvlWRIGojPaEKC')throw new Error('Incorrect sandbox');
- const session=await stripe.checkout.sessions.retrieve('cs_test_a1pi57w3bnYm14hY74oEUBCP5up3xu9JxZiifsFeVJUrOJjf8d9TU3OlH6');
+ for(const sessionId of ['cs_test_a1pi57w3bnYm14hY74oEUBCP5up3xu9JxZiifsFeVJUrOJjf8d9TU3OlH6','cs_test_a18LXLAGpqsVhNQ77cT5i0hSA4PPP9OQhYfTSSmzJd3a1WMOtrsEOCQjuz']){
+ const session=await stripe.checkout.sessions.retrieve(sessionId);
  const order=await getOrderRepository().getById(session.metadata?.orderId||'');
  if(!order||session.livemode)throw new Error('Saved sandbox quote missing');
  const quote=await quoteCostPlusOrder(order.items,order.shippingAddress);
@@ -19,6 +20,7 @@ async function main(){
   const event=events.data.find(e=>'id' in e.data.object&&e.data.object.id===session.id);
   const receipt=event?await getPool().query('SELECT processed_at FROM processed_webhook_events WHERE provider=$1 AND event_id=$2',['stripe',event.id]):undefined;
   console.log('DESTINATION_DRAFT_PROOF',JSON.stringify({id:draft.id,status:draft.status,costs:draft.costs,retailTotal:draft.retail_costs?.total,retailShipping:draft.retail_costs?.shipping,event:event?.id,signedReceiptProcessed:!!receipt?.rows[0]?.processed_at,items:draft.items.map(i=>({syncVariant:i.sync_variant_id,catalogVariant:i.variant_id,quantity:i.quantity,retailPrice:i.retail_price,files:i.files.map(f=>({id:f.id,type:f.type}))}))}));
+ }
  }
  try {
   const result=(await printfulRequest<{url:string;types:string[]}>('/webhooks')).result;

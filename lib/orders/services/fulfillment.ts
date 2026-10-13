@@ -69,6 +69,10 @@ export async function submitOrderToFulfillment(repository: OrderRepository, orde
   }
 
   const confirmed = await confirmPrintfulOrder(order.printfulOrderId);
+  if (!['pending','inreview','inprocess','partial','fulfilled'].includes(confirmed.status)) {
+    await repository.update(order.id,{mappingError:`Printful did not accept fulfillment: ${confirmed.status}`});
+    throw new Error('Printful has not accepted this order for fulfillment');
+  }
 
   return repository.transitionStatus(
     order.id,
@@ -77,7 +81,8 @@ export async function submitOrderToFulfillment(repository: OrderRepository, orde
     source,
     'Submitted to fulfillment',
     {
-      fulfilled: confirmed.status !== 'draft',
+      fulfilled: confirmed.status === 'fulfilled',
+      mappingError: undefined,
       printfulOrderId: confirmed.id,
       printfulExternalOrderId: String(confirmed.external_id || order.id),
     },
