@@ -7,7 +7,8 @@ import type { StoreOrderItem } from '../lib/orders/types';
 if (process.env.VERCEL_ENV !== 'preview' || process.env.VERCEL_GIT_COMMIT_REF !== 'stripe-printful-migration-audit' || getPrintfulEnv().storeId !== '18894982') throw new Error('Audit Preview only');
 // Illustration only until the merchant's actual fee schedule is verified.
 const fees = {basisPoints:290, fixedCents:30};
-const address = {firstName:'Alexander',lastName:'Lawrence',email:'illustratedalex@gmail.com',address:'18 Opera House Square',city:'Claremont',state:'NH',postalCode:'03743',country:'US'};
+// Published example recipient from Printful API documentation, not customer data.
+const address = {firstName:'John',lastName:'Doe',email:'test@example.com',address:'19749 Dearborn St',city:'Chatsworth',state:'CA',postalCode:'91311',country:'US'};
 type Detail = {sync_product:{id:number;name:string};sync_variants:Array<{id:number;size:string;color:string}>};
 for (const id of [480976406,480976408]) {
  const detail = (await printfulRequest<Detail>('/store/products/' + id)).result;
@@ -17,7 +18,7 @@ for (const id of [480976406,480976408]) {
   try {
    const costs = await estimateFulfillmentCosts([item],address);
    const price = calculateCostPlusTotal(costs.totalCents,1,fees);
-   console.log('PRICING_ESTIMATE',JSON.stringify({product:id,size:variant.size,color:variant.color,costs,price,feeAssumption:'Standard US domestic online card: 2.9% + 30 cents; merchant schedule unverified',destination:'Claremont NH 03743',published:false}));
+   console.log('PRICING_ESTIMATE',JSON.stringify({product:id,size:variant.size,color:variant.color,costs,price,feeAssumption:'Standard US domestic online card: 2.9% + 30 cents; merchant schedule unverified',destination:'Printful documentation sample recipient, CA 91311',published:false}));
   } catch {console.log('PRICING_ESTIMATE',JSON.stringify({product:id,size:variant.size,ok:false,published:false}));}
  }
 }
