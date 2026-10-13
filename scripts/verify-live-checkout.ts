@@ -6,8 +6,10 @@ async function main(){
  const stripe=getStripe();
  if((await stripe.accounts.retrieve()).id!=='acct_1UPvlRIsn0OPIJry')throw new Error('Wrong merchant');
  const products=await getCatalogRepository().listPublic();
- for(const productId of ['480976406','480976408']){
-  const product=products.find(p=>p.printfulProductId===productId);
+ for(const [productId,slug] of [['480976406','elected-not-housebroken'],['480976408','campaign-promises-batteries-not-included']]){
+  const product=products.find(p=>p.slug===slug);
+  // Restore numeric native IDs after the historical external-ID mapper was corrected.
+  if(product)await getPool().query('UPDATE catalog_products SET printful_product_id=$1 WHERE id=$2 AND slug=$3',[productId,product.id,slug]);
   const v=product?.variants.find(v=>v.available&&v.size==='M');
   if(!product||!v)throw new Error('Verified product unavailable');
   const quoteResponse=await fetch('https://shittytees.com/api/checkout/quote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({items:[{productId:product.id,variantId:v.id,quantity:1,name:product.name,image:product.images[0].src,size:v.size,color:v.color,unitPrice:v.retailPrice,printfulVariantId:v.printfulVariantId}],shippingAddress:{firstName:'John',lastName:'Doe',email:'test@example.com',address:'19749 Dearborn St',city:'Chatsworth',state:'CA',postalCode:'91311',country:'US'}})});
