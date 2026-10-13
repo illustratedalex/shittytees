@@ -25,7 +25,10 @@ function parseBoolean(value?: string): boolean {
 export function getPrintfulEnv(): PrintfulEnv {
   const parsed = rawEnvSchema.parse(process.env);
   return {
-    apiToken: parsed.PRINTFUL_API_TOKEN || undefined,
+    // Temporary alias for the saved Preview-only token; never used in production.
+    apiToken: process.env.VERCEL_ENV === 'preview' && process.env.VERCEL_GIT_COMMIT_REF === 'stripe-printful-migration-audit'
+      ? process.env.PRINTFUL_API_TOK || parsed.PRINTFUL_API_TOKEN || undefined
+      : parsed.PRINTFUL_API_TOKEN || undefined,
     storeId: parsed.PRINTFUL_STORE_ID || undefined,
     webhookSecret: parsed.PRINTFUL_WEBHOOK_SECRET || undefined,
     syncSecret: parsed.PRINTFUL_SYNC_SECRET || undefined,
