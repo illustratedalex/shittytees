@@ -1133,6 +1133,17 @@ textarea {
 .checkout-result h1{margin:24px 0;font-size:clamp(32px,5vw,48px)}
 .checkout-result p{color:#56534d;margin:0 0 32px}
 .checkout-result .flex{display:flex;justify-content:center;align-items:center;gap:24px;flex-wrap:wrap}
+.order-status-page{min-height:100vh;background:#f3f0e8;color:#171717;padding:80px 24px}
+.order-status-card{max-width:760px;margin:0 auto;padding:clamp(24px,5vw,48px);border:1px solid #cac4b8;background:#faf8f2}
+.order-status-card h1,.order-status-card h2,.order-status-card li,.order-status-card a{color:#171717}
+.order-status-card h1{font-size:clamp(34px,5vw,48px);margin-bottom:20px}
+.order-status-card p{color:#56534d;margin-bottom:20px}
+.order-status-current{margin:32px 0;padding:18px 20px;background:#e6e2d7}
+.order-status-current p{margin:0;font-weight:600;color:#171717}
+.order-status-items{border-top:1px solid #cac4b8;padding-top:24px}
+.order-status-items h2{font-size:22px;margin-bottom:16px}
+.order-status-items ul{list-style:none}.order-status-items li{margin-bottom:12px;line-height:1.6}
+.order-status-total{margin-top:24px;font-weight:600}
 .storefront{background:#f3f0e8;color:#171717;padding-top:80px;overflow-x:clip}
 .storefront h1,.storefront h2,.storefront h3{color:inherit}
 .store-eyebrow{font-size:11px;font-weight:600;letter-spacing:.15em;text-transform:uppercase}
