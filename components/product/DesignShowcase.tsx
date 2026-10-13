@@ -2,8 +2,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { DESIGN_SHOWCASE } from '@/data/designShowcase';
 
-export default function DesignShowcase({ politicsOnly = false }: { politicsOnly?: boolean }) {
-  const designs = politicsOnly ? DESIGN_SHOWCASE.filter((design) => design.collection === 'Shitty Politics') : DESIGN_SHOWCASE;
+export default function DesignShowcase({ politicsOnly = false, excludeSlugs = [] }: { politicsOnly?: boolean; excludeSlugs?: string[] }) {
+  const designs = DESIGN_SHOWCASE.filter(design => !excludeSlugs.includes(design.slug) && (!politicsOnly || design.collection === 'Shitty Politics'));
   return <div className="design-grid">{designs.map((design) => <article className="design-card" key={design.slug} id={design.slug}>
     <div className={`design-image ${design.image.endsWith('-art.png') ? 'design-image--art' : ''}`}>
       <Image src={design.image} alt={`${design.name} ${design.image.endsWith('-art.png') ? 'artwork' : 'shirt mockup'}`} fill sizes="(max-width: 600px) 90vw, (max-width: 1000px) 44vw, 30vw" className="object-contain" unoptimized />
