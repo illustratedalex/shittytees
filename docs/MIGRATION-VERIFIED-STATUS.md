@@ -2,9 +2,9 @@
 
 ## Live store
 
-Production deployment dpl_5mAe8cuZftRWoCJs6DMgu6SXWQaP (commit 38000165bda76b57c3d981a8608cc3752e5e964c) is READY and serves shittytees.com. Normal npm run build; no one-off build script in the live deployment. Main remains unchanged; Production was explicitly deployed from the migration branch under Alex's permission to finish and enable verified sales.
+Production deployment dpl_BCBxydURps5av7eW48UqpMBre3dU (commit 019b4fcae4b99bf80aa9fea0530b019b979d255e) is READY and serves shittytees.com. Normal npm run build; no one-off build script in the live deployment. Main remains unchanged; Production was explicitly deployed from the migration branch under Alex's permission to finish and enable verified sales.
 
-The redesigned homepage, navigation, footer, shop and two political product pages are live. Unfinished listings remain unavailable while old URLs are preserved. Native Black Bella + Canvas 3001 variants S/M/L/XL are published in Production and active/unignored in Printful. Production checkout, fulfillment and automatic confirmation flags are enabled. Preview test-order creation is disabled.
+The redesigned homepage, navigation, footer, shop and two political product pages are live. Final browser verification confirmed only Dead Tired remains in the shop coming-soon section. Audit Preview dpl_Ak2tLsH5sr2mj29t6akSMCAh1Xir is also READY with test-order creation disabled. Unfinished listings remain unavailable while old URLs are preserved. Native Black Bella + Canvas 3001 variants S/M/L/XL are published in Production and active/unignored in Printful. Production checkout, fulfillment and automatic confirmation flags are enabled. Preview test-order creation is disabled.
 
 Square is removed from the deployed payment/fulfillment path. The legacy Square-store API token was blanked; every Vercel deployment uses only the native token for store 18894982. The old Square store 7561356 and designs were preserved as an archive, not deleted.
 
