@@ -4,6 +4,7 @@ import { getCheckoutSession } from '@/lib/stripe/checkout';
 import { getOrderRepository } from '@/lib/orders';
 import { toErrorResponse } from '@/lib/orders/http';
 import { processStripeEvent, StripeSessionShape } from '@/lib/orders/services/webhooks';
+import { PrintfulError } from '@/lib/printful/errors';
 
 export async function POST(request: NextRequest) {
   const sig = request.headers.get('stripe-signature') || '';
@@ -52,6 +53,7 @@ export async function POST(request: NextRequest) {
     );
     return NextResponse.json({ received: true });
   } catch (error) {
+    console.error('Stripe webhook processing failed', {kind: error instanceof Error ? error.name : 'unknown',printfulStatus: error instanceof PrintfulError ? error.status : undefined});
     return toErrorResponse(error);
   }
 }

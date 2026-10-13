@@ -12,7 +12,7 @@ export interface PrintfulResponse<T> {
 
 export interface PrintfulErrorResponse {
   code: number;
-  result: {
+  result: string | {
     error?: string;
     errors?: Record<string, string[]>;
   };
@@ -36,8 +36,8 @@ async function parseResponse<T>(endpoint: string, response: Response): Promise<P
   if (!response.ok) {
     const errorPayload = payload as PrintfulErrorResponse;
     const message =
-      errorPayload.result?.error ||
-      (errorPayload.result?.errors ? JSON.stringify(errorPayload.result.errors) : 'Unknown Printful error');
+      (typeof errorPayload.result === 'string' ? errorPayload.result : errorPayload.result?.error) ||
+      (typeof errorPayload.result !== 'string' && errorPayload.result?.errors ? JSON.stringify(errorPayload.result.errors) : 'Unknown Printful error');
     throw new PrintfulError(`Printful API error (${response.status}) on ${endpoint}: ${message}`, {
       status: response.status,
       code: errorPayload.code,

@@ -1128,6 +1128,11 @@ textarea {
 }
 
 /* Shitty Tees storefront refresh: warm paper, ink, and safety orange. */
+.checkout-result{background:#f3f0e8;color:#171717;min-height:100vh;padding:100px 24px;text-align:center}
+.checkout-result>div{max-width:680px;margin:auto}
+.checkout-result h1{margin:24px 0;font-size:clamp(32px,5vw,48px)}
+.checkout-result p{color:#56534d;margin:0 0 32px}
+.checkout-result .flex{display:flex;justify-content:center;align-items:center;gap:24px;flex-wrap:wrap}
 .storefront{background:#f3f0e8;color:#171717;padding-top:80px;overflow-x:clip}
 .storefront h1,.storefront h2,.storefront h3{color:inherit}
 .store-eyebrow{font-size:11px;font-weight:600;letter-spacing:.15em;text-transform:uppercase}
