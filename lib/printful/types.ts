@@ -5,6 +5,11 @@ export type PrintfulFile = {
   preview_url?: string;
   thumbnail_url?: string;
   filename?: string;
+  status?: string;
+  width?: number;
+  height?: number;
+  dpi?: number;
+  hash?: string;
   visible?: boolean;
   options?: Record<string, string | number | boolean>;
 };

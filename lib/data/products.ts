@@ -1,3 +1,4 @@
+import { SHITTY_COLLECTIONS } from '@/data/shittyCollections';
 import { Collection, Product, ProductVariant } from '../types/product';
 import { ARCHIVE_PRODUCTS } from '@/data/archiveProducts';
 import { PUBLISHED_PRODUCTS } from '@/data/publishedProducts';
@@ -58,12 +59,7 @@ export const COLLECTIONS: Collection[] = [
     name: 'Holiday Damage',
     description: 'Seasonal releases for people who avoid polite small talk.',
   },
-  {
-    id: 'col-shitty-politics',
-    slug: 'shitty-politics',
-    name: 'Shitty Politics',
-    description: 'Campaign promises, political theater, and questionable leadership. Original political satire tees. First designs coming soon.',
-  },
+  ...SHITTY_COLLECTIONS,
   {
     id: 'col-10',
     slug: 'archive',

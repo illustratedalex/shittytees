@@ -1,4 +1,4 @@
-import DesignShowcase from '@/components/product/DesignShowcase';
+import {SHITTY_COLLECTIONS} from '@/data/shittyCollections';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getCollectionBySlug, getProductsByCollection } from '@/lib/catalog/service';
@@ -61,7 +61,8 @@ export default async function CollectionSlugPage({ params }: Props) {
     );
   }
 
-  if (slug === 'shitty-politics') return <><SiteHeader /><main className="storefront"><section className="store-section site-shell"><p className="store-eyebrow">Questionable leadership. Excellent shirts.</p><h1 className="store-page-title">SHITTY POLITICS.</h1><p className="store-page-description">Two candidates. Zero faith in the sales pitch. Meet the next release.</p><div className="next-design-heading"><DesignShowcase politicsOnly /></div>{products.length ? <div className="shop-grid mt-12">{products.map(product => <ProductTile key={product.id} product={product} />)}</div> : null}</section></main><SiteFooter /></>;
+  if (SHITTY_COLLECTIONS.some(c=>c.slug===slug)) return <><SiteHeader/><main className="storefront"><section className="store-section site-shell"><Link href="/collections" className="store-text-link">← The Shitty Tees family</Link><p className="store-eyebrow mt-6">A Shitty Tees collection</p><h1 className="store-page-title">{collection.name.toUpperCase()}.</h1><p className="store-page-description">{collection.description}</p>{products.length?<div className="shop-grid">{products.map(product=><ProductTile key={product.id} product={product}/>)}</div>:<p className="store-release-message">The first shirts are being prepared. Check back for the release.</p>}</section></main><SiteFooter/></>;
+
 
   return (
     <>
