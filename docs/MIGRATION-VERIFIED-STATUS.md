@@ -33,3 +33,7 @@ Print files are transparent 3000×4000 PNGs at 250 DPI on a 12×16-inch canvas. 
 - Dead Tired and Bad Decisions are not verified production products yet.
 
 Use `scripts/inspect-politics-test-orders.ts` for a read-only evidence report. Do not create another payment or retry mutation merely to recover this handoff.
+
+## Production credential preparation, 16:36 EDT
+
+Alex explicitly approved reusing the verified native Printful token in Production and Preview while fulfillment remains disabled. Vercel rejected renaming the saved sensitive key (`You cannot change the key of a Sensitive Environment Variable`), so retain `PRINTFUL_API_TOK`. The prepared runtime accepts that alias only for exact native store `18894982` in Production or the audit Preview; it never falls back to the old Square token in those contexts. Verify the environment-update receipt before claiming its scopes changed. Production store selection and live sales remain separate pending steps.

@@ -20,7 +20,13 @@ describe('native Printful credential routing',()=>{
  it('never falls back to the old Square token in Production',()=>{
   settings('production','18894982');
   vi.stubEnv('PRINTFUL_NATIVE_API_TOKEN','');
+  vi.stubEnv('PRINTFUL_API_TOK','');
   expect(getPrintfulEnv().apiToken).toBeUndefined();
+ });
+ it('accepts the existing unrenamable alias for the verified native Production store',()=>{
+  settings('production','18894982');
+  vi.stubEnv('PRINTFUL_NATIVE_API_TOKEN','');
+  expect(getPrintfulEnv().apiToken).toBe('preview-example');
  });
  it('keeps the existing audit Preview token working during preparation',()=>{
   settings('preview','18894982');

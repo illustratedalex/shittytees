@@ -27,11 +27,13 @@ export function getPrintfulEnv(): PrintfulEnv {
   const parsed = rawEnvSchema.parse(process.env);
   const auditPreview = process.env.VERCEL_ENV === 'preview' && process.env.VERCEL_GIT_COMMIT_REF === 'stripe-printful-migration-audit';
   const nativeStore = parsed.PRINTFUL_STORE_ID === '18894982';
+  // Vercel cannot rename a saved sensitive variable; retain the existing alias.
+  const nativeApiToken = parsed.PRINTFUL_NATIVE_API_TOKEN || process.env.PRINTFUL_API_TOK;
   const apiToken = process.env.VERCEL_ENV === 'production'
     // Fail closed until Production explicitly selects the verified native store.
-    ? (nativeStore ? parsed.PRINTFUL_NATIVE_API_TOKEN : undefined)
+    ? (nativeStore ? nativeApiToken : undefined)
     : auditPreview
-      ? (nativeStore ? parsed.PRINTFUL_NATIVE_API_TOKEN || process.env.PRINTFUL_API_TOK : undefined)
+      ? (nativeStore ? nativeApiToken : undefined)
       : parsed.PRINTFUL_API_TOKEN;
   return {
     apiToken: apiToken || undefined,
