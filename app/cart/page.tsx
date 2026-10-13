@@ -24,6 +24,9 @@ export default function CartPage() {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [quote,setQuote]=useState<{orderId:string;token:string;subtotal:number;shipping:number;total:number;fingerprint:string;createdAt:number}|null>(null);
+  const fingerprint=JSON.stringify({items,shippingAddress});
+  const currentQuote=quote?.fingerprint===fingerprint?quote:null;
 
 
   const handleCheckout = async () => {
@@ -60,10 +63,10 @@ export default function CartPage() {
 
       CheckoutRequestSchema.parse(payload);
 
-      const response = await fetch('/api/checkout', {
+      const response = await fetch(currentQuote?'/api/checkout':'/api/checkout/quote', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
+        body: JSON.stringify(currentQuote?{orderId:currentQuote.orderId,token:currentQuote.token}:payload),
       });
 
       if (!response.ok) {
@@ -72,10 +75,12 @@ export default function CartPage() {
       }
 
       const data = await response.json();
+      if(!currentQuote){setQuote({...data,fingerprint,createdAt:Date.now()});setLoading(false);return;}
       if (data.url) {
         window.location.href = data.url;
       }
     } catch (err) {
+      setQuote(null);
       setError(err instanceof Error ? err.message : 'Checkout failed');
       setLoading(false);
     }
@@ -181,19 +186,19 @@ export default function CartPage() {
               <div className="space-y-4 mb-8 text-sm">
                 <div className="flex justify-between text-[#aaa59c]">
                   <span>Subtotal</span>
-                  <span className="font-semibold text-[#f3efe6]">${subtotal.toFixed(2)}</span>
+                  <span className="font-semibold text-[#f3efe6]">${(currentQuote?.subtotal??subtotal).toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between text-[#aaa59c]">
-                  <span>Shipping</span>
-                  <span className="font-semibold text-[#f3efe6]">Calculated at checkout</span>
+                  <span>Delivery & handling</span>
+                  <span className="font-semibold text-[#f3efe6]">{currentQuote?`$${currentQuote.shipping.toFixed(2)}`:'Review after address'}</span>
                 </div>
                 <div className="flex justify-between text-[#aaa59c]">
-                  <span>Tax</span>
-                  <span className="font-semibold text-[#f3efe6]">Shown at checkout</span>
+                  <span>Production taxes</span>
+                  <span className="font-semibold text-[#f3efe6]">Included in delivery quote</span>
                 </div>
                 <div className="border-t border-[#2f2f2f] pt-4 flex justify-between font-bold text-[#f3efe6] text-lg">
-                  <span>Items total</span>
-                  <span>${subtotal.toFixed(2)}</span>
+                  <span>{currentQuote?'Total to pay':'Items total'}</span>
+                  <span>${(currentQuote?.total??subtotal).toFixed(2)}</span>
                 </div>
               </div>
 
@@ -278,7 +283,7 @@ export default function CartPage() {
                 disabled={loading || items.length === 0}
                 className="btn-primary-oxblood w-full mb-3 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {loading ? 'Processing...' : 'Proceed to Checkout'}
+                {loading ? 'Checking...' : currentQuote?'Pay with Stripe':'Review delivered price'}
               </button>
 
               <button

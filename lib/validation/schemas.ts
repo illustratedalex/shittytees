@@ -5,7 +5,7 @@ export const CheckoutLineItemSchema = z.object({
   variantId: z.string().min(1),
   quantity: z.number().int().min(1).max(100),
   name: z.string(),
-  image: z.string().url(),
+  image: z.string().min(1).refine(value => value.startsWith('/') || /^https?:\/\//.test(value)),
   size: z.string(),
   color: z.string(),
   unitPrice: z.number().nonnegative(),

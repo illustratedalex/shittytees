@@ -16,6 +16,9 @@ export async function createCheckoutSession(
   params: CreateCheckoutSessionParams
 ): Promise<Stripe.Checkout.Session> {
   const stripe = getStripe();
+  const account=await stripe.accounts.retrieve();
+  if(process.env.VERCEL_ENV==='production' && account.id!=='acct_1UPvlRIsn0OPIJry') throw new Error('Incorrect Shitty Tees merchant account');
+  if(process.env.VERCEL_ENV==='preview' && process.env.VERCEL_GIT_COMMIT_REF==='stripe-printful-migration-audit' && account.id!=='acct_1UPvlWRIGojPaEKC') throw new Error('Incorrect Shitty Tees sandbox account');
   const { items, shippingAddress, baseUrl, orderId, orderAccessToken, shipping } = params;
 
   const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
@@ -37,10 +40,11 @@ export async function createCheckoutSession(
 
   const session = await stripe.checkout.sessions.create({
     mode: 'payment',
+    payment_method_types: ['card'],
     line_items: lineItems,
     customer_email: shippingAddress.email,
     billing_address_collection: 'required',
-    shipping_options: [{ shipping_rate_data: { type: 'fixed_amount', fixed_amount: { amount: Math.round(shipping * 100), currency: 'usd' }, display_name: 'Standard shipping' } }],
+    shipping_options: [{ shipping_rate_data: { type: 'fixed_amount', fixed_amount: { amount: Math.round(shipping * 100), currency: 'usd' }, display_name: 'Delivery & handling' } }],
     custom_text: { submit: { message: `Ships to: ${shippingAddress.firstName} ${shippingAddress.lastName}, ${shippingAddress.address}${shippingAddress.addressLine2 ? ', ' + shippingAddress.addressLine2 : ''}, ${shippingAddress.city}, ${shippingAddress.state} ${shippingAddress.postalCode}. Return to cart to change this address.` } },
     success_url: `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}&order_id=${encodeURIComponent(orderId)}&token=${encodeURIComponent(orderAccessToken)}`,
     cancel_url: `${baseUrl}/checkout/cancel`,

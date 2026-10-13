@@ -1,4 +1,4 @@
-// Read-only production audit. Always fails the build to prevent publishing it.
+// Production configuration/permission audit. Always stops before publishing.
 import pg from 'pg';
 async function read(url, token, headers = {}) {
   const response = await fetch(url, {headers: {Authorization: `Bearer ${token}`, ...headers}});

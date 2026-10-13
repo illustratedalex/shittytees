@@ -22,18 +22,28 @@ Print files are transparent 3000×4000 PNGs at 250 DPI on a 12×16-inch canvas. 
 
 112 tests, lint and type checks passed after the external-ID fix. Earlier desktop/mobile checks passed; confirmation and order-status layouts were subsequently corrected during the hosted test.
 
-## Launch blockers
+## Current production verification
 
-- Production-only `STRIPE_SECRET_KEY` and `STRIPE_WEBHOOK_SECRET` were saved by Alex and their environment metadata verified on 2026-10-13. Their values/account identity and live webhook delivery have not been tested. Alex created the production webhook manually for `https://shittytees.com/api/stripe/webhook`, Your account, Snapshot, four required events. Stripe connector writes repeatedly requested authentication despite accepted authorization; stop retrying that connection. Merchant account `acct_1UPvlRIsn0OPIJry` previously reported charges/payouts enabled, with a live document-capture requirement due.
-- Production still references the old Printful store/token. The verified native-store token remains audit-Preview-only under `PRINTFUL_API_TOK`. Proposed reuse under `PRINTFUL_NATIVE_API_TOKEN` in Production and Preview was blocked by automatic approval review because the runtime did not yet recognize that name and broadening it could misconfigure fulfillment. No credential change occurred. Matching runtime support is now prepared: new Production code requires both `PRINTFUL_NATIVE_API_TOKEN` and exact native store `18894982`, with no legacy Square-token fallback. Audit Preview continues to accept its existing alias. Credential reuse and the Production store switch remain pending; do not retry the blocked change without addressing its risk/authorization.
-- Pricing is prepared, not activated: draft $36 retail has not been reconciled with production + destination shipping + processing fees + $2 profit per shirt. The sample estimate ($20.56 supplier total) yields $23.55 customer total only under assumed 2.9% + $0.30 processing; actual merchant/payment-method fees and final destination taxes must be accounted for.
-- Products remain draft/unavailable, and Printful variants ignored. Production fulfillment remains disabled; no test order can be confirmed through the fulfillment service.
-- `PRINTFUL_ENABLE_TEST_ORDERS` must be `false` on the audit Preview after testing, with a clean deployment to apply it. Inspect the deployment receipt before claiming cleanup complete.
+- The saved Production restricted Stripe key was exercised inside Vercel. It belongs to Shitty Tees account `acct_1UPvlRIsn0OPIJry`, with charges and payouts enabled. It read the enabled live endpoint `we_1UQCEXIsn0OPIJry4vhIvy20` at `https://shittytees.com/api/stripe/webhook`, with all four required events. A live internal Checkout session was created and immediately expired, unpaid; its URL was never published. This proves Checkout permissions, not a live payment or signed production delivery.
+- The native token `PRINTFUL_API_TOK` is now scoped to Production and Preview under Alex’s explicit approval. Both native products and all eight file/garment mappings were read successfully using that token in Production. The global store selector was then updated to native store `18894982`. Old Square store/designs remain preserved in Printful.
+- Production database connectivity and `catalog_products`, `catalog_variants`, `orders`, `order_status_events`, and `processed_webhook_events` were verified. Demo checkout, fulfillment and automatic confirmation were off during the audit.
+- These production audit builds deliberately exited before building/publishing the website. The live website has not yet been switched.
+
+## Prepared checkout changes awaiting Preview verification
+
+- Saved destination quotes expire after 15 minutes, require a private access token and are rechecked against available product mappings before Stripe opens. Client totals cannot replace saved prices.
+- Item prices by size are set from verified production cost plus $2. Delivery/handling includes destination shipping, supplier tax and a processing-fee allowance. The draft $36 flat retail price is retired when the new catalog registration runs.
+- The processing profile is the published US card rate with the international-card allowance: 4.4% plus $0.30 on the total. Checkout is restricted to cards and card wallets so BNPL fees cannot invalidate the quote. Profit targets at least $2 per shirt under that profile; domestic cards leave a small additional margin. This is not a guarantee about a custom merchant fee contract.
+- Supplier tax can depend on retail prices in some destinations. Quotes iterate with the exact item and delivery amounts sent to Printful until the bill and customer total converge; failures block checkout.
+- An explicit Production checkout switch requires native credentials, a live Stripe key, signing secret and enabled fulfillment before payment sessions can open.
+- Printful v1 callback authentication uses a separate derived URL credential because the provider does not send the previously assumed `X-Printful-Signature` header. Callback configuration/delivery still require verification. Retry receipts are saved after successful processing.
+
+## Remaining launch checks
+
+- Run the new catalog registration in Preview; verify the reviewed delivered price and hosted payment flow after the pricing changes. Test orders must remain unconfirmed.
+- Register the two native products as Production drafts. Verify a signed live webhook without charging a customer, then deploy the normal build and verify desktop/mobile purchase pages and cart.
+- Configure and verify the native Printful callback, enable the final published mappings and checkout/fulfillment switches only after these checks. Disable Preview test draft creation afterward.
 - No Facebook launch occurred. Preserve the existing conditional automation; post once only after both political products are genuinely purchasable, verify the shareable post URL, then disable it.
-- Dead Tired and Bad Decisions are not verified production products yet.
+- Dead Tired and Bad Decisions remain unverified production products.
 
-Use `scripts/inspect-politics-test-orders.ts` for a read-only evidence report. Do not create another payment or retry mutation merely to recover this handoff.
-
-## Production credential preparation, 16:36 EDT
-
-Alex explicitly approved reusing the verified native Printful token in Production and Preview while fulfillment remains disabled. Vercel rejected renaming the saved sensitive key (`You cannot change the key of a Sensitive Environment Variable`), so retain `PRINTFUL_API_TOK`. The prepared runtime accepts that alias only for exact native store `18894982` in Production or the audit Preview; it never falls back to the old Square token in those contexts. Verify the environment-update receipt before claiming its scopes changed. Production store selection and live sales remain separate pending steps.
+The native dimensions, file status and official mockup placement are verified; physical print quality is not. Use `scripts/inspect-politics-test-orders.ts` to recover earlier sandbox receipts without making another payment.

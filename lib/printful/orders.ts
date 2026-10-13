@@ -15,6 +15,7 @@ export type ResolvedPrintfulOrderItem = {
   sync_variant_id: number;
   quantity: number;
   name: string;
+  retail_price: string;
 };
 
 export function buildPrintfulRecipient(shippingAddress: StoreOrder['shippingAddress'], email: string, phone?: string): PrintfulRecipient {
@@ -36,6 +37,7 @@ export function mapOrderItemsToPrintful(items: StoreOrderItem[]): ResolvedPrintf
     sync_variant_id: Number(item.printfulVariantId),
     quantity: item.quantity,
     name: item.name,
+    retail_price: item.unitPrice.toFixed(2),
   }));
 }
 
@@ -46,6 +48,7 @@ export async function createPrintfulDraftOrder(order: StoreOrder, confirm = fals
     items: mapOrderItemsToPrintful(order.items),
     shipping: 'STANDARD',
     confirm,
+    retail_costs: {currency: order.currency, shipping: order.shipping.toFixed(2), tax: order.tax.toFixed(2)},
   };
 
   const response = await printfulRequest<PrintfulOrder>('/orders', {

@@ -12,10 +12,10 @@ function cents(value: number | string) {
 }
 
 /** Estimation only: this endpoint does not create or confirm an order. */
-export async function estimateFulfillmentCosts(items: StoreOrderItem[], address: StoreShippingAddress) {
+export async function estimateFulfillmentCosts(items: StoreOrderItem[], address: StoreShippingAddress, retailShipping?: number) {
   const response = await printfulRequest<{ costs: Costs }>('/orders/estimate-costs', {
     method: 'POST',
-    body: JSON.stringify({recipient: buildPrintfulRecipient(address, address.email), items: mapOrderItemsToPrintful(items), shipping: 'STANDARD'}),
+    body: JSON.stringify({recipient: buildPrintfulRecipient(address, address.email), items: mapOrderItemsToPrintful(items), shipping: 'STANDARD', ...(retailShipping === undefined ? {} : {retail_costs:{currency:'USD',shipping:retailShipping.toFixed(2),tax:'0.00'}})}),
   });
   const costs = response.result.costs;
   if (costs?.currency !== 'USD') throw new Error('USD fulfillment costs are required');

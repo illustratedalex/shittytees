@@ -1,4 +1,3 @@
-import crypto from 'crypto';
 import { getPrintfulEnv } from './env';
 import { PrintfulError, isRetryablePrintfulStatus } from './errors';
 import { parseRetryAfter, withRetry } from './retry';
@@ -64,20 +63,3 @@ export async function printfulRequest<T>(endpoint: string, options: RequestInit 
   });
 }
 
-export function validatePrintfulWebhook(body: string, signature: string): boolean {
-  const { webhookSecret } = getPrintfulEnv();
-
-  if (!webhookSecret) {
-    return false;
-  }
-
-  const expected = crypto.createHmac('sha256', webhookSecret).update(body).digest('hex');
-  const expectedBuffer = Buffer.from(expected);
-  const signatureBuffer = Buffer.from(signature);
-
-  if (expectedBuffer.length !== signatureBuffer.length) {
-    return false;
-  }
-
-  return crypto.timingSafeEqual(expectedBuffer, signatureBuffer);
-}

@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import {redirect} from 'next/navigation';
+import {getPublicProductBySlug} from '@/lib/catalog/service';
 import type { Metadata } from 'next';
 import { DESIGN_SHOWCASE } from '@/data/designShowcase';
 import { SiteFooter, SiteHeader } from '@/components/layout';
@@ -13,6 +15,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function PoliticsDesignPage({ params }: Props) {
  const design = findDesign((await params).slug);
  if (!design) notFound();
+ if(await getPublicProductBySlug(design.slug)) redirect('/shop/'+design.slug);
  return <><SiteHeader /><main className="storefront"><section className="store-section site-shell">
  <Link href="/collections/shitty-politics" className="underline">← Shitty Politics</Link>
  <div className="grid gap-8 md:grid-cols-2 mt-8">

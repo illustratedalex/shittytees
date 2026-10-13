@@ -178,6 +178,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
               <p className="text-[#c9beaa] text-[1rem] mt-4 leading-relaxed max-w-[38ch]">{product.shortDescription || product.description}</p>
 
               <Price amount={selectedVariant?.retailPrice || product.retailPrice} currency={product.currency || 'USD'} className="mt-5 text-[1.7rem] sm:text-[1.95rem] text-[#f2e8d5]" />
+              <p className="text-[#c9beaa] text-sm mt-2">Plus delivery & handling. Review your total before payment.</p>
 
               <p className="text-[#b9ad97] text-[0.95rem] mt-5 leading-relaxed max-w-[46ch]">{product.description}</p>
 

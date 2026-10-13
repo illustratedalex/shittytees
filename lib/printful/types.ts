@@ -112,6 +112,7 @@ export type PrintfulDraftOrderItem = {
   sync_variant_id: number;
   quantity: number;
   name?: string;
+  retail_price?: string;
 };
 
 export type PrintfulDraftOrderPayload = {
@@ -120,6 +121,7 @@ export type PrintfulDraftOrderPayload = {
   items: PrintfulDraftOrderItem[];
   shipping?: string;
   confirm?: boolean;
+  retail_costs?: {currency:string;shipping:string;tax:string};
 };
 
 export type PrintfulOrder = {

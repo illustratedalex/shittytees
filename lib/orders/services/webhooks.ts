@@ -147,6 +147,8 @@ async function applyStripeEvent(repository: OrderRepository, event: StripeEventS
 
 export type PrintfulEventShape = {
   id?: string;
+  store?: number;
+  created?: number;
   type: string;
   data?: {
     order?: {
@@ -154,6 +156,7 @@ export type PrintfulEventShape = {
       external_id?: string;
     };
     shipment?: {
+      id?: number;
       tracking_number?: string;
       tracking_url?: string;
     };
@@ -161,20 +164,19 @@ export type PrintfulEventShape = {
 };
 
 export async function processPrintfulEvent(repository: OrderRepository, event: PrintfulEventShape): Promise<void> {
-  const fallbackEventId = `${event.type}:${event.data?.order?.id || 'unknown'}`;
+  const fallbackEventId = `${event.type}:${event.data?.order?.id || 'unknown'}:${event.data?.shipment?.id || event.created || hashPayload(event.data)}`;
   const eventId = event.id || fallbackEventId;
-
-  const inserted = await repository.recordWebhookEvent({
+  if(await repository.hasWebhookEvent('printful',eventId)) return;
+  await applyPrintfulEvent(repository,event);
+  await repository.recordWebhookEvent({
     provider: 'printful',
     eventId,
     eventType: event.type,
     payloadHash: hashPayload(event),
   });
 
-  if (!inserted) {
-    return;
-  }
-
+}
+async function applyPrintfulEvent(repository:OrderRepository,event:PrintfulEventShape):Promise<void>{
   const printfulOrderId = event.data?.order?.id;
   if (!printfulOrderId) {
     return;
