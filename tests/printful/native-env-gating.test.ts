@@ -35,9 +35,9 @@ describe('native Printful credential routing',()=>{
   vi.stubEnv('PRINTFUL_STORE_ID','7561356');
   expect(getPrintfulEnv().apiToken).toBeUndefined();
  });
- it('does not route the native credential to unrelated branches',()=>{
+ it('rejects legacy Square credentials on every deployed branch',()=>{
   settings('preview','7561356');
   vi.stubEnv('VERCEL_GIT_COMMIT_REF','unrelated-branch');
-  expect(getPrintfulEnv().apiToken).toBe('legacy-example');
+  expect(getPrintfulEnv().apiToken).toBeUndefined();
  });
 });
