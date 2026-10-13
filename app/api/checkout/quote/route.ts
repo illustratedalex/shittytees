@@ -7,6 +7,7 @@ import {getOrderRepository} from '@/lib/orders';
 import {quoteCostPlusOrder} from '@/lib/pricing/quote';
 import {checkoutIsEnabled} from '@/lib/stripe/readiness';
 import {ZodError} from 'zod';
+import {PrintfulError} from '@/lib/printful/errors';
 export async function POST(request:NextRequest){
  if(!checkoutIsEnabled()) return NextResponse.json({error:'Checkout is being verified. Please check back shortly.'},{status:503});
  try {
@@ -19,7 +20,7 @@ export async function POST(request:NextRequest){
   return NextResponse.json({orderId,token,...totals,expiresInSeconds:900});
  } catch(error){
   const invalid=error instanceof ZodError||error instanceof SyntaxError;
-  console.error('Destination quote failed');
+  console.error('Destination quote failed', {kind:error instanceof Error ? error.name : 'unknown', detail:error instanceof PrintfulError ? 'Printful status '+error.status : error instanceof Error ? error.message : 'unknown'});
   return NextResponse.json({error:invalid?'Please check the delivery details.':'We could not confirm this price. Refresh your cart and try again.'},{status:invalid?400:422});
  }
 }
