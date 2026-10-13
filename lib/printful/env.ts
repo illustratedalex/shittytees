@@ -2,6 +2,7 @@ import { z } from 'zod';
 
 const rawEnvSchema = z.object({
   PRINTFUL_API_TOKEN: z.string().optional(),
+  PRINTFUL_NATIVE_API_TOKEN: z.string().optional(),
   PRINTFUL_STORE_ID: z.string().optional(),
   PRINTFUL_WEBHOOK_SECRET: z.string().optional(),
   PRINTFUL_SYNC_SECRET: z.string().optional(),
@@ -24,11 +25,16 @@ function parseBoolean(value?: string): boolean {
 
 export function getPrintfulEnv(): PrintfulEnv {
   const parsed = rawEnvSchema.parse(process.env);
+  const auditPreview = process.env.VERCEL_ENV === 'preview' && process.env.VERCEL_GIT_COMMIT_REF === 'stripe-printful-migration-audit';
+  const nativeStore = parsed.PRINTFUL_STORE_ID === '18894982';
+  const apiToken = process.env.VERCEL_ENV === 'production'
+    // Fail closed until Production explicitly selects the verified native store.
+    ? (nativeStore ? parsed.PRINTFUL_NATIVE_API_TOKEN : undefined)
+    : auditPreview
+      ? (nativeStore ? parsed.PRINTFUL_NATIVE_API_TOKEN || process.env.PRINTFUL_API_TOK : undefined)
+      : parsed.PRINTFUL_API_TOKEN;
   return {
-    // Temporary alias for the saved Preview-only token; never used in production.
-    apiToken: process.env.VERCEL_ENV === 'preview' && process.env.VERCEL_GIT_COMMIT_REF === 'stripe-printful-migration-audit'
-      ? process.env.PRINTFUL_API_TOK || parsed.PRINTFUL_API_TOKEN || undefined
-      : parsed.PRINTFUL_API_TOKEN || undefined,
+    apiToken: apiToken || undefined,
     storeId: parsed.PRINTFUL_STORE_ID || undefined,
     webhookSecret: parsed.PRINTFUL_WEBHOOK_SECRET || undefined,
     syncSecret: parsed.PRINTFUL_SYNC_SECRET || undefined,
