@@ -5,6 +5,7 @@ import { useMemo, useState } from 'react';
 import { useCart } from '@/lib/hooks/useCart';
 import { CartItem } from '@/lib/types/cart';
 import { evaluateVariantFulfillmentReadiness } from '@/lib/fulfillment/readiness';
+import DesignShowcase from '@/components/product/DesignShowcase';
 import { resolveProductGallery, resolveProductImage, toResolvedProductImage } from '@/lib/products/imageResolver';
 import { SiteFooter, SiteHeader } from '@/components/layout';
 import Button from '@/components/common/Button';
@@ -70,9 +71,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
 
   const selectedVariant = useMemo(() => {
     return product.variants.find((variant) => variant.size === selectedSize && variant.color === selectedColor)
-      || product.variants.find((variant) => variant.size === selectedSize)
-      || product.variants.find((variant) => variant.available)
-      || product.variants[0];
+;
   }, [product.variants, selectedColor, selectedSize]);
 
   const collectionLabel = product.collectionSlug ? formatLabel(product.collectionSlug) : '';
@@ -139,6 +138,10 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);
   };
+
+  const hasDraftCopy = /review copy|update this description|imported from printful|new from printful|placeholder/i.test(`${product.description} ${product.shortDescription}`);
+  const hasPurchaseImage = selectedImage.source !== 'placeholder' && !selectedImage.isPreview;
+  if (hasDraftCopy || !hasPurchaseImage) return <><SiteHeader /><main className="storefront"><section className="store-section site-shell"><Link href="/shop" className="store-text-link">← Back to the shirts</Link><p className="store-eyebrow mt-10">A better shirt is on the way</p><h1 className="store-page-title">{product.name}</h1><p className="store-page-description">This design is being updated. It will be available when the artwork and shirt are ready.</p><div className="store-section-heading next-design-heading"><h2>MEET THE NEXT RELEASE.</h2></div><DesignShowcase /></section></main><SiteFooter /></>;
 
   return (
     <>
@@ -272,9 +275,10 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
               <Button
                 type="button"
                 onClick={handleAddToCart}
+                disabled={!selectedVariant?.available || !selectedVariant?.printfulVariantId}
                 className={`w-full px-8 py-4 mb-3 text-[0.82rem] tracking-[0.14em] ${added ? 'bg-[#2d6d4a] text-white hover:bg-[#286342] border-transparent' : ''}`}
               >
-                {added ? 'Added to Cart' : 'ADD TO CART'}
+                {!selectedVariant?.available || !selectedVariant?.printfulVariantId ? 'Currently unavailable' : added ? 'Added to Cart' : 'ADD TO CART'}
               </Button>
 
               {addError ? <p className="text-sm text-[#e7b2b2] mb-3">{addError}</p> : null}

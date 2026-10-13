@@ -1,3 +1,4 @@
+import DesignShowcase from '@/components/product/DesignShowcase';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getCollectionBySlug, getProductsByCollection } from '@/lib/catalog/service';
@@ -59,6 +60,8 @@ export default async function CollectionSlugPage({ params }: Props) {
       </main>
     );
   }
+
+  if (slug === 'shitty-politics') return <><SiteHeader /><main className="storefront"><section className="store-section site-shell"><p className="store-eyebrow">Questionable leadership. Excellent shirts.</p><h1 className="store-page-title">SHITTY POLITICS.</h1><p className="store-page-description">Two candidates. Zero faith in the sales pitch. Meet the next release.</p><div className="next-design-heading"><DesignShowcase politicsOnly /></div>{products.length ? <div className="shop-grid mt-12">{products.map(product => <ProductTile key={product.id} product={product} />)}</div> : null}</section></main><SiteFooter /></>;
 
   return (
     <>
