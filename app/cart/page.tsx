@@ -204,79 +204,79 @@ export default function CartPage() {
 
               <div className="cart-address space-y-4 mb-6">
                 <div>
-                  <label className="block text-xs font-semibold text-[#f3efe6] mb-2 uppercase tracking-[0.1em]">First Name *</label>
+                  <label htmlFor="cart-first" className="block text-xs font-semibold text-[#f3efe6] mb-2 uppercase tracking-[0.1em]">First Name *</label>
                   <input
                     type="text"
                     value={shippingAddress.firstName}
                     onChange={(e) => setShippingAddress({ ...shippingAddress, firstName: e.target.value })}
                     className="w-full min-h-[48px] px-3 py-2 bg-[#141414] border border-[#3a3a3a] text-[#f3efe6] placeholder-[#75706a] text-sm rounded-md"
-                    placeholder="First name"
+                    id="cart-first" placeholder="First name"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-[#f3efe6] mb-2 uppercase tracking-[0.1em]">Last Name *</label>
+                  <label htmlFor="cart-last" className="block text-xs font-semibold text-[#f3efe6] mb-2 uppercase tracking-[0.1em]">Last Name *</label>
                   <input
                     type="text"
                     value={shippingAddress.lastName}
                     onChange={(e) => setShippingAddress({ ...shippingAddress, lastName: e.target.value })}
                     className="w-full min-h-[48px] px-3 py-2 bg-[#141414] border border-[#3a3a3a] text-[#f3efe6] placeholder-[#75706a] text-sm rounded-md"
-                    placeholder="Last name"
+                    id="cart-last" placeholder="Last name"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-[#f3efe6] mb-2 uppercase tracking-[0.1em]">Email *</label>
+                  <label htmlFor="cart-email" className="block text-xs font-semibold text-[#f3efe6] mb-2 uppercase tracking-[0.1em]">Email *</label>
                   <input
                     type="email"
                     value={shippingAddress.email}
                     onChange={(e) => setShippingAddress({ ...shippingAddress, email: e.target.value })}
                     className="w-full min-h-[48px] px-3 py-2 bg-[#141414] border border-[#3a3a3a] text-[#f3efe6] placeholder-[#75706a] text-sm rounded-md"
-                    placeholder="Email"
+                    id="cart-email" placeholder="Email"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-[#f3efe6] mb-2 uppercase tracking-[0.1em]">Address *</label>
+                  <label htmlFor="cart-address" className="block text-xs font-semibold text-[#f3efe6] mb-2 uppercase tracking-[0.1em]">Address *</label>
                   <input
                     type="text"
                     value={shippingAddress.address}
                     onChange={(e) => setShippingAddress({ ...shippingAddress, address: e.target.value })}
                     className="w-full min-h-[48px] px-3 py-2 bg-[#141414] border border-[#3a3a3a] text-[#f3efe6] placeholder-[#75706a] text-sm rounded-md"
-                    placeholder="Address"
+                    id="cart-address" placeholder="Address"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-[#f3efe6] mb-2 uppercase tracking-[0.1em]">City *</label>
+                  <label htmlFor="cart-city" className="block text-xs font-semibold text-[#f3efe6] mb-2 uppercase tracking-[0.1em]">City *</label>
                   <input
                     type="text"
                     value={shippingAddress.city}
                     onChange={(e) => setShippingAddress({ ...shippingAddress, city: e.target.value })}
                     className="w-full min-h-[48px] px-3 py-2 bg-[#141414] border border-[#3a3a3a] text-[#f3efe6] placeholder-[#75706a] text-sm rounded-md"
-                    placeholder="City"
+                    id="cart-city" placeholder="City"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-[#f3efe6] mb-2 uppercase tracking-[0.1em]">State *</label>
+                  <label htmlFor="cart-state" className="block text-xs font-semibold text-[#f3efe6] mb-2 uppercase tracking-[0.1em]">State *</label>
                   <input
                     type="text"
                     value={shippingAddress.state}
                     onChange={(e) => setShippingAddress({ ...shippingAddress, state: e.target.value.slice(0, 2).toUpperCase() })}
                     className="w-full min-h-[48px] px-3 py-2 bg-[#141414] border border-[#3a3a3a] text-[#f3efe6] placeholder-[#75706a] text-sm rounded-md"
-                    placeholder="State (TX)"
+                    id="cart-state" placeholder="State (TX)"
                     maxLength={2}
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-[#f3efe6] mb-2 uppercase tracking-[0.1em]">ZIP Code *</label>
+                  <label htmlFor="cart-zip" className="block text-xs font-semibold text-[#f3efe6] mb-2 uppercase tracking-[0.1em]">ZIP Code *</label>
                   <input
                     type="text"
                     value={shippingAddress.postalCode}
                     onChange={(e) => setShippingAddress({ ...shippingAddress, postalCode: e.target.value })}
                     className="w-full min-h-[48px] px-3 py-2 bg-[#141414] border border-[#3a3a3a] text-[#f3efe6] placeholder-[#75706a] text-sm rounded-md"
-                    placeholder="ZIP code"
+                    id="cart-zip" placeholder="ZIP code"
                   />
                 </div>
               </div>
 
-              {error && <div className="bg-[#4a1f1f] text-[#f3efe6] p-3 mb-4 text-sm rounded border border-[#7f1d1d]">{error}</div>}
+              {error && <div role="alert" className="bg-[#4a1f1f] text-[#f3efe6] p-3 mb-4 text-sm rounded border border-[#7f1d1d]">{error}</div>}
 
               <button
                 onClick={handleCheckout}
