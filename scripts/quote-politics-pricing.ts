@@ -10,6 +10,7 @@ const fees = {basisPoints:290, fixedCents:30};
 // Published example recipient from Printful API documentation, not customer data.
 const address = {firstName:'John',lastName:'Doe',email:'test@example.com',address:'19749 Dearborn St',city:'Chatsworth',state:'CA',postalCode:'91311',country:'US'};
 type Detail = {sync_product:{id:number;name:string};sync_variants:Array<{id:number;size:string;color:string}>};
+async function main() {
 for (const id of [480976406,480976408]) {
  const detail = (await printfulRequest<Detail>('/store/products/' + id)).result;
  for (const variant of detail.sync_variants) {
@@ -22,3 +23,5 @@ for (const id of [480976406,480976408]) {
   } catch {console.log('PRICING_ESTIMATE',JSON.stringify({product:id,size:variant.size,ok:false,published:false}));}
  }
 }
+}
+main().catch(() => {console.error('Pricing diagnostic failed'); process.exitCode = 1;});
