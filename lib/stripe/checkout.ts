@@ -36,7 +36,6 @@ export async function createCheckoutSession(
   }
 
   const session = await stripe.checkout.sessions.create({
-    payment_method_types: process.env.STRIPE_ENABLE_CASH_APP === 'true' ? ['card', 'cashapp'] : ['card'],
     mode: 'payment',
     line_items: lineItems,
     customer_email: shippingAddress.email,
