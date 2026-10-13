@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { validateAndNormalizeCheckoutItems } from '@/lib/orders/services/checkoutSecurity';
+import { toStoreOrderItems, validateAndNormalizeCheckoutItems } from '@/lib/orders/services/checkoutSecurity';
 import { DEMO_PRODUCTS } from '@/lib/data/products';
 
 const mappedFixture = DEMO_PRODUCTS
@@ -70,4 +70,13 @@ describe('checkout tamper rejection', () => {
   it('rejects client unit price tampering', async () => {
     await expect(validateAndNormalizeCheckoutItems([lineItem({ unitPrice: variant.retailPrice + 100 }) as any])).rejects.toThrow();
   });
+});
+
+it('allows separate orders for the same variant without colliding item IDs', async () => {
+  const validated = await validateAndNormalizeCheckoutItems([lineItem()]);
+  const first = toStoreOrderItems(validated)[0];
+  const second = toStoreOrderItems(validated)[0];
+  expect(first.id).not.toBe(second.id);
+  expect(first.localVariantId).toBe(second.localVariantId);
+  expect(first.printfulVariantId).toBe(second.printfulVariantId);
 });
