@@ -1216,3 +1216,20 @@ textarea {
 @media(max-width:900px){.store-hero{gap:25px}.design-grid{gap:18px}.politics-banner{padding:40px!important;gap:30px}.politics-seal{width:230px;height:230px;font-size:30px}.politics-seal span{font-size:42px}}
 @media(max-width:650px){.storefront{padding-top:70px}.store-hero{grid-template-columns:1fr;padding-top:36px;padding-bottom:36px;gap:32px}.store-hero h1{font-size:61px;margin:18px 0}.store-hero-description{font-size:16px}.store-hero-footnote{margin-top:25px}.store-hero-image{aspect-ratio:1/1}.hero-sticker{width:100px;height:100px;font-size:17px}.store-section{padding-top:43px;padding-bottom:43px}.store-section-heading{align-items:start;flex-direction:column;gap:14px}.design-grid{grid-template-columns:1fr;gap:20px}.design-image{aspect-ratio:1/1.05}.design-image img{padding:24px}.design-copy{padding:20px 0}.design-copy h3{font-size:21px}.politics-banner{grid-template-columns:1fr;padding:32px 24px!important;gap:40px;margin-bottom:30px}.politics-seal{width:210px;height:210px}.store-manifesto{padding:32px 0 55px}.store-ticker{font-size:15px;padding:14px 0}.store-ticker span{margin:0 18px}.footer-refresh-top{flex-direction:column;gap:25px}.footer-refresh-links{grid-template-columns:repeat(3,1fr);gap:8px 15px}.footer-refresh-bottom{gap:15px;flex-direction:column}.storefront .shop-grid{grid-template-columns:1fr}.header-wordmark{font-size:21px!important}.header-shell .site-shell{gap:8px}.header-shell a[href='/cart']{padding-left:10px;padding-right:10px}.header-shell button{padding-left:12px;padding-right:12px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.design-image img{transition:none}.design-card:hover .design-image img{transform:none}}
+
+/* Explicit checkout spacing follows the storefront reset. */
+.store-cart {min-height:100vh;background:#111;color:#f3efe6;padding:48px 0 72px;}
+.store-cart h1 {margin:16px 0 32px;}
+.cart-items {display:grid;gap:20px;}
+.cart-item {padding:20px;}
+.cart-item h3 {margin-bottom:8px;}
+.cart-item p {margin-bottom:12px;}
+.cart-summary {padding:28px;}
+.cart-summary h2 {margin-bottom:24px;}
+.cart-totals {display:grid;gap:12px;margin-bottom:28px;}
+.cart-totals>div:last-child {padding-top:16px;}
+.cart-address {display:grid;gap:16px;margin-bottom:24px;}
+.cart-address label {margin-bottom:8px;}
+.cart-address input {padding:12px 14px;}
+.cart-summary>button {margin-top:12px;}
+@media(max-width:600px){.store-cart{padding:28px 0 48px;}.cart-item{padding:16px;}.cart-summary{padding:20px;}.cart-totals>div{gap:16px;}.cart-totals>div>span:last-child{text-align:right;}}

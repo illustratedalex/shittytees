@@ -90,7 +90,7 @@ export default function CartPage() {
     return (
       <>
       <SiteHeader />
-      <div className="min-h-screen bg-[#111111] pt-[4.75rem]">
+      <div className="store-cart">
         <div className="site-shell section-shell max-w-2xl">
           <Link href="/" className="text-[#d5d0c6] hover:text-[#f3efe6] text-sm tracking-[0.04em] font-semibold mb-8 inline-flex items-center gap-2">
             ← Back
@@ -108,7 +108,7 @@ export default function CartPage() {
     return (
       <>
       <SiteHeader />
-      <div className="min-h-screen bg-[#111111] pt-[4.75rem]">
+      <div className="store-cart">
         <div className="site-shell section-shell max-w-2xl">
           <Link href="/" className="text-[#d5d0c6] hover:text-[#f3efe6] text-sm tracking-[0.04em] font-semibold mb-8 inline-flex items-center gap-2">
             ← Back
@@ -129,7 +129,7 @@ export default function CartPage() {
   return (
     <>
     <SiteHeader />
-    <div className="min-h-screen bg-[#111111] pt-[4.75rem]">
+    <div className="store-cart">
       <div className="site-shell section-shell">
         <Link href="/" className="text-[#d5d0c6] hover:text-[#f3efe6] text-sm tracking-[0.04em] font-semibold mb-8 inline-flex items-center gap-2">
           ← Back
@@ -139,9 +139,9 @@ export default function CartPage() {
         <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] gap-8 lg:gap-10">
           {/* Items */}
           <div>
-            <div className="space-y-5 mb-8">
+            <div className="cart-items space-y-5 mb-8">
               {items.map((item) => (
-                <div key={`${item.productId}-${item.variantId}`} className="bg-[#1b1b1b] border border-[#2f2f2f] rounded-2xl p-4 sm:p-5 flex gap-4 sm:gap-5 items-start">
+                <div key={`${item.productId}-${item.variantId}`} className="cart-item bg-[#1b1b1b] border border-[#2f2f2f] rounded-2xl p-4 sm:p-5 flex gap-4 sm:gap-5 items-start">
                   <div className="w-24 h-24 sm:w-28 sm:h-28 product-image-stage mb-0 flex-shrink-0">
                     <img src={item.image} alt={item.name} className="w-full h-full object-contain" />
                   </div>
@@ -180,10 +180,10 @@ export default function CartPage() {
 
           {/* Order Summary & Checkout */}
           <div>
-            <div className="bg-[#1b1b1b] border border-[#2f2f2f] rounded-2xl p-6 sm:p-7 sticky top-24">
+            <div className="cart-summary bg-[#1b1b1b] border border-[#2f2f2f] rounded-2xl p-6 sm:p-7 sticky top-24">
               <h2 className="font-semibold text-[#f3efe6] text-xl mb-6 normal-case">Order Summary</h2>
 
-              <div className="space-y-4 mb-8 text-sm">
+              <div className="cart-totals space-y-4 mb-8 text-sm">
                 <div className="flex justify-between text-[#aaa59c]">
                   <span>Subtotal</span>
                   <span className="font-semibold text-[#f3efe6]">${(currentQuote?.subtotal??subtotal).toFixed(2)}</span>
@@ -202,7 +202,7 @@ export default function CartPage() {
                 </div>
               </div>
 
-              <div className="space-y-4 mb-6">
+              <div className="cart-address space-y-4 mb-6">
                 <div>
                   <label className="block text-xs font-semibold text-[#f3efe6] mb-2 uppercase tracking-[0.1em]">First Name *</label>
                   <input
