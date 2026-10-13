@@ -2,14 +2,16 @@
 import pg from 'pg';
 async function read(url, token, headers = {}) {
   const response = await fetch(url, {headers: {Authorization: `Bearer ${token}`, ...headers}});
-  if (!response.ok) throw new Error('Provider read failed');
+  if (!response.ok) throw new Error(`Provider read failed: HTTP ${response.status}`);
   return response.json();
 }
 async function main() {
   if (process.env.VERCEL_ENV !== 'production') throw new Error('Production only');
   const key = process.env.STRIPE_SECRET_KEY;
-  if (!key?.startsWith('sk_live_')) throw new Error('Live Stripe key required');
+  console.log('PRODUCTION_KEY_KIND', JSON.stringify({liveSecret:key?.startsWith('sk_live_')||false,liveRestricted:key?.startsWith('rk_live_')||false,test:key?.startsWith('sk_test_')||key?.startsWith('rk_test_')||false,present:!!key}));
+  if (!key?.startsWith('sk_live_') && !key?.startsWith('rk_live_')) throw new Error('Live Stripe key required');
   const account = await read('https://api.stripe.com/v1/account', key);
+  console.log('PRODUCTION_ACCOUNT_ID',account.id);
   if (account.id !== 'acct_1UPvlRIsn0OPIJry') throw new Error('Wrong merchant');
   const endpoints = await read('https://api.stripe.com/v1/webhook_endpoints?limit=100', key);
   const required = ['checkout.session.completed', 'checkout.session.async_payment_succeeded', 'checkout.session.async_payment_failed', 'charge.refunded'];
@@ -23,7 +25,7 @@ async function main() {
     console.log('PRODUCTION_DATABASE_AUDIT', JSON.stringify({connected:true,tables:tables.rows.map(r=>r.table_name),demoCheckout:process.env.NEXT_PUBLIC_DEMO_CHECKOUT==='true'}));
   } finally { await pool.end(); }
 }
-main().catch(() => console.error('PRODUCTION_AUDIT_FAILED: inspect sanitized proof lines above')).finally(() => {
+main().catch(error => console.error('PRODUCTION_AUDIT_FAILED', /^(Production only|Live Stripe key required|Wrong merchant|Provider read failed: HTTP \d+)$/.test(error.message) ? error.message : 'Read-only check failed')).finally(() => {
   console.log('AUDIT_ONLY: deliberately stopping before website build or alias changes');
   process.exitCode=1;
 });
