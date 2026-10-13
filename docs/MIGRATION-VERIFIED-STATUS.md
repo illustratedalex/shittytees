@@ -1,49 +1,55 @@
-# Shitty Tees migration — verified 2026-10-13
+# Shitty Tees verified migration status — October 13, 2026
 
-Branch: `stripe-printful-migration-audit`. Production/main has not been switched.
+## Live store
 
-## Verified Preview
+Production deployment dpl_5mAe8cuZftRWoCJs6DMgu6SXWQaP (commit 38000165bda76b57c3d981a8608cc3752e5e964c) is READY and serves shittytees.com. Normal npm run build; no one-off build script in the live deployment. Main remains unchanged; Production was explicitly deployed from the migration branch under Alex's permission to finish and enable verified sales.
 
-- Redesign with actual design assets and official Printful garment mockups.
-- Native Printful store `18894982` (old Square store preserved).
-- ShittyTees sandbox `acct_1UPvlWRIGojPaEKC`; ModernRelic credentials are not used.
-- Two actual hosted sandbox card payments completed at $40.95 each (draft $36 retail plus $4.95 shipping). No real money moved.
-- Their original Stripe events were signed and delivered to the Preview webhook. Initial draft creation failed because external order IDs exceeded Printful's 32-character limit. Compatible IDs are now preserved; longer IDs are deterministically hashed.
-- Stripe's official CLI redelivered the original events after the fix. Both event receipts are processed, and both order histories record `pending_payment → paid → printful_draft_created` from `stripe_webhook`.
+The redesigned homepage, navigation, footer, shop and two political product pages are live. Unfinished listings remain unavailable while old URLs are preserved. Native Black Bella + Canvas 3001 variants S/M/L/XL are published in Production and active/unignored in Printful. Production checkout, fulfillment and automatic confirmation flags are enabled. Preview test-order creation is disabled.
 
-| Design | Stripe event | Printful draft | Sync variant | Catalog variant | Print file |
-|---|---|---:|---:|---:|---:|
-| Elected, Not Housebroken | evt_1UQAAERIGojPaEKCP221kDZD | 180746567 | 5569301209 | 4016 | 1085648812 |
-| Campaign Promises — Batteries Not Included | evt_1UQACMRIGojPaEKCaPUmDkaA | 180746568 | 5569301218 | 4016 | 1085648838 |
+Square is removed from the deployed payment/fulfillment path. The legacy Square-store API token was blanked; every Vercel deployment uses only the native token for store 18894982. The old Square store 7561356 and designs were preserved as an archive, not deleted.
 
-Both drafts were independently retrieved from Printful and remain `draft`, unconfirmed. The tests used Printful's published sample destination and dummy contact details. No customer contact data or access tokens are in this report.
+## Verified mappings
 
-Print files are transparent 3000×4000 PNGs at 250 DPI on a 12×16-inch canvas. These were enlarged from lower-resolution originals; pixel dimensions do not restore native artwork detail. Provider file status and mockup placement are verified, but physical print quality remains unverified. All eight S/M/L/XL Black Bella + Canvas 3001 mappings were checked; the payment tests used S/Black.
+| Design | Native product | S | M | L | XL | Default print file |
+| --- | --- | --- | --- | --- | --- | --- |
+| Elected, Not Housebroken | 480976406 | 5569301209 / 4016 | 5569301208 / 4017 | 5569301207 / 4018 | 5569301210 / 4019 | 1085648812 |
+| Campaign Promises — Batteries Not Included | 480976408 | 5569301218 / 4016 | 5569301217 / 4017 | 5569301216 / 4018 | 5569301219 / 4019 | 1085648838 |
 
-112 tests, lint and type checks passed after the external-ID fix. Earlier desktop/mobile checks passed; confirmation and order-status layouts were subsequently corrected during the hosted test.
+Variant cells are Sync Variant / Catalog Variant IDs. All eight Black variants were independently checked active/in-stock, matching garment, size and default artwork. Provider retail prices and website item prices are 13.92 USD each for these four sizes. Numeric product IDs are now mapped independently of external references; the two Production records were repaired after detecting historical ID conflation.
 
-## Current production verification
+Files are transparent 3000×4000 PNG, 250 DPI, a 12×16-inch canvas with 11.5-inch-wide art and 0.5-inch top placement. Source art was upscaled with Alex's explicit permission; this does not restore native detail or constitute a physical print proof. Official Printful mockups, processed files, file bytes and placement were verified. Dead Tired and Bad Decisions are not production-verified sale listings.
 
-- The saved Production restricted Stripe key was exercised inside Vercel. It belongs to Shitty Tees account `acct_1UPvlRIsn0OPIJry`, with charges and payouts enabled. It read the enabled live endpoint `we_1UQCEXIsn0OPIJry4vhIvy20` at `https://shittytees.com/api/stripe/webhook`, with all four required events. A live internal Checkout session was created and immediately expired, unpaid; its URL was never published. This proves Checkout permissions, not a live payment or signed production delivery.
-- The native token `PRINTFUL_API_TOK` is now scoped to Production and Preview under Alex’s explicit approval. Both native products and all eight file/garment mappings were read successfully using that token in Production. The global store selector was then updated to native store `18894982`. Old Square store/designs remain preserved in Printful.
-- Production database connectivity and `catalog_products`, `catalog_variants`, `orders`, `order_status_events`, and `processed_webhook_events` were verified. Demo checkout, fulfillment and automatic confirmation were off during the audit.
-- These production audit builds deliberately exited before building/publishing the website. The live website has not yet been switched.
+## Pricing
 
-## Prepared checkout changes awaiting Preview verification
+The earlier proposed 36 USD flat retail price is retired. Per-size item price is verified production cost 11.92 + 2.00. Destination delivery/handling covers Printful shipping, supplier tax, and an integer processing-fee gross-up (4.4% + 0.30 allowance). Card/Apple Pay checkout only; Link disabled on the separate test and live merchant configurations to avoid unpriced BNPL paths. This targets at least 2 USD per shirt under the standard US card fee profile plus international-card allowance; custom merchant rates or future supplier fees require review.
 
-- Saved destination quotes expire after 15 minutes, require a private access token and are rechecked against available product mappings before Stripe opens. Client totals cannot replace saved prices.
-- Item prices by size are set from verified production cost plus $2. Delivery/handling includes destination shipping, supplier tax and a processing-fee allowance. The draft $36 flat retail price is retired when the new catalog registration runs.
-- The processing profile is the published US card rate with the international-card allowance: 4.4% plus $0.30 on the total. Checkout is restricted to cards and card wallets so BNPL fees cannot invalidate the quote. Profit targets at least $2 per shirt under that profile; domestic cards leave a small additional margin. This is not a guarantee about a custom merchant fee contract.
-- Supplier tax can depend on retail prices in some destinations. Quotes iterate with the exact item and delivery amounts sent to Printful until the bill and customer total converge; failures block checkout.
-- An explicit Production checkout switch requires native credentials, a live Stripe key, signing secret and enabled fulfillment before payment sessions can open.
-- Printful v1 callback authentication uses a separate derived URL credential because the provider does not send the previously assumed `X-Printful-Signature` header. Callback configuration/delivery still require verification. Retry receipts are saved after successful processing.
+Chatsworth CA sample: one shirt total 21.55 = item13.92 + handling7.63; actual Printful draft bill18.30 (11.92 production +4.95 shipping +1.43 tax). Two-shirt browser quote39.91 =27.84 items +12.07 delivery/handling. Totals are stored before Stripe; paid amounts and variant mappings are validated against the saved order. Quotes expire in15minutes. Unique order-item UUIDs fix repeated purchases of the same variant colliding with earlier order item primary keys.
 
-## Remaining launch checks
+## End-to-end proof
 
-- Run the new catalog registration in Preview; verify the reviewed delivered price and hosted payment flow after the pricing changes. Test orders must remain unconfirmed.
-- Register the two native products as Production drafts. Verify a signed live webhook without charging a customer, then deploy the normal build and verify desktop/mobile purchase pages and cart.
-- Configure and verify the native Printful callback, enable the final published mappings and checkout/fulfillment switches only after these checks. Disable Preview test draft creation afterward.
-- No Facebook launch occurred. Preserve the existing conditional automation; post once only after both political products are genuinely purchasable, verify the shareable post URL, then disable it.
-- Dead Tired and Bad Decisions remain unverified production products.
+Two real Stripe sandbox card payments at the destination price passed with genuine signed checkout.session.completed receipts and matching native Printful drafts. Neither draft was confirmed:
 
-The native dimensions, file status and official mockup placement are verified; physical print quality is not. Use `scripts/inspect-politics-test-orders.ts` to recover earlier sandbox receipts without making another payment.
+| Design / size | Saved order | Stripe event | Printful draft | Paid total |
+| --- | --- | --- | --- | --- |
+| Elected / S | 3118823b-c740-4945-ae9e-3c401ea71f8d | evt_1UQD1lRIGojPaEKCc15Hh7nV | 180769197 | 21.55 |
+| Campaign / XL | 78242ed5-3e0d-4ef9-9e0f-bd382e436133 | evt_1UQDOKRIGojPaEKCX6BkFEBw | 180772314 | 21.55 |
+
+Live merchant acct_1UPvlRIsn0OPIJry has charges and payouts enabled. No Modern Relic credential was used. Production signing secret was verified using actual unpaid expired Checkout event evt_1UQDSMIsn0OPIJryyJcsn4a9, recorded as processed in Production. Live webhook we_1UQCEXIsn0OPIJry4vhIvy20 was restored to the four required events after that test.
+
+Printful v1 callback is configured for native store18894982 with an HMAC-derived URL token, not the raw API key and not an invented provider signature header. Authenticated synthetic endpoint probe200 and missing-token401 passed; actual provider shipment delivery is not yet observed. Retryable processing receipts are recorded only after success. Failed provider confirmation does not falsely mark an order fulfilled.
+
+Both live public product pages and official mockups were verified in the browser. Individual live Checkout sessions for both products were created from real public quote/checkout endpoints and immediately expired unpaid, independently checked in the correct merchant account. Repeated live sessions after the UUID fix passed (orders b830a832-6cfa-4896-b0fc-7821018207ca and06e400bd-f60d-467c-b1a7-7aec7921e7d9). A browser cart with both M/Black shirts quoted39.91 and opened matching live Stripe Checkout. No real card entered and no charge made.
+
+131 tests, lint, TypeScript and production build passed. Local actual-component mobile390/desktop1440 render checks had no JS errors or horizontal overflow; mobile fixtures do not independently prove live APIs. Live browser flow and deployed assets were checked separately. Payment success now requires matching saved order/private token and actual Stripe paid status; purchased quantities are removed once from the cart.
+
+No physical production/shipment or first real paid order has been tested. Production automatically submits genuine paid orders; provider billing failures are surfaced and remain retryable.
+
+## Facebook launch
+
+Existing conditional automation6acd1e9699b881919996577f4b50b4a5 published while final manual checks were running. Its recorded post ID103562802200116_1177601838130608 predates the manual duplicate103562802200116_1177603474797111 (photo1177603458130446). The manual post was verified publicly at https://www.facebook.com/100076424088056/posts/1177603474797111/ with correct caption, both product links, matching Campaign mockup and public audience. The launch automation is now disabled. Do not post again.
+
+Windsor cached reads initially returned no posts and hourly refresh is unavailable on the connected trial; the concurrent automation's completion became visible only when disabling it. The connected actions expose create_post/create_photo_post/upload_photo, but not delete/trash. The extra manual post still requires removal in Facebook. Record the surviving canonical URL after verification and do not claim exactly one launch post until duplicate cleanup is verified.
+
+## Operational note
+
+Several one-off configuration/proof builds deliberately exit1 after performing their guarded work so they never replace Production. Their expected failed build status is not an unresolved app build failure. Use the latest normal READY Production deployment above for live status. Tokens, callback credentials, private order access URLs and hosted live payment URLs are not included in this report.

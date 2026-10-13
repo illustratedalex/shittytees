@@ -5,6 +5,14 @@ if(process.env.VERCEL_ENV!=='production'||process.env.PRINTFUL_STORE_ID!=='18894
 async function main(){
  const stripe=getStripe();
  if((await stripe.accounts.retrieve()).id!=='acct_1UPvlRIsn0OPIJry')throw new Error('Wrong merchant');
+ const expireId=process.argv.find(v=>v.startsWith('--expire-session='))?.split('=')[1];
+ if(expireId){
+  const c=await stripe.checkout.sessions.retrieve(expireId);
+  if(c.customer_email!=='test@example.com'||c.payment_status!=='unpaid'||!c.livemode)throw new Error('Wrong unpaid verification session');
+  if(c.status==='open')await stripe.checkout.sessions.expire(expireId);
+  console.log('BROWSER_CHECKOUT_EXPIRED',JSON.stringify({session:expireId,total:c.amount_total,unpaid:true,charged:false,status:(await stripe.checkout.sessions.retrieve(expireId)).status}));
+  await getPool().end();return;
+ }
  const products=await getCatalogRepository().listPublic();
  for(const [productId,slug] of [['480976406','elected-not-housebroken'],['480976408','campaign-promises-batteries-not-included']]){
   const product=products.find(p=>p.slug===slug);
