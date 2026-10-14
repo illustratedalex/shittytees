@@ -1,3 +1,13 @@
+# Latest verified update — October 14, 2026
+
+All twelve approved collection designs are now genuinely live on https://shittytees.com/shop, two each in Shitty Jobs, Childhoods, Cars, Housing, Relationships and Decisions. The twelve existing native Printful products were reused. All 48 Black Bella + Canvas 3001 S/M/L/XL variants passed artwork, garment, stock, price and unconfirmed-draft checks before being activated and published. Twelve public product pages, permanent mockups, six collection pages and twelve matching live Checkout sessions were verified. Every verification session was expired unpaid; no card was charged. Total live storefront listings: fourteen including the two earlier political shirts.
+
+Normal Production dpl_Ccpwn7SGKxNAezP5Pv6EV5Pp5hMy is READY at commit 6b5ac552ce706359d7a2f9ffda2ae9d4024f16c0. Checkout and fulfillment configuration are preserved; main remains unchanged. Item price $13.92, with existing destination delivery/handling quoted before payment. Local 134 tests, lint, TypeScript and build passed. No physical print/shipment proof or new paid-card test is claimed.
+
+See [the detailed October 14 publication verification](./COLLECTION-PUBLICATION-2026-10-14.md) and data/designs/collection-product-proof.json for the twelve product/file/variant mappings and permanent mockup hashes. The historical October 13 status below is retained for the earlier checkout migration proof; its Production deployment ID is superseded by the one above.
+
+---
+
 # Shitty Tees verified migration status — October 13, 2026
 
 ## Live store
