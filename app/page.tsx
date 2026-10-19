@@ -7,7 +7,17 @@ import ProductTile from '@/components/product/ProductTile';
 import DesignShowcase from '@/components/product/DesignShowcase';
 
 export const dynamic = 'force-dynamic';
-export const metadata: Metadata = { title: 'Shitty Tees — Wear your bad attitude.', description: 'Original graphic tees. Dark humor, questionable leadership, and absolutely no filter.' };
+export const metadata: Metadata = {
+  title: 'Shitty Tees — Wear your bad attitude.',
+  description: 'Original graphic tees. Dark humor, questionable leadership, and absolutely no filter.',
+  alternates: { canonical: '/' },
+  openGraph: {
+    title: 'Shitty Tees — Wear your bad attitude.',
+    description: 'Original graphic tees. Dark humor, questionable leadership, and absolutely no filter.',
+    url: '/',
+    type: 'website',
+  },
+};
 export default async function Home() {
   const products = await getPublicProducts();
   return <><SiteHeader /><main className="storefront">

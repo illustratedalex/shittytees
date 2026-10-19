@@ -38,11 +38,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
-  return {
-    title: `${collection.name} | ShittyTees`,
-    description: collection.slug === 'artists-bench'
+  const title = `${collection.name} | ShittyTees`;
+  const description = collection.slug === 'artists-bench'
       ? 'Original ShittyTees apparel inspired by sketchbooks, tattoo shops, late nights, and the people who make things by hand.'
-      : collection.description,
+      : collection.description;
+
+  return {
+    title,
+    description,
+    alternates: { canonical: `/collections/${collection.slug}` },
+    openGraph: {
+      title,
+      description,
+      url: `/collections/${collection.slug}`,
+      type: 'website',
+    },
   };
 }
 

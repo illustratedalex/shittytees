@@ -9,15 +9,12 @@ const fontVariables = {
 } as CSSProperties;
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://shittytees.com'),
   title: 'ShittyTees | Terrible Ideas. Excellent Shirts.',
   description: 'Independent apparel with dark humor, premium blanks, and zero interest in behaving.',
-  alternates: {
-    canonical: '/',
-  },
   openGraph: {
     title: 'ShittyTees | Terrible Ideas. Excellent Shirts.',
     description: 'Independent apparel with dark humor, premium blanks, and zero interest in behaving.',
-    url: 'https://shittytees.com',
     type: 'website',
   },
   twitter: {
