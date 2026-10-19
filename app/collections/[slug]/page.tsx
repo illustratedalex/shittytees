@@ -1,3 +1,4 @@
+import {SHITTY_COLLECTIONS} from '@/data/shittyCollections';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getCollectionBySlug, getProductsByCollection } from '@/lib/catalog/service';
@@ -37,11 +38,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
-  return {
-    title: `${collection.name} | ShittyTees`,
-    description: collection.slug === 'artists-bench'
+  const title = `${collection.name} | ShittyTees`;
+  const description = collection.slug === 'artists-bench'
       ? 'Original ShittyTees apparel inspired by sketchbooks, tattoo shops, late nights, and the people who make things by hand.'
-      : collection.description,
+      : collection.description;
+
+  return {
+    title,
+    description,
+    alternates: { canonical: `/collections/${collection.slug}` },
+    openGraph: {
+      title,
+      description,
+      url: `/collections/${collection.slug}`,
+      type: 'website',
+    },
   };
 }
 
@@ -59,6 +70,9 @@ export default async function CollectionSlugPage({ params }: Props) {
       </main>
     );
   }
+
+  if (SHITTY_COLLECTIONS.some(c=>c.slug===slug)) return <><SiteHeader/><main className="storefront"><section className="store-section site-shell"><Link href="/collections" className="store-text-link">← The Shitty Tees family</Link><p className="store-eyebrow mt-6">A Shitty Tees collection</p><h1 className="store-page-title">{collection.name.toUpperCase()}.</h1><p className="store-page-description">{collection.description}</p>{products.length?<div className="shop-grid">{products.map(product=><ProductTile key={product.id} product={product}/>)}</div>:<p className="store-release-message">The first shirts are being prepared. Check back for the release.</p>}</section></main><SiteFooter/></>;
+
 
   return (
     <>

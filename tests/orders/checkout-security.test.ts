@@ -1,5 +1,5 @@
-import { describe, expect, it } from 'vitest';
-import { validateAndNormalizeCheckoutItems } from '@/lib/orders/services/checkoutSecurity';
+import { describe, expect, it, vi } from 'vitest';
+import { toStoreOrderItems, validateAndNormalizeCheckoutItems } from '@/lib/orders/services/checkoutSecurity';
 import { DEMO_PRODUCTS } from '@/lib/data/products';
 
 const mappedFixture = DEMO_PRODUCTS
@@ -11,6 +11,8 @@ const mappedFixture = DEMO_PRODUCTS
 if (!mappedFixture) {
   throw new Error('Expected at least one fulfillment-ready product variant fixture.');
 }
+
+vi.mock('@/lib/catalog', () => ({ getCatalogRepository: () => ({ listPublic: async () => [product] }) }));
 
 const product = mappedFixture.product;
 const variant = mappedFixture.variant;
@@ -68,4 +70,13 @@ describe('checkout tamper rejection', () => {
   it('rejects client unit price tampering', async () => {
     await expect(validateAndNormalizeCheckoutItems([lineItem({ unitPrice: variant.retailPrice + 100 }) as any])).rejects.toThrow();
   });
+});
+
+it('allows separate orders for the same variant without colliding item IDs', async () => {
+  const validated = await validateAndNormalizeCheckoutItems([lineItem()]);
+  const first = toStoreOrderItems(validated)[0];
+  const second = toStoreOrderItems(validated)[0];
+  expect(first.id).not.toBe(second.id);
+  expect(first.localVariantId).toBe(second.localVariantId);
+  expect(first.printfulVariantId).toBe(second.printfulVariantId);
 });

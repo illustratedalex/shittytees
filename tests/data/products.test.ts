@@ -19,11 +19,11 @@ describe('product data integrity', () => {
     }
   });
 
-  it('contains at least one available variant and one image per product', () => {
+  it('has images, positive prices, and only mapped available variants', () => {
     for (const product of DEMO_PRODUCTS) {
       expect(product.images.length).toBeGreaterThan(0);
       expect(product.variants.length).toBeGreaterThan(0);
-      expect(product.variants.every((variant) => variant.available)).toBe(true);
+      expect(product.variants.filter((variant) => variant.available).every((variant) => Boolean(variant.printfulVariantId))).toBe(true);
       expect(product.variants.every((variant) => variant.retailPrice > 0)).toBe(true);
     }
   });

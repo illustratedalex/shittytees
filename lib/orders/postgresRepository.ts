@@ -485,6 +485,11 @@ export function createPostgresOrderRepository(): OrderRepository {
       });
     },
 
+    async hasWebhookEvent(provider, eventId) {
+      const rows = await query<{ found: boolean }>('SELECT EXISTS(SELECT 1 FROM processed_webhook_events WHERE provider = $1 AND event_id = $2) AS found', [provider, eventId]);
+      return rows[0]?.found ?? false;
+    },
+
     async recordWebhookEvent(event: ProcessedWebhookEvent) {
       const rows = await query<{ inserted: boolean }>(
         `WITH ins AS (

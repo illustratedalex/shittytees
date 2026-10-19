@@ -5,6 +5,7 @@ import { useMemo, useState } from 'react';
 import { useCart } from '@/lib/hooks/useCart';
 import { CartItem } from '@/lib/types/cart';
 import { evaluateVariantFulfillmentReadiness } from '@/lib/fulfillment/readiness';
+import DesignShowcase from '@/components/product/DesignShowcase';
 import { resolveProductGallery, resolveProductImage, toResolvedProductImage } from '@/lib/products/imageResolver';
 import { SiteFooter, SiteHeader } from '@/components/layout';
 import Button from '@/components/common/Button';
@@ -70,9 +71,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
 
   const selectedVariant = useMemo(() => {
     return product.variants.find((variant) => variant.size === selectedSize && variant.color === selectedColor)
-      || product.variants.find((variant) => variant.size === selectedSize)
-      || product.variants.find((variant) => variant.available)
-      || product.variants[0];
+;
   }, [product.variants, selectedColor, selectedSize]);
 
   const collectionLabel = product.collectionSlug ? formatLabel(product.collectionSlug) : '';
@@ -140,10 +139,14 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
     setTimeout(() => setAdded(false), 2000);
   };
 
+  const hasDraftCopy = /review copy|update this description|imported from printful|new from printful|placeholder/i.test(`${product.description} ${product.shortDescription}`);
+  const hasPurchaseImage = selectedImage.source !== 'placeholder' && !selectedImage.isPreview;
+  if (hasDraftCopy || !hasPurchaseImage) return <><SiteHeader /><main className="storefront"><section className="store-section site-shell"><Link href="/shop" className="store-text-link">← Back to the shirts</Link><p className="store-eyebrow mt-10">A better shirt is on the way</p><h1 className="store-page-title">{product.name}</h1><p className="store-page-description">This design is being updated. It will be available when the artwork and shirt are ready.</p><div className="store-section-heading next-design-heading"><h2>MEET THE NEXT RELEASE.</h2></div><DesignShowcase /></section></main><SiteFooter /></>;
+
   return (
     <>
       <SiteHeader />
-      <main className="min-h-screen bg-[#0b0b0b] pt-[5rem]">
+      <main className="store-product">
         <div className="site-shell section-shell pdp-shell">
           <Link href="/shop" className="text-[#c9beaa] hover:text-[#f2e8d5] text-sm tracking-[0.04em] font-semibold mb-8 inline-flex items-center gap-2 focus-visible-ring rounded-sm">
             ← Back to Shop
@@ -175,6 +178,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
               <p className="text-[#c9beaa] text-[1rem] mt-4 leading-relaxed max-w-[38ch]">{product.shortDescription || product.description}</p>
 
               <Price amount={selectedVariant?.retailPrice || product.retailPrice} currency={product.currency || 'USD'} className="mt-5 text-[1.7rem] sm:text-[1.95rem] text-[#f2e8d5]" />
+              <p className="text-[#c9beaa] text-sm mt-2">Plus delivery & handling. Review your total before payment.</p>
 
               <p className="text-[#b9ad97] text-[0.95rem] mt-5 leading-relaxed max-w-[46ch]">{product.description}</p>
 
@@ -272,9 +276,10 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
               <Button
                 type="button"
                 onClick={handleAddToCart}
+                disabled={!selectedVariant?.available || !selectedVariant?.printfulVariantId}
                 className={`w-full px-8 py-4 mb-3 text-[0.82rem] tracking-[0.14em] ${added ? 'bg-[#2d6d4a] text-white hover:bg-[#286342] border-transparent' : ''}`}
               >
-                {added ? 'Added to Cart' : 'ADD TO CART'}
+                {!selectedVariant?.available || !selectedVariant?.printfulVariantId ? 'Currently unavailable' : added ? 'Added to Cart' : 'ADD TO CART'}
               </Button>
 
               {addError ? <p className="text-sm text-[#e7b2b2] mb-3">{addError}</p> : null}

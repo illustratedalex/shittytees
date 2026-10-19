@@ -1126,3 +1126,133 @@ textarea {
 .footer-link:hover {
   color: #ffd75a;
 }
+
+/* Shitty Tees storefront refresh: warm paper, ink, and safety orange. */
+.checkout-result{background:#f3f0e8;color:#171717;min-height:100vh;padding:100px 24px;text-align:center}
+.checkout-result>div{max-width:680px;margin:auto}
+.checkout-result h1{margin:24px 0;font-size:clamp(32px,5vw,48px)}
+.checkout-result p{color:#56534d;margin:0 0 32px}
+.checkout-result .flex{display:flex;justify-content:center;align-items:center;gap:24px;flex-wrap:wrap}
+.order-status-page{min-height:100vh;background:#f3f0e8;color:#171717;padding:80px 24px}
+.order-status-card{max-width:760px;margin:0 auto;padding:clamp(24px,5vw,48px);border:1px solid #cac4b8;background:#faf8f2}
+.order-status-card h1,.order-status-card h2,.order-status-card li,.order-status-card a{color:#171717}
+.order-status-card h1{font-size:clamp(34px,5vw,48px);margin-bottom:20px}
+.order-status-card p{color:#56534d;margin-bottom:20px}
+.order-status-current{margin:32px 0;padding:18px 20px;background:#e6e2d7}
+.order-status-current p{margin:0;font-weight:600;color:#171717}
+.order-status-items{border-top:1px solid #cac4b8;padding-top:24px}
+.order-status-items h2{font-size:22px;margin-bottom:16px}
+.order-status-items ul{list-style:none}.order-status-items li{margin-bottom:12px;line-height:1.6}
+.order-status-total{margin-top:24px;font-weight:600}
+.storefront{background:#f3f0e8;color:#171717;padding-top:80px;overflow-x:clip}
+.storefront h1,.storefront h2,.storefront h3{color:inherit}
+.store-eyebrow{font-size:11px;font-weight:600;letter-spacing:.15em;text-transform:uppercase}
+.storefront .store-eyebrow{color:#59554c}
+.header-shell nav[aria-label="Primary"]{gap:24px}
+.store-hero{display:grid;grid-template-columns:1.05fr 1fr;gap:40px;padding-top:60px;padding-bottom:70px;align-items:center}
+.store-hero h1{font-size:clamp(58px,7.9vw,112px);line-height:.95;letter-spacing:-.04em;margin:24px 0;font-weight:700}
+.store-hero h1 span{color:#cf4525}
+.store-hero-description{font-size:18px;line-height:1.65;max-width:34ch;color:#56534d}
+.store-actions{display:flex;flex-direction:column;align-items:flex-start;gap:22px;margin-top:30px}
+.store-button{display:inline-flex;justify-content:space-between;align-items:center;gap:32px;min-height:54px;padding:16px 24px;background:#181818;color:#fff;font-size:14px;font-weight:600;border:1px solid #181818;transition:background .2s}
+.store-button:hover{background:#cf4525;border-color:#cf4525}
+.store-button:focus-visible,.store-text-link:focus-visible,.design-card summary:focus-visible{outline:3px solid #cf4525;outline-offset:5px}
+.store-text-link{font-size:14px;font-weight:600;border-bottom:1px solid currentColor;padding-bottom:4px}
+.store-hero-footnote{margin-top:42px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#777167}
+.store-hero-image{position:relative;aspect-ratio:1/1.08;background:#dedbd2;overflow:hidden}
+.hero-sticker{position:absolute;top:20px;right:18px;transform:rotate(8deg);background:#e35a35;color:#171717;font-family:var(--font-display);font-size:21px;line-height:1.15;font-weight:700;padding:18px;border-radius:50%;width:128px;height:128px;display:flex;align-items:center;justify-content:center;text-align:center}
+.hero-image-note{position:absolute;bottom:16px;left:18px;background:#f3f0e8e8;padding:5px 9px;font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+.store-ticker{white-space:nowrap;background:#181818;color:#f3f0e8;padding:17px 0;text-align:center;font-family:var(--font-display);font-size:19px;letter-spacing:.06em;overflow:hidden}
+.store-ticker span{color:#e35a35;margin:0 32px}
+.store-section{padding-top:70px;padding-bottom:70px}
+.store-section-heading{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:30px}
+.store-section-heading h2{font-size:clamp(36px,4vw,58px);letter-spacing:-.03em;line-height:1;margin-top:10px}
+.store-section-heading>a{font-weight:600;font-size:14px;border-bottom:1px solid #171717;padding-bottom:4px}
+.store-section-heading>p{font-size:13px;line-height:1.6;color:#69655d}
+.design-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:25px}
+.design-card{min-width:0}
+.design-image{position:relative;aspect-ratio:4/5;background:#e1ddd4;overflow:hidden}
+.design-image--art{background:#272725}
+.design-image img{padding:15px;transition:transform .3s}
+.design-card:hover .design-image img{transform:scale(1.025)}
+.design-status{position:absolute;top:14px;left:14px;background:#f3f0e8;color:#171717;font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:5px 9px}
+.design-copy{padding:22px 0}
+.design-copy .store-eyebrow{color:#b73b20}
+.design-copy h3{font-family:var(--font-body);font-size:18px;line-height:1.4;font-weight:600;margin:9px 0}
+.design-copy>p:not(.store-eyebrow){font-size:14px;line-height:1.7;color:#676259}
+.design-copy details{font-size:12px;color:#676259;border-top:1px solid #d3cec3;margin-top:16px;padding-top:14px}
+.design-copy summary{cursor:pointer;color:#292824;font-weight:600;min-height:30px}
+.design-copy details p{margin:10px 0;line-height:1.6}
+.design-copy details a{text-decoration:underline}
+.politics-banner{background:#d34b2b;color:#f6efe2;display:grid;grid-template-columns:1.2fr 1fr;gap:50px;align-items:center;padding:60px!important;margin-bottom:65px}
+.storefront .politics-banner .store-eyebrow{color:#f6efe2}
+.politics-banner h2{font-size:clamp(38px,4.9vw,70px);letter-spacing:-.035em;line-height:1;margin-top:20px}
+.politics-banner p:not(.store-eyebrow){max-width:40ch;font-size:15px;line-height:1.7;margin:23px 0}
+.politics-seal{border:3px solid currentColor;outline:1px solid currentColor;outline-offset:9px;border-radius:50%;width:290px;height:290px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;margin:auto;transform:rotate(-9deg);font-family:var(--font-display);font-size:38px;line-height:1.1}
+.politics-seal span{font-size:50px}.politics-seal small{font-family:var(--font-body);font-size:8px;letter-spacing:.08em;margin-top:20px}
+.store-manifesto{padding:35px 0 90px;text-align:center}
+.store-manifesto h2{font-size:clamp(35px,4.5vw,62px);line-height:1.05;margin:22px 0;letter-spacing:-.03em}
+.store-manifesto>p:not(.store-eyebrow){max-width:55ch;margin:0 auto 25px;font-size:16px;line-height:1.8;color:#69645c}
+.store-page-title{font-size:clamp(55px,7vw,90px);letter-spacing:-.035em;margin:18px 0}
+.store-page-description{color:#676259;font-size:17px}
+.store-filter-links{display:flex;flex-wrap:wrap;gap:10px;margin:32px 0}
+.store-filter-links a{border:1px solid #bcb6aa;min-height:44px;padding:10px 18px;font-size:13px}
+.store-filter-links a[aria-current],.store-filter-links a:hover{background:#171717;color:#f3f0e8;border-color:#171717}
+.store-release-message{border-top:1px solid #cac4b8;border-bottom:1px solid #cac4b8;padding:38px 0;margin-top:30px}
+.store-release-message h2{font-size:30px;margin-bottom:10px}.store-release-message p{font-size:15px;color:#676259}
+.next-design-heading{margin-top:55px}
+.storefront .product-card-clean{background:transparent;border:0;padding:0;box-shadow:none}
+.storefront .product-card-clean h3,.storefront .product-card-clean p,.storefront .product-card-clean .price{color:#171717}
+.storefront .product-image-stage{background:#e3dfd6;border:0;border-radius:0}
+.header-shell{border-bottom:1px solid #333!important}
+.header-wordmark{letter-spacing:-.025em!important;font-size:25px!important;font-weight:700!important}
+.product-image-stage{border-radius:0}
+.pdp-info-panel h1{font-size:clamp(30px,3.8vw,52px)!important;line-height:1.12!important}
+.site-footer-refresh{padding:42px 0 25px;background:#171717;color:#f3f0e8}
+.footer-refresh-top{display:flex;justify-content:space-between;gap:30px;border-bottom:1px solid #45433e;padding-bottom:32px}
+.footer-refresh-brand{font-family:var(--font-display);font-size:36px;letter-spacing:-.02em}.footer-refresh-top p{font-size:13px;color:#b9b3a7;margin-top:8px}
+.footer-refresh-links{display:grid;grid-template-columns:repeat(3,1fr);gap:12px 25px;font-size:12px;align-content:center}.footer-refresh-links a{min-height:35px;display:flex;align-items:center}
+.footer-refresh-bottom{display:flex;justify-content:space-between;padding-top:23px;font-size:10px;color:#9f9a90;letter-spacing:.04em}
+@media(max-width:900px){.store-hero{gap:25px}.design-grid{gap:18px}.politics-banner{padding:40px!important;gap:30px}.politics-seal{width:230px;height:230px;font-size:30px}.politics-seal span{font-size:42px}}
+@media(max-width:650px){.storefront{padding-top:70px}.store-hero{grid-template-columns:1fr;padding-top:36px;padding-bottom:36px;gap:32px}.store-hero h1{font-size:61px;margin:18px 0}.store-hero-description{font-size:16px}.store-hero-footnote{margin-top:25px}.store-hero-image{aspect-ratio:1/1}.hero-sticker{width:100px;height:100px;font-size:17px}.store-section{padding-top:43px;padding-bottom:43px}.store-section-heading{align-items:start;flex-direction:column;gap:14px}.design-grid{grid-template-columns:1fr;gap:20px}.design-image{aspect-ratio:1/1.05}.design-image img{padding:24px}.design-copy{padding:20px 0}.design-copy h3{font-size:21px}.politics-banner{grid-template-columns:1fr;padding:32px 24px!important;gap:40px;margin-bottom:30px}.politics-seal{width:210px;height:210px}.store-manifesto{padding:32px 0 55px}.store-ticker{font-size:15px;padding:14px 0}.store-ticker span{margin:0 18px}.footer-refresh-top{flex-direction:column;gap:25px}.footer-refresh-links{grid-template-columns:repeat(3,1fr);gap:8px 15px}.footer-refresh-bottom{gap:15px;flex-direction:column}.storefront .shop-grid{grid-template-columns:1fr}.header-wordmark{font-size:21px!important}.header-shell .site-shell{gap:8px}.header-shell a[href='/cart']{padding-left:10px;padding-right:10px}.header-shell button{padding-left:12px;padding-right:12px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.design-image img{transition:none}.design-card:hover .design-image img{transform:none}}
+
+/* Explicit checkout spacing follows the storefront reset. */
+.store-cart {min-height:100vh;background:#111;color:#f3efe6;padding:48px 0 72px;}
+.store-cart h1 {margin:16px 0 32px;}
+.cart-items {display:grid;gap:20px;}
+.cart-item {padding:20px;}
+.cart-item h3 {margin-bottom:8px;}
+.cart-item p {margin-bottom:12px;}
+.cart-summary {padding:28px;}
+.cart-summary h2 {margin-bottom:24px;}
+.cart-totals {display:grid;gap:12px;margin-bottom:28px;}
+.cart-totals>div:last-child {padding-top:16px;}
+.cart-address {display:grid;gap:16px;margin-bottom:24px;}
+.cart-address label {margin-bottom:8px;}
+.cart-address input {padding:12px 14px;}
+.cart-summary>button {margin-top:12px;}
+@media(max-width:600px){.store-cart{padding:28px 0 48px;}.cart-item{padding:16px;}.cart-summary{padding:20px;}.cart-totals>div{gap:16px;}.cart-totals>div>span:last-child{text-align:right;}}
+
+.store-product {min-height:100vh;background:#0b0b0b;padding-top:80px;}
+.pdp-info-panel>h1 {margin:16px 0;}
+.pdp-info-panel>p {margin:16px 0;}
+.pdp-info-panel>div {margin-top:24px;}
+.pdp-info-panel>div>p,.pdp-info-panel>div>label {margin-bottom:12px;}
+.pdp-info-panel>button {margin:0 0 12px;}
+.pdp-info-panel details {padding:16px;margin-bottom:12px;}
+.pdp-info-panel details p {margin-top:12px;}
+.pdp-info-panel>div.grid>p {padding:12px;}
+.store-product .pdp-shell>section {margin-top:64px;}
+.store-product .pdp-shell>section h2 {margin:12px 0 24px;}
+
+@media(max-width:600px){.cart-item{display:grid;grid-template-columns:96px minmax(0,1fr);gap:16px;align-items:start;}.cart-item>button{grid-column:1;grid-row:2;text-align:left;}.cart-item>div:nth-child(2){grid-column:2;grid-row:1 / span 2;}}
+
+/* The parent brand and its seven themed collections. */
+.shitty-collection-grid { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;margin-top:38px; }
+.shitty-collection-card { padding:20px;border:1px solid #38332d;background:#171513;border-radius:12px; }
+.shitty-collection-card h2 { margin:12px 0;font-size:30px; }
+.shitty-collection-card p { margin:14px 0; }
+.shitty-collection-card .store-text-link { display:inline-block;margin-top:18px; }
+@media(max-width:1000px){.shitty-collection-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }}
+@media(max-width:600px){.shitty-collection-grid { grid-template-columns:1fr;gap:22px; }}

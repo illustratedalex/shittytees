@@ -1,0 +1,518 @@
+[
+  {
+    "slug": "corporate-family-pay-my-bills",
+    "productId": 481316035,
+    "fileId": 1085846746,
+    "md5": "744f26156c2adca029cee2b716abcaee",
+    "task": "gt-983626337",
+    "mockupUrl": "https://printful-upload.s3-accelerate.amazonaws.com/tmp/2a1cc32248593dcffb10f4c5ada9b647/unisex-staple-t-shirt-black-front-6acebd62a7687.png",
+    "variants": [
+      {
+        "id": 5572202787,
+        "catalog": 4016,
+        "size": "S",
+        "price": 13.92,
+        "productionCents": 1192
+      },
+      {
+        "id": 5572202788,
+        "catalog": 4017,
+        "size": "M",
+        "price": 13.92,
+        "productionCents": 1192
+      },
+      {
+        "id": 5572202790,
+        "catalog": 4018,
+        "size": "L",
+        "price": 13.92,
+        "productionCents": 1192
+      },
+      {
+        "id": 5572202791,
+        "catalog": 4019,
+        "size": "XL",
+        "price": 13.92,
+        "productionCents": 1192
+      }
+    ],
+    "mockupSha256": "36eb5dd681fea6731b92d10e9eee9dee7de84491e1d0e74f281e419b10065962",
+    "mockupPixels": [
+      1000,
+      1000
+    ]
+  },
+  {
+    "slug": "minimum-wage-maximum-fuck-you",
+    "productId": 481316039,
+    "fileId": 1085846769,
+    "md5": "30ed81a26b65e76116421b584da73330",
+    "task": "gt-983626347",
+    "mockupUrl": "https://printful-upload.s3-accelerate.amazonaws.com/tmp/ed74fd1e1f1a848d831d3c1d31b264c3/unisex-staple-t-shirt-black-front-6acebd63d0538.png",
+    "variants": [
+      {
+        "id": 5572202801,
+        "catalog": 4016,
+        "size": "S",
+        "price": 13.92,
+        "productionCents": 1192
+      },
+      {
+        "id": 5572202802,
+        "catalog": 4017,
+        "size": "M",
+        "price": 13.92,
+        "productionCents": 1192
+      },
+      {
+        "id": 5572202803,
+        "catalog": 4018,
+        "size": "L",
+        "price": 13.92,
+        "productionCents": 1192
+      },
+      {
+        "id": 5572202804,
+        "catalog": 4019,
+        "size": "XL",
+        "price": 13.92,
+        "productionCents": 1192
+      }
+    ],
+    "mockupSha256": "fda7604a1021badefcfe94b9265ff0e4e423c8cba93e4be610822bce6c095c7a",
+    "mockupPixels": [
+      1000,
+      1000
+    ]
+  },
+  {
+    "slug": "raised-wrong-still-your-problem",
+    "productId": 481316043,
+    "fileId": 1085846786,
+    "md5": "f241bb8c1594f025b6b983e94edd5e59",
+    "task": "gt-983626771",
+    "mockupUrl": "https://printful-upload.s3-accelerate.amazonaws.com/tmp/03651a103bc8a52b31821acb19ab97dc/unisex-staple-t-shirt-black-front-6acebd9fc5439.png",
+    "variants": [
+      {
+        "id": 5572202814,
+        "catalog": 4016,
+        "size": "S",
+        "price": 13.92,
+        "productionCents": 1192
+      },
+      {
+        "id": 5572202815,
+        "catalog": 4017,
+        "size": "M",
+        "price": 13.92,
+        "productionCents": 1192
+      },
+      {
+        "id": 5572202816,
+        "catalog": 4018,
+        "size": "L",
+        "price": 13.92,
+        "productionCents": 1192
+      },
+      {
+        "id": 5572202817,
+        "catalog": 4019,
+        "size": "XL",
+        "price": 13.92,
+        "productionCents": 1192
+      }
+    ],
+    "mockupSha256": "fb6c8f919619e601fb7618f1586cc700eb01275c8aae16bf3dc9acdc46c139e0",
+    "mockupPixels": [
+      1000,
+      1000
+    ]
+  },
+  {
+    "slug": "childhood-paid-my-therapists-mortgage",
+    "productId": 481316217,
+    "fileId": 1085847260,
+    "md5": "51f48b12d1c22259df7a94c3b9f9ac02",
+    "task": "gt-983626780",
+    "mockupUrl": "https://printful-upload.s3-accelerate.amazonaws.com/tmp/5e2192ffa75d7c61a4f95f468915f636/unisex-staple-t-shirt-black-front-6acebda251191.png",
+    "variants": [
+      {
+        "id": 5572204164,
+        "catalog": 4016,
+        "size": "S",
+        "price": 13.92,
+        "productionCents": 1192
+      },
+      {
+        "id": 5572204165,
+        "catalog": 4017,
+        "size": "M",
+        "price": 13.92,
+        "productionCents": 1192
+      },
+      {
+        "id": 5572204166,
+        "catalog": 4018,
+        "size": "L",
+        "price": 13.92,
+        "productionCents": 1192
+      },
+      {
+        "id": 5572204167,
+        "catalog": 4019,
+        "size": "XL",
+        "price": 13.92,
+        "productionCents": 1192
+      }
+    ],
+    "mockupSha256": "770b643b5a1df24e76a0b701557e728fec40190f6c165002fdb2e996f1f71c7a",
+    "mockupPixels": [
+      1000,
+      1000
+    ]
+  },
+  {
+    "slug": "check-engine-fuck-my-life",
+    "productId": 481316222,
+    "fileId": 1085847279,
+    "md5": "0f31565b3d2da7d7dd9b5758e94cfea5",
+    "task": "gt-983627213",
+    "mockupUrl": "https://printful-upload.s3-accelerate.amazonaws.com/tmp/c8cb5525ae763b05806ceb704ed71d85/unisex-staple-t-shirt-black-front-6acebddd14260.png",
+    "variants": [
+      {
+        "id": 5572204179,
+        "catalog": 4016,
+        "size": "S",
+        "price": 13.92,
+        "productionCents": 1192
+      },
+      {
+        "id": 5572204180,
+        "catalog": 4017,
+        "size": "M",
+        "price": 13.92,
+        "productionCents": 1192
+      },
+      {
+        "id": 5572204181,
+        "catalog": 4018,
+        "size": "L",
+        "price": 13.92,
+        "productionCents": 1192
+      },
+      {
+        "id": 5572204182,
+        "catalog": 4019,
+        "size": "XL",
+        "price": 13.92,
+        "productionCents": 1192
+      }
+    ],
+    "mockupSha256": "232e3f3eaf4eded37b6e5779f2e93ea2034e169463379e5c218a8528d29fbf09",
+    "mockupPixels": [
+      1000,
+      1000
+    ]
+  },
+  {
+    "slug": "shitbox-financial-hostage",
+    "productId": 481316410,
+    "fileId": 1085847833,
+    "md5": "33593b494eb8c9d23821638a66afaf57",
+    "task": "gt-983627232",
+    "mockupUrl": "https://printful-upload.s3-accelerate.amazonaws.com/tmp/7f28b6b16b1f0463bf3abfe204693572/unisex-staple-t-shirt-black-front-6acebddfbb3a6.png",
+    "variants": [
+      {
+        "id": 5572205215,
+        "catalog": 4016,
+        "size": "S",
+        "price": 13.92,
+        "productionCents": 1192
+      },
+      {
+        "id": 5572205216,
+        "catalog": 4017,
+        "size": "M",
+        "price": 13.92,
+        "productionCents": 1192
+      },
+      {
+        "id": 5572205217,
+        "catalog": 4018,
+        "size": "L",
+        "price": 13.92,
+        "productionCents": 1192
+      },
+      {
+        "id": 5572205218,
+        "catalog": 4019,
+        "size": "XL",
+        "price": 13.92,
+        "productionCents": 1192
+      }
+    ],
+    "mockupSha256": "7e01a4607b0d6d137a1fae45387e92899c51bb9783f4a1d375ff4aebf95e8288",
+    "mockupPixels": [
+      1000,
+      1000
+    ]
+  },
+  {
+    "slug": "live-laugh-fuck-the-landlord",
+    "productId": 481316412,
+    "fileId": 1085847852,
+    "md5": "8e8a230ef1869c0b487465927c45582c",
+    "task": "gt-983627659",
+    "mockupUrl": "https://printful-upload.s3-accelerate.amazonaws.com/tmp/e7322f4462d91d1022ac66683730365c/unisex-staple-t-shirt-black-front-6acebe1aa01b2.png",
+    "variants": [
+      {
+        "id": 5572205231,
+        "catalog": 4016,
+        "size": "S",
+        "price": 13.92,
+        "productionCents": 1192
+      },
+      {
+        "id": 5572205232,
+        "catalog": 4017,
+        "size": "M",
+        "price": 13.92,
+        "productionCents": 1192
+      },
+      {
+        "id": 5572205233,
+        "catalog": 4018,
+        "size": "L",
+        "price": 13.92,
+        "productionCents": 1192
+      },
+      {
+        "id": 5572205234,
+        "catalog": 4019,
+        "size": "XL",
+        "price": 13.92,
+        "productionCents": 1192
+      }
+    ],
+    "mockupSha256": "4946e8c417ae14236d77adf81dfdbf2f847906c26dc03454b6cd8d7fc7a694c7",
+    "mockupPixels": [
+      1000,
+      1000
+    ]
+  },
+  {
+    "slug": "rent-is-due-so-is-the-revolution",
+    "productId": 481316547,
+    "fileId": 1085848420,
+    "md5": "7ed56505e3ac92cfd5867682060de94e",
+    "task": "gt-983627672",
+    "mockupUrl": "https://printful-upload.s3-accelerate.amazonaws.com/tmp/9b7909e88ba8b9190718fd00b88d9a10/unisex-staple-t-shirt-black-front-6acebe1c201d6.png",
+    "variants": [
+      {
+        "id": 5572206120,
+        "catalog": 4016,
+        "size": "S",
+        "price": 13.92,
+        "productionCents": 1192
+      },
+      {
+        "id": 5572206121,
+        "catalog": 4017,
+        "size": "M",
+        "price": 13.92,
+        "productionCents": 1192
+      },
+      {
+        "id": 5572206122,
+        "catalog": 4018,
+        "size": "L",
+        "price": 13.92,
+        "productionCents": 1192
+      },
+      {
+        "id": 5572206123,
+        "catalog": 4019,
+        "size": "XL",
+        "price": 13.92,
+        "productionCents": 1192
+      }
+    ],
+    "mockupSha256": "c77830a1d6c6550df2f2e96dff94f37db7ff0a7f72200d76fb09682ba52da30f",
+    "mockupPixels": [
+      1000,
+      1000
+    ]
+  },
+  {
+    "slug": "my-ex-was-a-warning-label",
+    "productId": 481316551,
+    "fileId": 1085848432,
+    "md5": "3e8d5c045b09a0a758cd44792a641276",
+    "task": "gt-983628069",
+    "mockupUrl": "https://printful-upload.s3-accelerate.amazonaws.com/tmp/be47e5fed01e465d458e834d40f4efe0/unisex-staple-t-shirt-black-front-6acebe59b1273.png",
+    "variants": [
+      {
+        "id": 5572206147,
+        "catalog": 4016,
+        "size": "S",
+        "price": 13.92,
+        "productionCents": 1192
+      },
+      {
+        "id": 5572206159,
+        "catalog": 4017,
+        "size": "M",
+        "price": 13.92,
+        "productionCents": 1192
+      },
+      {
+        "id": 5572206168,
+        "catalog": 4018,
+        "size": "L",
+        "price": 13.92,
+        "productionCents": 1192
+      },
+      {
+        "id": 5572206180,
+        "catalog": 4019,
+        "size": "XL",
+        "price": 13.92,
+        "productionCents": 1192
+      }
+    ],
+    "mockupSha256": "50106150de6d046da03cc884a6aeeac726cc547a218d6718e880d80c602600b1",
+    "mockupPixels": [
+      1000,
+      1000
+    ]
+  },
+  {
+    "slug": "love-is-blind-divorce-is-expensive",
+    "productId": 481316726,
+    "fileId": 1085848866,
+    "md5": "f221d908a799ebac6ed76331848ea9cb",
+    "task": "gt-983628081",
+    "mockupUrl": "https://printful-upload.s3-accelerate.amazonaws.com/tmp/6829ff84a19bef0a269ad32a47c0883b/unisex-staple-t-shirt-black-front-6acebe5a77df3.png",
+    "variants": [
+      {
+        "id": 5572207216,
+        "catalog": 4016,
+        "size": "S",
+        "price": 13.92,
+        "productionCents": 1192
+      },
+      {
+        "id": 5572207217,
+        "catalog": 4017,
+        "size": "M",
+        "price": 13.92,
+        "productionCents": 1192
+      },
+      {
+        "id": 5572207218,
+        "catalog": 4018,
+        "size": "L",
+        "price": 13.92,
+        "productionCents": 1192
+      },
+      {
+        "id": 5572207219,
+        "catalog": 4019,
+        "size": "XL",
+        "price": 13.92,
+        "productionCents": 1192
+      }
+    ],
+    "mockupSha256": "a0b439c61bb6b23c089350ad5093bef40e2295b0e410415ff77993b279de97f1",
+    "mockupPixels": [
+      1000,
+      1000
+    ]
+  },
+  {
+    "slug": "fuck-around-keep-the-receipts",
+    "productId": 481316731,
+    "fileId": 1085848883,
+    "md5": "b0b0debdc4beee294262dba41cb46a1b",
+    "task": "gt-983628477",
+    "mockupUrl": "https://printful-upload.s3-accelerate.amazonaws.com/tmp/82ff914c99b9673fc49daf92e6de4c51/unisex-staple-t-shirt-black-front-6acebe963b572.png",
+    "variants": [
+      {
+        "id": 5572207232,
+        "catalog": 4016,
+        "size": "S",
+        "price": 13.92,
+        "productionCents": 1192
+      },
+      {
+        "id": 5572207233,
+        "catalog": 4017,
+        "size": "M",
+        "price": 13.92,
+        "productionCents": 1192
+      },
+      {
+        "id": 5572207234,
+        "catalog": 4018,
+        "size": "L",
+        "price": 13.92,
+        "productionCents": 1192
+      },
+      {
+        "id": 5572207235,
+        "catalog": 4019,
+        "size": "XL",
+        "price": 13.92,
+        "productionCents": 1192
+      }
+    ],
+    "mockupSha256": "6566749b1907ee46d4fedc7e03b6aa2a04c281fbc064d85a83d9d831a87e60b8",
+    "mockupPixels": [
+      1000,
+      1000
+    ]
+  },
+  {
+    "slug": "bad-influence-worse-fucking-ideas",
+    "productId": 481316975,
+    "fileId": 1085849606,
+    "md5": "15bcd1c788720d1610a70cf006c34492",
+    "task": "gt-983628489",
+    "mockupUrl": "https://printful-upload.s3-accelerate.amazonaws.com/tmp/f820ed3f204302e186748cf59a008229/unisex-staple-t-shirt-black-front-6acebe9807006.png",
+    "variants": [
+      {
+        "id": 5572208297,
+        "catalog": 4016,
+        "size": "S",
+        "price": 13.92,
+        "productionCents": 1192
+      },
+      {
+        "id": 5572208298,
+        "catalog": 4017,
+        "size": "M",
+        "price": 13.92,
+        "productionCents": 1192
+      },
+      {
+        "id": 5572208299,
+        "catalog": 4018,
+        "size": "L",
+        "price": 13.92,
+        "productionCents": 1192
+      },
+      {
+        "id": 5572208300,
+        "catalog": 4019,
+        "size": "XL",
+        "price": 13.92,
+        "productionCents": 1192
+      }
+    ],
+    "mockupSha256": "a826622f739860f12d7af74fe6ea173ad942f4a573b840853276898ec3072ad1",
+    "mockupPixels": [
+      1000,
+      1000
+    ]
+  }
+]

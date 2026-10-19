@@ -1,4 +1,5 @@
 import type { ArtworkPlacement, GarmentColor } from '@/components/product/GarmentMockup';
+import NEW_DESIGNS from './designs/new-collections.json';
 import { GENERATED_PRODUCT_PRESENTATIONS } from './generatedProductPresentations';
 
 export type ProductPresentation = {
@@ -14,6 +15,9 @@ export type ProductPresentation = {
 };
 
 export const PRODUCT_PRESENTATIONS: ProductPresentation[] = [
+  ...NEW_DESIGNS.map(d => ({slug:d.slug,frontImage:d.mockup,garmentColor:'black' as const,source:'local' as const})),
+  {slug:'elected-not-housebroken',frontImage:'/images/designs/elected-printful-front.png',garmentColor:'black',source:'local'},
+  {slug:'campaign-promises-batteries-not-included',frontImage:'/images/designs/campaign-printful-front.png',garmentColor:'black',source:'local'},
   {
     slug: 'professionally-unsupervised',
     garmentColor: 'charcoal',

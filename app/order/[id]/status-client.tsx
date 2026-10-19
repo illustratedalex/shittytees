@@ -76,8 +76,8 @@ export default function OrderStatusClient({ orderId, token }: { orderId: string;
 
   if (error) {
     return (
-      <main className="min-h-screen bg-[#0e0d0c] pt-[7rem] sm:pt-[7.5rem] px-5">
-        <div className="max-w-3xl mx-auto panel-soft p-8 mt-10">
+      <main className="order-status-page">
+        <div className="order-status-card">
           <h1 className="text-[#f2ecde] text-2xl mb-4">Order Not Found</h1>
           <p className="text-[#c4b9a7]">We could not find that order status link.</p>
         </div>
@@ -86,12 +86,12 @@ export default function OrderStatusClient({ orderId, token }: { orderId: string;
   }
 
   return (
-    <main className="min-h-screen bg-[#0e0d0c] pt-[7rem] sm:pt-[7.5rem] px-5 pb-10">
-      <div className="max-w-3xl mx-auto panel-soft p-8 mt-10">
+    <main className="order-status-page">
+      <div className="order-status-card">
         <h1 className="text-[#f2ecde] text-2xl mb-3">Order Status</h1>
         <p className="text-[#d4cdbc] mb-6">Payment confirmation and fulfillment updates can take a moment to appear.</p>
 
-        <div className="space-y-3 mb-8">
+        <div className="order-status-current">
           <p className="text-[#f2ecde]">Current: {data?.statusLabel || 'Loading...'}</p>
           {data?.trackingUrl ? (
             <a href={data.trackingUrl} target="_blank" rel="noreferrer" className="text-[#f2ecde] underline">
@@ -100,7 +100,7 @@ export default function OrderStatusClient({ orderId, token }: { orderId: string;
           ) : null}
         </div>
 
-        <div className="border-t border-[#f2ecde1f] pt-5">
+        <div className="order-status-items">
           <h2 className="text-[#f2ecde] text-lg mb-3">Items</h2>
           <ul className="space-y-2">
             {data?.items.map((item) => (
@@ -109,6 +109,7 @@ export default function OrderStatusClient({ orderId, token }: { orderId: string;
               </li>
             ))}
           </ul>
+          {data ? <p className="order-status-total">Total: {new Intl.NumberFormat('en-US',{style:'currency',currency:data.currency}).format(data.total)}</p> : null}
         </div>
       </div>
     </main>
