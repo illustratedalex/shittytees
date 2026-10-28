@@ -5,9 +5,19 @@ import type { StoreOrderItem, StoreShippingAddress } from '@/lib/orders/types';
 type Costs = { currency: string; subtotal: number | string; shipping: number | string; tax: number | string; total: number | string };
 
 function cents(value: number | string) {
-  if (!/^\d+(\.\d{1,2})?$/.test(String(value))) throw new Error('Invalid Printful cost');
-  const result = Math.round(Number(value) * 100);
+  if (typeof value === 'string') {
+    if (!/^\d+(\.\d{1,2})?$/.test(value)) throw new Error('Invalid Printful cost');
+  } else if (typeof value !== 'number' || !Number.isFinite(value) || value < 0) {
+    throw new Error('Invalid Printful cost');
+  }
+  const scaled = Number(value) * 100;
+  const result = Math.round(scaled);
   if (!Number.isSafeInteger(result)) throw new Error('Printful cost exceeds limits');
+  // Numeric API amounts can contain binary floating-point noise, e.g.
+  // 5.3500000000000005. Accept cent values within rounding error only;
+  // genuine fractional-cent prices must still fail closed.
+  const tolerance = Number.EPSILON * Math.max(1, Math.abs(scaled)) * 4;
+  if (Math.abs(scaled - result) > tolerance) throw new Error('Invalid Printful cost');
   return result;
 }
 
