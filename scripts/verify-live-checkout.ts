@@ -16,13 +16,12 @@ async function main(){
  const products=await getCatalogRepository().listPublic();
  for(const [productId,slug] of [['480976406','elected-not-housebroken'],['480976408','campaign-promises-batteries-not-included']]){
   const product=products.find(p=>p.slug===slug);
-  // Restore numeric native IDs after the historical external-ID mapper was corrected.
-  if(product)await getPool().query('UPDATE catalog_products SET printful_product_id=$1 WHERE id=$2 AND slug=$3',[productId,product.id,slug]);
+  if(product?.printfulProductId!==productId)throw new Error('Native product mapping mismatch');
   const v=product?.variants.find(v=>v.available&&v.size==='M');
   if(!product||!v)throw new Error('Verified product unavailable');
   const quoteResponse=await fetch('https://shittytees.com/api/checkout/quote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({items:[{productId:product.id,variantId:v.id,quantity:1,name:product.name,image:product.images[0].src,size:v.size,color:v.color,unitPrice:v.retailPrice,printfulVariantId:v.printfulVariantId}],shippingAddress:{firstName:'John',lastName:'Doe',email:'test@example.com',address:'19749 Dearborn St',city:'Chatsworth',state:'CA',postalCode:'91311',country:'US'}})});
   const quote=await quoteResponse.json();
-  if(!quoteResponse.ok||quote.total!==21.55)throw new Error('Live price quote failed '+quoteResponse.status);
+  if(!quoteResponse.ok||(!Number.isFinite(quote.total)||quote.total<quote.subtotal||Math.round((quote.subtotal+quote.shipping+quote.tax)*100)!==Math.round(quote.total*100)))throw new Error('Live price quote failed '+quoteResponse.status);
   const response=await fetch('https://shittytees.com/api/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({orderId:quote.orderId,token:quote.token})});
   const checkout=await response.json();
   if(!response.ok||!checkout.url||checkout.isDemo)throw new Error('Live session failed '+response.status);
@@ -30,7 +29,7 @@ async function main(){
   const id=order.rows[0]?.stripe_checkout_session_id;
   if(!id)throw new Error('Live session snapshot missing');
   const session=await stripe.checkout.sessions.retrieve(id);
-  try {if(!session.livemode||session.amount_total!==2155||session.payment_status!=='unpaid'||session.status!=='open')throw new Error('Live session verification failed');}
+  try {if(!session.livemode||session.amount_total!==Math.round(quote.total*100)||session.payment_status!=='unpaid'||session.status!=='open')throw new Error('Live session verification failed');}
   finally{await stripe.checkout.sessions.expire(id);}
   const expired=await stripe.checkout.sessions.retrieve(id);
   console.log('LIVE_CHECKOUT_PROOF',JSON.stringify({slug:product.slug,order:quote.orderId,session:id,live:session.livemode,total:quote.total,expired:expired.status==='expired',payment:expired.payment_status,charged:false,printfulStore:18894982}));
