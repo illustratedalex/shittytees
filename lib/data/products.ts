@@ -1,3 +1,4 @@
+import { SHITTY_COLLECTIONS } from '@/data/shittyCollections';
 import { Collection, Product, ProductVariant } from '../types/product';
 import { ARCHIVE_PRODUCTS } from '@/data/archiveProducts';
 import { PUBLISHED_PRODUCTS } from '@/data/publishedProducts';
@@ -58,6 +59,7 @@ export const COLLECTIONS: Collection[] = [
     name: 'Holiday Damage',
     description: 'Seasonal releases for people who avoid polite small talk.',
   },
+  ...SHITTY_COLLECTIONS,
   {
     id: 'col-10',
     slug: 'archive',
@@ -72,7 +74,7 @@ type ProductSeed = {
   name: string;
   shortDescription: string;
   description: string;
-  collectionSlug: 'dark-humor' | 'blue-collar' | 'tattoo-culture' | 'artists-bench';
+  collectionSlug: 'dark-humor' | 'blue-collar' | 'tattoo-culture' | 'artists-bench' | 'shitty-politics';
   category: string;
   color: string;
   colorHex: string;
@@ -505,7 +507,7 @@ function createVariants(seed: ProductSeed): ProductVariant[] {
     colorHex: seed.colorHex,
     sku: `${seed.slug.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 10)}-${size}`,
     retailPrice: seed.retailPrice,
-    available: true,
+    available: !seed.id.startsWith('prod-'),
   }));
 }
 

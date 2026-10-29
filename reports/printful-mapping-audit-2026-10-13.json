@@ -1,0 +1,1468 @@
+{
+  "generatedAt": "2026-10-13T03:17:44.641Z",
+  "coreListings": 20,
+  "expectedSizesPerListing": [
+    "S",
+    "M",
+    "L",
+    "XL"
+  ],
+  "variants": 80,
+  "verified": 0,
+  "unavailable": 80,
+  "totalsBySize": {
+    "S": {
+      "verified": 0,
+      "unavailable": 20
+    },
+    "M": {
+      "verified": 0,
+      "unavailable": 20
+    },
+    "L": {
+      "verified": 0,
+      "unavailable": 20
+    },
+    "XL": {
+      "verified": 0,
+      "unavailable": 20
+    }
+  },
+  "listingSummary": [
+    {
+      "productId": "prod-1",
+      "slug": "professionally-unsupervised",
+      "name": "Professionally Unsupervised",
+      "variants": [
+        {
+          "size": "S",
+          "color": "Charcoal",
+          "status": "unavailable",
+          "reason": "No verified Printful Sync Variant matches size/color"
+        },
+        {
+          "size": "M",
+          "color": "Charcoal",
+          "status": "unavailable",
+          "reason": "No verified Printful Sync Variant matches size/color"
+        },
+        {
+          "size": "L",
+          "color": "Charcoal",
+          "status": "unavailable",
+          "reason": "No verified Printful Sync Variant matches size/color"
+        },
+        {
+          "size": "XL",
+          "color": "Charcoal",
+          "status": "unavailable",
+          "reason": "No verified Printful Sync Variant matches size/color"
+        }
+      ]
+    },
+    {
+      "productId": "prod-2",
+      "slug": "bad-decisions-department",
+      "name": "Bad Decisions Department",
+      "variants": [
+        {
+          "size": "S",
+          "color": "Black",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "M",
+          "color": "Black",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "L",
+          "color": "Black",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "XL",
+          "color": "Black",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        }
+      ]
+    },
+    {
+      "productId": "prod-3",
+      "slug": "clocked-out-mentally",
+      "name": "Clocked Out Mentally",
+      "variants": [
+        {
+          "size": "S",
+          "color": "Charcoal",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "M",
+          "color": "Charcoal",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "L",
+          "color": "Charcoal",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "XL",
+          "color": "Charcoal",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        }
+      ]
+    },
+    {
+      "productId": "prod-4",
+      "slug": "not-my-circus",
+      "name": "Not My Circus",
+      "variants": [
+        {
+          "size": "S",
+          "color": "Black",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "M",
+          "color": "Black",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "L",
+          "color": "Black",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "XL",
+          "color": "Black",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        }
+      ]
+    },
+    {
+      "productId": "prod-5",
+      "slug": "questionable-since-birth",
+      "name": "Questionable Since Birth",
+      "variants": [
+        {
+          "size": "S",
+          "color": "Bone",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "M",
+          "color": "Bone",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "L",
+          "color": "Bone",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "XL",
+          "color": "Bone",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        }
+      ]
+    },
+    {
+      "productId": "prod-6",
+      "slug": "low-standards-club",
+      "name": "Low Standards Club",
+      "variants": [
+        {
+          "size": "S",
+          "color": "Black",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "M",
+          "color": "Black",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "L",
+          "color": "Black",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "XL",
+          "color": "Black",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        }
+      ]
+    },
+    {
+      "productId": "prod-7",
+      "slug": "certified-bad-influence",
+      "name": "Certified Bad Influence",
+      "variants": [
+        {
+          "size": "S",
+          "color": "Black",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "M",
+          "color": "Black",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "L",
+          "color": "Black",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "XL",
+          "color": "Black",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        }
+      ]
+    },
+    {
+      "productId": "prod-8",
+      "slug": "running-on-caffeine-and-regret",
+      "name": "Running on Caffeine & Regret",
+      "variants": [
+        {
+          "size": "S",
+          "color": "Charcoal",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "M",
+          "color": "Charcoal",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "L",
+          "color": "Charcoal",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "XL",
+          "color": "Charcoal",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        }
+      ]
+    },
+    {
+      "productId": "prod-9",
+      "slug": "hrs-favorite-employee",
+      "name": "HR's Favorite Employee",
+      "variants": [
+        {
+          "size": "S",
+          "color": "Bone",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "M",
+          "color": "Bone",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "L",
+          "color": "Bone",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "XL",
+          "color": "Bone",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        }
+      ]
+    },
+    {
+      "productId": "prod-10",
+      "slug": "todays-bad-idea",
+      "name": "Today's Bad Idea",
+      "variants": [
+        {
+          "size": "S",
+          "color": "Black",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "M",
+          "color": "Black",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "L",
+          "color": "Black",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "XL",
+          "color": "Black",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        }
+      ]
+    },
+    {
+      "productId": "prod-11",
+      "slug": "overqualified-underpaid",
+      "name": "Overqualified Underpaid",
+      "variants": [
+        {
+          "size": "S",
+          "color": "Charcoal",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "M",
+          "color": "Charcoal",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "L",
+          "color": "Charcoal",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "XL",
+          "color": "Charcoal",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        }
+      ]
+    },
+    {
+      "productId": "prod-12",
+      "slug": "probably-fine",
+      "name": "Probably Fine",
+      "variants": [
+        {
+          "size": "S",
+          "color": "Oxblood",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "M",
+          "color": "Oxblood",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "L",
+          "color": "Oxblood",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "XL",
+          "color": "Oxblood",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        }
+      ]
+    },
+    {
+      "productId": "prod-13",
+      "slug": "do-not-encourage-me",
+      "name": "Do Not Encourage Me",
+      "variants": [
+        {
+          "size": "S",
+          "color": "Black",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "M",
+          "color": "Black",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "L",
+          "color": "Black",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "XL",
+          "color": "Black",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        }
+      ]
+    },
+    {
+      "productId": "prod-14",
+      "slug": "unsupervised-again",
+      "name": "Unsupervised Again",
+      "variants": [
+        {
+          "size": "S",
+          "color": "Bone",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "M",
+          "color": "Bone",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "L",
+          "color": "Bone",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "XL",
+          "color": "Bone",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        }
+      ]
+    },
+    {
+      "productId": "prod-15",
+      "slug": "problem-solver-usually-the-problem",
+      "name": "Problem Solver (Usually the Problem)",
+      "variants": [
+        {
+          "size": "S",
+          "color": "Charcoal",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "M",
+          "color": "Charcoal",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "L",
+          "color": "Charcoal",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "XL",
+          "color": "Charcoal",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        }
+      ]
+    },
+    {
+      "productId": "prod-16",
+      "slug": "socially-optional",
+      "name": "Socially Optional",
+      "variants": [
+        {
+          "size": "S",
+          "color": "Black",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "M",
+          "color": "Black",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "L",
+          "color": "Black",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "XL",
+          "color": "Black",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        }
+      ]
+    },
+    {
+      "productId": "prod-17",
+      "slug": "no-good-decisions-after-midnight",
+      "name": "No Good Decisions After Midnight",
+      "variants": [
+        {
+          "size": "S",
+          "color": "Oxblood",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "M",
+          "color": "Oxblood",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "L",
+          "color": "Oxblood",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "XL",
+          "color": "Oxblood",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        }
+      ]
+    },
+    {
+      "productId": "prod-18",
+      "slug": "tattoo-therapy",
+      "name": "Tattoo Therapy",
+      "variants": [
+        {
+          "size": "S",
+          "color": "Black",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "M",
+          "color": "Black",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "L",
+          "color": "Black",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "XL",
+          "color": "Black",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        }
+      ]
+    },
+    {
+      "productId": "prod-19",
+      "slug": "weekend-survival-kit",
+      "name": "Weekend Survival Kit",
+      "variants": [
+        {
+          "size": "S",
+          "color": "Charcoal",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "M",
+          "color": "Charcoal",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "L",
+          "color": "Charcoal",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "XL",
+          "color": "Charcoal",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        }
+      ]
+    },
+    {
+      "productId": "prod-20",
+      "slug": "everything-is-fine",
+      "name": "Everything Is Fine",
+      "variants": [
+        {
+          "size": "S",
+          "color": "Bone",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "M",
+          "color": "Bone",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "L",
+          "color": "Bone",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        },
+        {
+          "size": "XL",
+          "color": "Bone",
+          "status": "unavailable",
+          "reason": "No exact Printful Sync Product name match"
+        }
+      ]
+    }
+  ],
+  "rows": [
+    {
+      "productId": "prod-1",
+      "slug": "professionally-unsupervised",
+      "name": "Professionally Unsupervised",
+      "variantId": "prod-1-var-s",
+      "size": "S",
+      "color": "Charcoal",
+      "status": "unavailable",
+      "reason": "No verified Printful Sync Variant matches size/color"
+    },
+    {
+      "productId": "prod-1",
+      "slug": "professionally-unsupervised",
+      "name": "Professionally Unsupervised",
+      "variantId": "prod-1-var-m",
+      "size": "M",
+      "color": "Charcoal",
+      "status": "unavailable",
+      "reason": "No verified Printful Sync Variant matches size/color"
+    },
+    {
+      "productId": "prod-1",
+      "slug": "professionally-unsupervised",
+      "name": "Professionally Unsupervised",
+      "variantId": "prod-1-var-l",
+      "size": "L",
+      "color": "Charcoal",
+      "status": "unavailable",
+      "reason": "No verified Printful Sync Variant matches size/color"
+    },
+    {
+      "productId": "prod-1",
+      "slug": "professionally-unsupervised",
+      "name": "Professionally Unsupervised",
+      "variantId": "prod-1-var-xl",
+      "size": "XL",
+      "color": "Charcoal",
+      "status": "unavailable",
+      "reason": "No verified Printful Sync Variant matches size/color"
+    },
+    {
+      "productId": "prod-2",
+      "slug": "bad-decisions-department",
+      "name": "Bad Decisions Department",
+      "variantId": "prod-2-var-s",
+      "size": "S",
+      "color": "Black",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-2",
+      "slug": "bad-decisions-department",
+      "name": "Bad Decisions Department",
+      "variantId": "prod-2-var-m",
+      "size": "M",
+      "color": "Black",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-2",
+      "slug": "bad-decisions-department",
+      "name": "Bad Decisions Department",
+      "variantId": "prod-2-var-l",
+      "size": "L",
+      "color": "Black",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-2",
+      "slug": "bad-decisions-department",
+      "name": "Bad Decisions Department",
+      "variantId": "prod-2-var-xl",
+      "size": "XL",
+      "color": "Black",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-3",
+      "slug": "clocked-out-mentally",
+      "name": "Clocked Out Mentally",
+      "variantId": "prod-3-var-s",
+      "size": "S",
+      "color": "Charcoal",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-3",
+      "slug": "clocked-out-mentally",
+      "name": "Clocked Out Mentally",
+      "variantId": "prod-3-var-m",
+      "size": "M",
+      "color": "Charcoal",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-3",
+      "slug": "clocked-out-mentally",
+      "name": "Clocked Out Mentally",
+      "variantId": "prod-3-var-l",
+      "size": "L",
+      "color": "Charcoal",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-3",
+      "slug": "clocked-out-mentally",
+      "name": "Clocked Out Mentally",
+      "variantId": "prod-3-var-xl",
+      "size": "XL",
+      "color": "Charcoal",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-4",
+      "slug": "not-my-circus",
+      "name": "Not My Circus",
+      "variantId": "prod-4-var-s",
+      "size": "S",
+      "color": "Black",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-4",
+      "slug": "not-my-circus",
+      "name": "Not My Circus",
+      "variantId": "prod-4-var-m",
+      "size": "M",
+      "color": "Black",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-4",
+      "slug": "not-my-circus",
+      "name": "Not My Circus",
+      "variantId": "prod-4-var-l",
+      "size": "L",
+      "color": "Black",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-4",
+      "slug": "not-my-circus",
+      "name": "Not My Circus",
+      "variantId": "prod-4-var-xl",
+      "size": "XL",
+      "color": "Black",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-5",
+      "slug": "questionable-since-birth",
+      "name": "Questionable Since Birth",
+      "variantId": "prod-5-var-s",
+      "size": "S",
+      "color": "Bone",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-5",
+      "slug": "questionable-since-birth",
+      "name": "Questionable Since Birth",
+      "variantId": "prod-5-var-m",
+      "size": "M",
+      "color": "Bone",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-5",
+      "slug": "questionable-since-birth",
+      "name": "Questionable Since Birth",
+      "variantId": "prod-5-var-l",
+      "size": "L",
+      "color": "Bone",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-5",
+      "slug": "questionable-since-birth",
+      "name": "Questionable Since Birth",
+      "variantId": "prod-5-var-xl",
+      "size": "XL",
+      "color": "Bone",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-6",
+      "slug": "low-standards-club",
+      "name": "Low Standards Club",
+      "variantId": "prod-6-var-s",
+      "size": "S",
+      "color": "Black",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-6",
+      "slug": "low-standards-club",
+      "name": "Low Standards Club",
+      "variantId": "prod-6-var-m",
+      "size": "M",
+      "color": "Black",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-6",
+      "slug": "low-standards-club",
+      "name": "Low Standards Club",
+      "variantId": "prod-6-var-l",
+      "size": "L",
+      "color": "Black",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-6",
+      "slug": "low-standards-club",
+      "name": "Low Standards Club",
+      "variantId": "prod-6-var-xl",
+      "size": "XL",
+      "color": "Black",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-7",
+      "slug": "certified-bad-influence",
+      "name": "Certified Bad Influence",
+      "variantId": "prod-7-var-s",
+      "size": "S",
+      "color": "Black",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-7",
+      "slug": "certified-bad-influence",
+      "name": "Certified Bad Influence",
+      "variantId": "prod-7-var-m",
+      "size": "M",
+      "color": "Black",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-7",
+      "slug": "certified-bad-influence",
+      "name": "Certified Bad Influence",
+      "variantId": "prod-7-var-l",
+      "size": "L",
+      "color": "Black",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-7",
+      "slug": "certified-bad-influence",
+      "name": "Certified Bad Influence",
+      "variantId": "prod-7-var-xl",
+      "size": "XL",
+      "color": "Black",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-8",
+      "slug": "running-on-caffeine-and-regret",
+      "name": "Running on Caffeine & Regret",
+      "variantId": "prod-8-var-s",
+      "size": "S",
+      "color": "Charcoal",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-8",
+      "slug": "running-on-caffeine-and-regret",
+      "name": "Running on Caffeine & Regret",
+      "variantId": "prod-8-var-m",
+      "size": "M",
+      "color": "Charcoal",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-8",
+      "slug": "running-on-caffeine-and-regret",
+      "name": "Running on Caffeine & Regret",
+      "variantId": "prod-8-var-l",
+      "size": "L",
+      "color": "Charcoal",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-8",
+      "slug": "running-on-caffeine-and-regret",
+      "name": "Running on Caffeine & Regret",
+      "variantId": "prod-8-var-xl",
+      "size": "XL",
+      "color": "Charcoal",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-9",
+      "slug": "hrs-favorite-employee",
+      "name": "HR's Favorite Employee",
+      "variantId": "prod-9-var-s",
+      "size": "S",
+      "color": "Bone",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-9",
+      "slug": "hrs-favorite-employee",
+      "name": "HR's Favorite Employee",
+      "variantId": "prod-9-var-m",
+      "size": "M",
+      "color": "Bone",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-9",
+      "slug": "hrs-favorite-employee",
+      "name": "HR's Favorite Employee",
+      "variantId": "prod-9-var-l",
+      "size": "L",
+      "color": "Bone",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-9",
+      "slug": "hrs-favorite-employee",
+      "name": "HR's Favorite Employee",
+      "variantId": "prod-9-var-xl",
+      "size": "XL",
+      "color": "Bone",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-10",
+      "slug": "todays-bad-idea",
+      "name": "Today's Bad Idea",
+      "variantId": "prod-10-var-s",
+      "size": "S",
+      "color": "Black",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-10",
+      "slug": "todays-bad-idea",
+      "name": "Today's Bad Idea",
+      "variantId": "prod-10-var-m",
+      "size": "M",
+      "color": "Black",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-10",
+      "slug": "todays-bad-idea",
+      "name": "Today's Bad Idea",
+      "variantId": "prod-10-var-l",
+      "size": "L",
+      "color": "Black",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-10",
+      "slug": "todays-bad-idea",
+      "name": "Today's Bad Idea",
+      "variantId": "prod-10-var-xl",
+      "size": "XL",
+      "color": "Black",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-11",
+      "slug": "overqualified-underpaid",
+      "name": "Overqualified Underpaid",
+      "variantId": "prod-11-var-s",
+      "size": "S",
+      "color": "Charcoal",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-11",
+      "slug": "overqualified-underpaid",
+      "name": "Overqualified Underpaid",
+      "variantId": "prod-11-var-m",
+      "size": "M",
+      "color": "Charcoal",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-11",
+      "slug": "overqualified-underpaid",
+      "name": "Overqualified Underpaid",
+      "variantId": "prod-11-var-l",
+      "size": "L",
+      "color": "Charcoal",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-11",
+      "slug": "overqualified-underpaid",
+      "name": "Overqualified Underpaid",
+      "variantId": "prod-11-var-xl",
+      "size": "XL",
+      "color": "Charcoal",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-12",
+      "slug": "probably-fine",
+      "name": "Probably Fine",
+      "variantId": "prod-12-var-s",
+      "size": "S",
+      "color": "Oxblood",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-12",
+      "slug": "probably-fine",
+      "name": "Probably Fine",
+      "variantId": "prod-12-var-m",
+      "size": "M",
+      "color": "Oxblood",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-12",
+      "slug": "probably-fine",
+      "name": "Probably Fine",
+      "variantId": "prod-12-var-l",
+      "size": "L",
+      "color": "Oxblood",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-12",
+      "slug": "probably-fine",
+      "name": "Probably Fine",
+      "variantId": "prod-12-var-xl",
+      "size": "XL",
+      "color": "Oxblood",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-13",
+      "slug": "do-not-encourage-me",
+      "name": "Do Not Encourage Me",
+      "variantId": "prod-13-var-s",
+      "size": "S",
+      "color": "Black",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-13",
+      "slug": "do-not-encourage-me",
+      "name": "Do Not Encourage Me",
+      "variantId": "prod-13-var-m",
+      "size": "M",
+      "color": "Black",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-13",
+      "slug": "do-not-encourage-me",
+      "name": "Do Not Encourage Me",
+      "variantId": "prod-13-var-l",
+      "size": "L",
+      "color": "Black",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-13",
+      "slug": "do-not-encourage-me",
+      "name": "Do Not Encourage Me",
+      "variantId": "prod-13-var-xl",
+      "size": "XL",
+      "color": "Black",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-14",
+      "slug": "unsupervised-again",
+      "name": "Unsupervised Again",
+      "variantId": "prod-14-var-s",
+      "size": "S",
+      "color": "Bone",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-14",
+      "slug": "unsupervised-again",
+      "name": "Unsupervised Again",
+      "variantId": "prod-14-var-m",
+      "size": "M",
+      "color": "Bone",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-14",
+      "slug": "unsupervised-again",
+      "name": "Unsupervised Again",
+      "variantId": "prod-14-var-l",
+      "size": "L",
+      "color": "Bone",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-14",
+      "slug": "unsupervised-again",
+      "name": "Unsupervised Again",
+      "variantId": "prod-14-var-xl",
+      "size": "XL",
+      "color": "Bone",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-15",
+      "slug": "problem-solver-usually-the-problem",
+      "name": "Problem Solver (Usually the Problem)",
+      "variantId": "prod-15-var-s",
+      "size": "S",
+      "color": "Charcoal",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-15",
+      "slug": "problem-solver-usually-the-problem",
+      "name": "Problem Solver (Usually the Problem)",
+      "variantId": "prod-15-var-m",
+      "size": "M",
+      "color": "Charcoal",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-15",
+      "slug": "problem-solver-usually-the-problem",
+      "name": "Problem Solver (Usually the Problem)",
+      "variantId": "prod-15-var-l",
+      "size": "L",
+      "color": "Charcoal",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-15",
+      "slug": "problem-solver-usually-the-problem",
+      "name": "Problem Solver (Usually the Problem)",
+      "variantId": "prod-15-var-xl",
+      "size": "XL",
+      "color": "Charcoal",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-16",
+      "slug": "socially-optional",
+      "name": "Socially Optional",
+      "variantId": "prod-16-var-s",
+      "size": "S",
+      "color": "Black",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-16",
+      "slug": "socially-optional",
+      "name": "Socially Optional",
+      "variantId": "prod-16-var-m",
+      "size": "M",
+      "color": "Black",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-16",
+      "slug": "socially-optional",
+      "name": "Socially Optional",
+      "variantId": "prod-16-var-l",
+      "size": "L",
+      "color": "Black",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-16",
+      "slug": "socially-optional",
+      "name": "Socially Optional",
+      "variantId": "prod-16-var-xl",
+      "size": "XL",
+      "color": "Black",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-17",
+      "slug": "no-good-decisions-after-midnight",
+      "name": "No Good Decisions After Midnight",
+      "variantId": "prod-17-var-s",
+      "size": "S",
+      "color": "Oxblood",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-17",
+      "slug": "no-good-decisions-after-midnight",
+      "name": "No Good Decisions After Midnight",
+      "variantId": "prod-17-var-m",
+      "size": "M",
+      "color": "Oxblood",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-17",
+      "slug": "no-good-decisions-after-midnight",
+      "name": "No Good Decisions After Midnight",
+      "variantId": "prod-17-var-l",
+      "size": "L",
+      "color": "Oxblood",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-17",
+      "slug": "no-good-decisions-after-midnight",
+      "name": "No Good Decisions After Midnight",
+      "variantId": "prod-17-var-xl",
+      "size": "XL",
+      "color": "Oxblood",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-18",
+      "slug": "tattoo-therapy",
+      "name": "Tattoo Therapy",
+      "variantId": "prod-18-var-s",
+      "size": "S",
+      "color": "Black",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-18",
+      "slug": "tattoo-therapy",
+      "name": "Tattoo Therapy",
+      "variantId": "prod-18-var-m",
+      "size": "M",
+      "color": "Black",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-18",
+      "slug": "tattoo-therapy",
+      "name": "Tattoo Therapy",
+      "variantId": "prod-18-var-l",
+      "size": "L",
+      "color": "Black",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-18",
+      "slug": "tattoo-therapy",
+      "name": "Tattoo Therapy",
+      "variantId": "prod-18-var-xl",
+      "size": "XL",
+      "color": "Black",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-19",
+      "slug": "weekend-survival-kit",
+      "name": "Weekend Survival Kit",
+      "variantId": "prod-19-var-s",
+      "size": "S",
+      "color": "Charcoal",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-19",
+      "slug": "weekend-survival-kit",
+      "name": "Weekend Survival Kit",
+      "variantId": "prod-19-var-m",
+      "size": "M",
+      "color": "Charcoal",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-19",
+      "slug": "weekend-survival-kit",
+      "name": "Weekend Survival Kit",
+      "variantId": "prod-19-var-l",
+      "size": "L",
+      "color": "Charcoal",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-19",
+      "slug": "weekend-survival-kit",
+      "name": "Weekend Survival Kit",
+      "variantId": "prod-19-var-xl",
+      "size": "XL",
+      "color": "Charcoal",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-20",
+      "slug": "everything-is-fine",
+      "name": "Everything Is Fine",
+      "variantId": "prod-20-var-s",
+      "size": "S",
+      "color": "Bone",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-20",
+      "slug": "everything-is-fine",
+      "name": "Everything Is Fine",
+      "variantId": "prod-20-var-m",
+      "size": "M",
+      "color": "Bone",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-20",
+      "slug": "everything-is-fine",
+      "name": "Everything Is Fine",
+      "variantId": "prod-20-var-l",
+      "size": "L",
+      "color": "Bone",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    },
+    {
+      "productId": "prod-20",
+      "slug": "everything-is-fine",
+      "name": "Everything Is Fine",
+      "variantId": "prod-20-var-xl",
+      "size": "XL",
+      "color": "Bone",
+      "status": "unavailable",
+      "reason": "No exact Printful Sync Product name match"
+    }
+  ],
+  "invalidSyncProducts": [],
+  "printfulStoreAccess": {
+    "accessible": true,
+    "intendedStoreMatched": true
+  },
+  "auditedCommit": "a26a05c5710ee3c216f91bdd8349068a94184bc6",
+  "auditDeployment": "dpl_HioNGwhAZyuRNDAsDvRo6odw88Jv",
+  "changes": {
+    "printfulProducts": false,
+    "fulfillment": false,
+    "main": false,
+    "productionCheckout": false
+  }
+}

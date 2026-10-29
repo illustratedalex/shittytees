@@ -1,4 +1,3 @@
-import crypto from 'crypto';
 import { getPrintfulEnv } from './env';
 import { PrintfulError, isRetryablePrintfulStatus } from './errors';
 import { parseRetryAfter, withRetry } from './retry';
@@ -12,7 +11,7 @@ export interface PrintfulResponse<T> {
 
 export interface PrintfulErrorResponse {
   code: number;
-  result: {
+  result: string | {
     error?: string;
     errors?: Record<string, string[]>;
   };
@@ -28,7 +27,6 @@ function buildHeaders(initHeaders?: HeadersInit): Headers {
   headers.set('Authorization', `Bearer ${env.apiToken}`);
   headers.set('Content-Type', 'application/json');
   headers.set('X-PF-Store-Id', env.storeId);
-  headers.set('X-Store-Id', env.storeId);
   return headers;
 }
 
@@ -37,8 +35,8 @@ async function parseResponse<T>(endpoint: string, response: Response): Promise<P
   if (!response.ok) {
     const errorPayload = payload as PrintfulErrorResponse;
     const message =
-      errorPayload.result?.error ||
-      (errorPayload.result?.errors ? JSON.stringify(errorPayload.result.errors) : 'Unknown Printful error');
+      (typeof errorPayload.result === 'string' ? errorPayload.result : errorPayload.result?.error) ||
+      (typeof errorPayload.result !== 'string' && errorPayload.result?.errors ? JSON.stringify(errorPayload.result.errors) : 'Unknown Printful error');
     throw new PrintfulError(`Printful API error (${response.status}) on ${endpoint}: ${message}`, {
       status: response.status,
       code: errorPayload.code,
@@ -65,20 +63,3 @@ export async function printfulRequest<T>(endpoint: string, options: RequestInit 
   });
 }
 
-export function validatePrintfulWebhook(body: string, signature: string): boolean {
-  const { webhookSecret } = getPrintfulEnv();
-
-  if (!webhookSecret) {
-    return false;
-  }
-
-  const expected = crypto.createHmac('sha256', webhookSecret).update(body).digest('hex');
-  const expectedBuffer = Buffer.from(expected);
-  const signatureBuffer = Buffer.from(signature);
-
-  if (expectedBuffer.length !== signatureBuffer.length) {
-    return false;
-  }
-
-  return crypto.timingSafeEqual(expectedBuffer, signatureBuffer);
-}

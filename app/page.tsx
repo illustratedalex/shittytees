@@ -1,182 +1,34 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { getPublicProductBySlug, getPublicProducts } from '@/lib/catalog/service';
-import { resolveProductImage } from '@/lib/products/imageResolver';
+import Image from 'next/image';
+import { getPublicProducts } from '@/lib/catalog/service';
 import { SiteFooter, SiteHeader } from '@/components/layout';
-import NewsletterSignup from '@/components/common/NewsletterSignup';
-import ProductImageStage from '@/components/product/ProductImageStage';
 import ProductTile from '@/components/product/ProductTile';
+import DesignShowcase from '@/components/product/DesignShowcase';
 
 export const dynamic = 'force-dynamic';
-
 export const metadata: Metadata = {
-  title: 'ShittyTees | Terrible Ideas. Excellent Shirts.',
-  description: 'Independent apparel with dark humor, premium blanks, and zero interest in behaving.',
-  alternates: {
-    canonical: '/',
-  },
+  title: 'Shitty Tees — Wear your bad attitude.',
+  description: 'Original graphic tees. Dark humor, questionable leadership, and absolutely no filter.',
+  alternates: { canonical: '/' },
   openGraph: {
-    title: 'ShittyTees | Terrible Ideas. Excellent Shirts.',
-    description: 'Independent apparel with dark humor, premium blanks, and zero interest in behaving.',
+    title: 'Shitty Tees — Wear your bad attitude.',
+    description: 'Original graphic tees. Dark humor, questionable leadership, and absolutely no filter.',
+    url: '/',
     type: 'website',
-    url: 'https://shittytees.com',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'ShittyTees | Terrible Ideas. Excellent Shirts.',
-    description: 'Independent apparel with dark humor, premium blanks, and zero interest in behaving.',
   },
 };
-
 export default async function Home() {
-  const publicProducts = await getPublicProducts();
-  const arrivals = publicProducts.slice(0, 6);
-
-  const heroProduct = (await getPublicProductBySlug('professionally-unsupervised')) || arrivals[0] || publicProducts[0];
-
-  const featuredProduct = (await getPublicProductBySlug('bad-decisions-department'))
-    || publicProducts.find((product) => product.featured)
-    || arrivals[1]
-    || publicProducts[1];
-
-  const featuredImage = featuredProduct ? resolveProductImage(featuredProduct) : undefined;
-
-  const collectionCards = [
-    {
-      slug: 'dark-humor',
-      title: 'Dark Humor',
-      description: 'Dry delivery, sharp prints, and questionable timing.',
-    },
-    {
-      slug: 'artists-bench',
-      title: "Artist's Bench",
-      description: 'Sketchbooks, shop floors, late nights, and the people who make things by hand.',
-    },
-    {
-      slug: 'blue-collar',
-      title: 'Blue Collar',
-      description: 'Built for night shifts, shop floors, and after-hours detours.',
-    },
-    {
-      slug: 'tattoo-culture',
-      title: 'Tattoo Culture',
-      description: 'Linework-heavy graphics with clean premium blanks.',
-    },
-  ] as const;
-
-  return (
-    <>
-      <SiteHeader transparentOnTop />
-      <main className="bg-[#0b0b0b] text-[#f2e8d5] overflow-x-clip pt-[5rem]">
-        <section className="site-shell home-hero-shell">
-          <p className="home-hero-kicker">ShittyTees</p>
-          <h1 className="home-hero-title">
-            TERRIBLE IDEAS.
-            <br />
-            EXCELLENT SHIRTS.
-          </h1>
-          <p className="home-hero-subcopy">Graphic tees for questionable people with excellent taste.</p>
-          <div className="home-hero-actions">
-            <Link href="/drops/drop-001" className="btn btn--primary min-h-[50px] px-7">
-              Shop The Drop
-            </Link>
-            <Link href="/shop" className="btn btn--secondary min-h-[50px] px-7">
-              Shop All
-            </Link>
-          </div>
-        </section>
-
-        <section className="site-shell section-shell pt-6" id="new-arrivals">
-          <div className="section-heading-shell mb-10">
-            <p className="section-heading-kicker">Latest Bad Decisions</p>
-            <h2 className="section-heading-title">LATEST BAD DECISIONS</h2>
-            <p className="section-heading-subcopy">Freshly printed mistakes.</p>
-          </div>
-
-          <div className="shop-grid">
-            {arrivals.map((product) => (
-              <ProductTile
-                key={product.id}
-                product={product}
-                badge={product.tags?.includes('new-arrival') ? 'New' : undefined}
-              />
-            ))}
-          </div>
-        </section>
-
-        <section className="site-shell section-shell featured-product-shell">
-          <div className="featured-product-frame">
-            <div>
-              {featuredImage ? (
-                <ProductImageStage
-                  image={featuredImage}
-                  className="featured-product-media"
-                  priority={featuredProduct?.id === heroProduct?.id}
-                  sizes="(max-width: 1023px) 92vw, 46vw"
-                />
-              ) : null}
-            </div>
-            <div className="featured-product-copy">
-              <p className="featured-product-kicker">Featured Shirt</p>
-              <h2 className="featured-product-title">{featuredProduct?.name || 'Bad Decisions Department'}</h2>
-              <p className="featured-product-description">
-                {featuredProduct?.shortDescription || 'Open enrollment, no interview required.'}
-              </p>
-              <p className="featured-product-price">${(featuredProduct?.retailPrice || 36).toFixed(2)}</p>
-              <Link href={featuredProduct ? `/shop/${featuredProduct.slug}` : '/shop'} className="btn btn--primary min-h-[50px] px-7 mt-2 inline-flex">
-                Get This Terrible Idea
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        <section className="site-shell section-shell">
-          <div className="mb-8">
-            <h2 className="text-[#f2e8d5] text-[1.6rem] sm:text-[1.9rem] tracking-[0.03em]">Shop by Collection</h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
-            {collectionCards.map((collection) => {
-              const sourceProduct = publicProducts.find((item) => item.collectionSlug === collection.slug);
-              const collectionImage = sourceProduct ? resolveProductImage(sourceProduct) : undefined;
-
-              return (
-                <article key={collection.slug} className="collection-feature-card">
-                  {collectionImage ? <ProductImageStage image={collectionImage} className="mb-5" /> : null}
-                  <h3 className="text-[#f2e8d5] normal-case text-[1.35rem]">{collection.title}</h3>
-                  <p className="text-[#c1b6a2] mt-2">{collection.description}</p>
-                  <Link href={`/collections/${collection.slug}`} className="mt-5 inline-flex min-h-[44px] items-center underline underline-offset-4 text-[#f2e8d5] hover:text-white">
-                    Shop Collection
-                  </Link>
-                </article>
-              );
-            })}
-          </div>
-
-          <div className="mt-8">
-            <Link href="/collections/archive" className="inline-flex min-h-[44px] items-center text-[#f2b8c4] underline underline-offset-4 hover:text-[#ffd75a]">
-              Explore the Archive
-            </Link>
-          </div>
-        </section>
-
-        <section className="bg-[#f2e8d5] mt-4">
-          <div className="site-shell py-16 md:py-20">
-            <p className="max-w-[900px] text-[#111111] text-[2rem] md:text-[2.8rem] lg:text-[3.4rem] leading-[1.08] font-medium">
-              Made for tattoo shops, garages, dive bars, night shifts, bad decisions, and people who laugh at the wrong time.
-            </p>
-          </div>
-        </section>
-
-        <section className="site-shell section-shell pt-14">
-          <NewsletterSignup
-            title="Join the bad influence."
-            description="New drops, questionable ideas, and occasional bad decisions."
-            className="border-[#2f2f2f]"
-          />
-        </section>
-      </main>
-      <SiteFooter />
-    </>
-  );
+  const products = await getPublicProducts();
+  return <><SiteHeader /><main className="storefront">
+    <section className="store-hero site-shell">
+      <div className="store-hero-copy"><p className="store-eyebrow">Independent graphics. Questionable taste.</p><h1>GOOD SHIRTS.<br /><span>BAD ATTITUDE.</span></h1><p className="store-hero-description">For people who have a lot to say and very little interest in saying it politely.</p><div className="store-actions"><Link className="store-button" href={products.length ? '/shop' : '#next-release'}>{products.length ? 'Find your next bad decision' : 'Meet the next release'} <span>↗</span></Link><Link className="store-text-link" href="/collections/shitty-politics">Explore Shitty Politics →</Link></div><p className="store-hero-footnote">Original designs. Zero filter.</p></div>
+      <div className="store-hero-image"><Image src="/images/designs/dead-tired-mockup.png" alt="Dead Tired — Still a Problem black shirt concept" fill priority sizes="(max-width: 800px) 92vw, 50vw" className="object-cover" unoptimized /><span className="hero-sticker">DEAD TIRED.<br />STILL A PROBLEM.</span><span className="hero-image-note">Next release · Visual mockup</span></div>
+    </section>
+    <div className="store-ticker" aria-hidden="true">TERRIBLE IDEAS. EXCELLENT SHIRTS. <span>✳</span> WEAR YOUR BAD ATTITUDE. <span>✳</span> TERRIBLE IDEAS. EXCELLENT SHIRTS.</div>
+    {products.length ? <section className="store-section site-shell"><div className="store-section-heading"><div><p className="store-eyebrow">Ready to cause problems</p><h2>THE SHIRTS.</h2></div><Link href="/shop">Shop all →</Link></div><div className="shop-grid">{products.slice(0,6).map(product => <ProductTile key={product.id} product={product} />)}</div></section> : null}
+    <section className="store-section site-shell" id="next-release"><div className="store-section-heading"><div><p className="store-eyebrow">The next bad decisions</p><h2>FRESH ATTITUDE.</h2></div><p>Original artwork. Questionable taste.<br />See each shirt for options and availability.</p></div><DesignShowcase /></section>
+    <section className="politics-banner site-shell"><div><p className="store-eyebrow">Introducing Shitty Politics</p><h2>ZERO FAITH.<br />EXCELLENT TASTE.</h2><p>Campaign promises, questionable leadership, and a healthy disrespect for the sales pitch.</p><Link className="store-button" href="/collections/shitty-politics">Meet the candidates ↗</Link></div><div className="politics-seal" aria-hidden="true">SHITTY<br /><span>POLITICS</span><small>APPROVAL RATING: WHO CARES</small></div></section>
+    <section className="store-manifesto site-shell"><p className="store-eyebrow">A little about us</p><h2>WE MAKE THE SHIRTS.<br />YOU MAKE IT AWKWARD.</h2><p>Dark humor. Loud graphics. The kind of shirt that says what you were thinking before someone from HR walked in.</p><Link href="/about" className="store-text-link">Our questionable story →</Link></section>
+  </main><SiteFooter /></>;
 }

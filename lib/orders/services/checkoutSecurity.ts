@@ -1,3 +1,4 @@
+import {randomUUID} from 'node:crypto';
 import { getCatalogRepository } from '@/lib/catalog';
 import { CheckoutLineItem } from '@/lib/validation/schemas';
 import { StoreOrderItem } from '@/lib/orders/types';
@@ -93,7 +94,7 @@ export async function validateAndNormalizeCheckoutItems(items: CheckoutLineItem[
 
 export function toStoreOrderItems(items: ValidatedLineItem[]): StoreOrderItem[] {
   return items.map((item) => ({
-    id: `${item.productId}-${item.variantId}`,
+    id: randomUUID(),
     productId: item.productId,
     productSlug: item.productSlug,
     localVariantId: item.variantId,

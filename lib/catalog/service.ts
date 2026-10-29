@@ -1,3 +1,4 @@
+import { isStorefrontProductReady } from '@/lib/products/storefrontReadiness';
 import { COLLECTIONS } from '@/lib/data/products';
 import type { Collection, Product } from '@/lib/types/product';
 import { getCatalogRepository } from './index';
@@ -8,7 +9,7 @@ function byNewest(left: Product, right: Product): number {
 
 export async function getPublicProducts(): Promise<Product[]> {
   const repository = getCatalogRepository();
-  return repository.listPublic();
+  return (await repository.listPublic()).filter(isStorefrontProductReady);
 }
 
 export async function getAllProducts(): Promise<Product[]> {

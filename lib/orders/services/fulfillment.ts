@@ -1,4 +1,4 @@
-import { createPrintfulDraftOrder } from '@/lib/printful/orders';
+import { confirmPrintfulOrder, createPrintfulDraftOrder } from '@/lib/printful/orders';
 import { FulfillmentDisabledError, PaymentNotConfirmedError, PrintfulDraftMissingError, UnresolvedVariantError } from '@/lib/orders/errors';
 import { OrderRepository } from '@/lib/orders/repository';
 import { StoreOrder } from '@/lib/orders/types';
@@ -11,13 +11,13 @@ function canCreateDraft(order: StoreOrder): boolean {
   return order.status === 'paid' && !order.printfulOrderId;
 }
 
-export async function createDraftForOrder(repository: OrderRepository, orderId: string, source: 'admin_action' | 'stripe_webhook') {
+export async function createDraftForOrder(repository: OrderRepository, orderId: string, source: 'admin_action' | 'stripe_webhook', testDraft = false) {
   const order = await repository.getById(orderId);
   if (!order) {
     throw new Error('Order not found');
   }
 
-  if (!isFulfillmentEnabled()) {
+  if (!isFulfillmentEnabled() && !(testDraft && process.env.PRINTFUL_ENABLE_TEST_ORDERS === 'true')) {
     throw new FulfillmentDisabledError();
   }
 
@@ -56,12 +56,22 @@ export async function submitOrderToFulfillment(repository: OrderRepository, orde
     throw new FulfillmentDisabledError();
   }
 
+  if (order.stripeCheckoutSessionId?.startsWith('cs_test_')) {
+    throw new PaymentNotConfirmedError('Test payments cannot be submitted to production fulfillment');
+  }
+
   if (order.status !== 'printful_draft_created' && order.status !== 'paid') {
     throw new PaymentNotConfirmedError(`Order cannot be submitted from ${order.status}`);
   }
 
   if (!order.printfulOrderId) {
     throw new PrintfulDraftMissingError();
+  }
+
+  const confirmed = await confirmPrintfulOrder(order.printfulOrderId);
+  if (!['pending','inreview','inprocess','partial','fulfilled'].includes(confirmed.status)) {
+    await repository.update(order.id,{mappingError:`Printful did not accept fulfillment: ${confirmed.status}`});
+    throw new Error('Printful has not accepted this order for fulfillment');
   }
 
   return repository.transitionStatus(
@@ -71,7 +81,10 @@ export async function submitOrderToFulfillment(repository: OrderRepository, orde
     source,
     'Submitted to fulfillment',
     {
-      fulfilled: true,
+      fulfilled: confirmed.status === 'fulfilled',
+      mappingError: undefined,
+      printfulOrderId: confirmed.id,
+      printfulExternalOrderId: String(confirmed.external_id || order.id),
     },
   );
 }

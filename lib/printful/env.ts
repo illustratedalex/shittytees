@@ -2,6 +2,7 @@ import { z } from 'zod';
 
 const rawEnvSchema = z.object({
   PRINTFUL_API_TOKEN: z.string().optional(),
+  PRINTFUL_NATIVE_API_TOKEN: z.string().optional(),
   PRINTFUL_STORE_ID: z.string().optional(),
   PRINTFUL_WEBHOOK_SECRET: z.string().optional(),
   PRINTFUL_SYNC_SECRET: z.string().optional(),
@@ -24,8 +25,14 @@ function parseBoolean(value?: string): boolean {
 
 export function getPrintfulEnv(): PrintfulEnv {
   const parsed = rawEnvSchema.parse(process.env);
+  const nativeStore = parsed.PRINTFUL_STORE_ID === '18894982';
+  // Vercel retains the saved sensitive variable name; all deployments use native credentials.
+  const nativeApiToken = parsed.PRINTFUL_NATIVE_API_TOKEN || process.env.PRINTFUL_API_TOK;
+  const apiToken = process.env.VERCEL_ENV
+    ? (nativeStore ? nativeApiToken : undefined)
+    : nativeApiToken || parsed.PRINTFUL_API_TOKEN;
   return {
-    apiToken: parsed.PRINTFUL_API_TOKEN || undefined,
+    apiToken: apiToken || undefined,
     storeId: parsed.PRINTFUL_STORE_ID || undefined,
     webhookSecret: parsed.PRINTFUL_WEBHOOK_SECRET || undefined,
     syncSecret: parsed.PRINTFUL_SYNC_SECRET || undefined,
