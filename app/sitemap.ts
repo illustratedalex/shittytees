@@ -1,5 +1,7 @@
 import { MetadataRoute } from 'next';
+import { selectProductsForCollection } from '@/lib/catalog/collectionMembership';
 import { getAllCollections, getPublicProducts } from '@/lib/catalog/service';
+import { includeCollectionInSitemap } from '@/lib/seo/collections';
 
 export const dynamic = 'force-dynamic';
 
@@ -73,13 +75,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  // Collection pages
-  const collectionPages: MetadataRoute.Sitemap = getAllCollections().map((collection) => ({
-    url: `${baseUrl}/collections/${collection.slug}`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly' as const,
-    priority: 0.7,
-  }));
+  // Collection pages with shirts. Empty collections stay out until a product is published.
+  // New Arrivals repeats /shop, so the shop URL is the one search engines should use.
+  const collectionPages: MetadataRoute.Sitemap = getAllCollections()
+    .filter((collection) => includeCollectionInSitemap(collection.slug, selectProductsForCollection(products, collection.slug).length))
+    .map((collection) => ({
+      url: `${baseUrl}/collections/${collection.slug}`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.7,
+    }));
 
   return [...staticPages, ...productPages, ...collectionPages];
 }

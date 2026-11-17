@@ -17,6 +17,19 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.resolve(__dirname),
   },
+  redirects: async () => [
+    {
+      source: '/:path*',
+      has: [
+        {
+          type: 'host',
+          value: 'www.shittytees.com',
+        },
+      ],
+      destination: 'https://shittytees.com/:path*',
+      permanent: true,
+    },
+  ],
   headers: async () => [
     {
       source: '/:path*',

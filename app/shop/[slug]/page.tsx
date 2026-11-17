@@ -1,6 +1,9 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { cache } from 'react';
 import { getFeaturedProducts, getPublicProductBySlug } from '@/lib/catalog/service';
+import { productImageUrls, productJsonLd, searchableProductTitle, serializeJsonLd } from '@/lib/seo/product';
+import { defaultShareImage } from '@/lib/seo/site';
 import type { Product } from '@/lib/types/product';
 import ProductDetailClient, { ProductViewModel } from './ProductDetailClient';
 
@@ -37,9 +40,17 @@ function toProductViewModel(product: Product): ProductViewModel {
   };
 }
 
+const loadPublicProduct = cache(async (slug: string) => getPublicProductBySlug(slug));
+
+function productSocialImages(product: Product) {
+  const primary = productImageUrls(product)[0];
+  if (!primary) return [defaultShareImage];
+  return [{ url: primary, alt: product.images[0]?.alt || product.name }];
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const product = await getPublicProductBySlug(slug);
+  const product = await loadPublicProduct(slug);
 
   if (!product) {
     return {
@@ -48,8 +59,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
-  const title = `${product.name} | ShittyTees`;
+  const title = searchableProductTitle(product.name);
   const description = product.description;
+  const images = productSocialImages(product);
 
   return {
     title,
@@ -62,18 +74,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description,
       type: 'website',
       url: `https://shittytees.com/shop/${product.slug}`,
+      images,
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
+      images: images.map((image) => image.url),
     },
   };
 }
 
 export default async function ProductPage({ params }: Props) {
   const { slug } = await params;
-  const product = await getPublicProductBySlug(slug);
+  const product = await loadPublicProduct(slug);
 
   if (!product) {
     notFound();
@@ -81,5 +95,13 @@ export default async function ProductPage({ params }: Props) {
 
   const relatedProducts = (await getFeaturedProducts()).filter((item) => item.slug !== slug).slice(0, 3);
 
-  return <ProductDetailClient product={toProductViewModel(product)} relatedProducts={relatedProducts.map(toProductViewModel)} />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(productJsonLd(product)) }}
+      />
+      <ProductDetailClient product={toProductViewModel(product)} relatedProducts={relatedProducts.map(toProductViewModel)} />
+    </>
+  );
 }

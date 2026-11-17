@@ -1,5 +1,6 @@
 import type { CSSProperties, ReactNode } from 'react';
 import type { Metadata } from 'next';
+import { defaultShareImage } from '@/lib/seo/site';
 import { Providers } from './providers';
 import '@/styles/globals.css';
 
@@ -16,11 +17,13 @@ export const metadata: Metadata = {
     title: 'ShittyTees | Terrible Ideas. Excellent Shirts.',
     description: 'Independent apparel with dark humor, premium blanks, and zero interest in behaving.',
     type: 'website',
+    images: [defaultShareImage],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'ShittyTees | Terrible Ideas. Excellent Shirts.',
     description: 'Independent apparel with dark humor, premium blanks, and zero interest in behaving.',
+    images: [defaultShareImage.url],
   },
 };
 

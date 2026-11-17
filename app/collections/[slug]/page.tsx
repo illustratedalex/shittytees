@@ -1,7 +1,10 @@
 import {SHITTY_COLLECTIONS} from '@/data/shittyCollections';
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { cache } from 'react';
 import { getCollectionBySlug, getProductsByCollection } from '@/lib/catalog/service';
+import { collectionCanonicalPath, collectionIsIndexable } from '@/lib/seo/collections';
+import { defaultShareImage } from '@/lib/seo/site';
 import ProductTile from '@/components/product/ProductTile';
 import { SiteFooter, SiteHeader } from '@/components/layout';
 
@@ -11,7 +14,7 @@ const COLLECTION_BODY_COPY: Record<string, string> = {
 
 export const dynamic = 'force-dynamic';
 
-export async function getCollectionPageState(slug: string) {
+export const getCollectionPageState = cache(async function getCollectionPageState(slug: string) {
   const collection = getCollectionBySlug(slug);
   const products = collection ? await getProductsByCollection(collection.slug) : [];
 
@@ -22,7 +25,7 @@ export async function getCollectionPageState(slug: string) {
     isComingSoon: collection?.slug === 'artists-bench' && products.length === 0,
     bodyCopy: collection ? COLLECTION_BODY_COPY[collection.slug] || collection.description : undefined,
   };
-}
+});
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -30,7 +33,7 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const collection = getCollectionBySlug(slug);
+  const { collection, products } = await getCollectionPageState(slug);
   if (!collection) {
     return {
       title: 'Collection Not Found | ShittyTees',
@@ -42,16 +45,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const description = collection.slug === 'artists-bench'
       ? 'Original ShittyTees apparel inspired by sketchbooks, tattoo shops, late nights, and the people who make things by hand.'
       : collection.description;
+  const canonical = collectionCanonicalPath(collection.slug);
 
   return {
     title,
     description,
-    alternates: { canonical: `/collections/${collection.slug}` },
+    alternates: { canonical },
+    robots: collectionIsIndexable(products.length)
+      ? { index: true, follow: true }
+      : { index: false, follow: true },
     openGraph: {
       title,
       description,
-      url: `/collections/${collection.slug}`,
+      url: canonical,
       type: 'website',
+      images: [defaultShareImage],
     },
   };
 }
