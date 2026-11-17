@@ -12,7 +12,7 @@ export interface NavigationData {
 export const NAVIGATION: NavigationData = {
   header: [
     { label: 'Shop', href: '/shop' },
-    { label: 'Drop 001', href: '/drops/drop-001' },
+    { label: 'Shitty Politics', href: '/collections/shitty-politics' },
     { label: 'Collections', href: '/collections' },
     { label: 'About', href: '/about' },
     { label: 'Cart', href: '/cart' },

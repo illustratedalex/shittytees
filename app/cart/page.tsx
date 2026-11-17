@@ -7,7 +7,6 @@ import { CheckoutRequestSchema } from '@/lib/validation/schemas';
 import { evaluateCartFulfillmentReadiness } from '@/lib/fulfillment/readiness';
 import { SiteHeader } from '@/components/layout';
 
-const SHIPPING_COST = 10;
 
 export default function CartPage() {
   const { items, removeItem, updateQuantity, clear, subtotal, isHydrated } = useCart();
@@ -25,9 +24,10 @@ export default function CartPage() {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [quote,setQuote]=useState<{orderId:string;token:string;subtotal:number;shipping:number;total:number;fingerprint:string;createdAt:number}|null>(null);
+  const fingerprint=JSON.stringify({items,shippingAddress});
+  const currentQuote=quote?.fingerprint===fingerprint?quote:null;
 
-  const tax = subtotal * 0.08;
-  const total = subtotal + SHIPPING_COST + tax;
 
   const handleCheckout = async () => {
     if (!shippingAddress.firstName || !shippingAddress.email || !shippingAddress.address) {
@@ -63,10 +63,10 @@ export default function CartPage() {
 
       CheckoutRequestSchema.parse(payload);
 
-      const response = await fetch('/api/checkout', {
+      const response = await fetch(currentQuote?'/api/checkout':'/api/checkout/quote', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
+        body: JSON.stringify(currentQuote?{orderId:currentQuote.orderId,token:currentQuote.token}:payload),
       });
 
       if (!response.ok) {
@@ -75,10 +75,12 @@ export default function CartPage() {
       }
 
       const data = await response.json();
+      if(!currentQuote){setQuote({...data,fingerprint,createdAt:Date.now()});setLoading(false);return;}
       if (data.url) {
         window.location.href = data.url;
       }
     } catch (err) {
+      setQuote(null);
       setError(err instanceof Error ? err.message : 'Checkout failed');
       setLoading(false);
     }
@@ -88,7 +90,7 @@ export default function CartPage() {
     return (
       <>
       <SiteHeader />
-      <div className="min-h-screen bg-[#111111] pt-[4.75rem]">
+      <div className="store-cart">
         <div className="site-shell section-shell max-w-2xl">
           <Link href="/" className="text-[#d5d0c6] hover:text-[#f3efe6] text-sm tracking-[0.04em] font-semibold mb-8 inline-flex items-center gap-2">
             ← Back
@@ -106,7 +108,7 @@ export default function CartPage() {
     return (
       <>
       <SiteHeader />
-      <div className="min-h-screen bg-[#111111] pt-[4.75rem]">
+      <div className="store-cart">
         <div className="site-shell section-shell max-w-2xl">
           <Link href="/" className="text-[#d5d0c6] hover:text-[#f3efe6] text-sm tracking-[0.04em] font-semibold mb-8 inline-flex items-center gap-2">
             ← Back
@@ -127,7 +129,7 @@ export default function CartPage() {
   return (
     <>
     <SiteHeader />
-    <div className="min-h-screen bg-[#111111] pt-[4.75rem]">
+    <div className="store-cart">
       <div className="site-shell section-shell">
         <Link href="/" className="text-[#d5d0c6] hover:text-[#f3efe6] text-sm tracking-[0.04em] font-semibold mb-8 inline-flex items-center gap-2">
           ← Back
@@ -137,9 +139,9 @@ export default function CartPage() {
         <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] gap-8 lg:gap-10">
           {/* Items */}
           <div>
-            <div className="space-y-5 mb-8">
+            <div className="cart-items space-y-5 mb-8">
               {items.map((item) => (
-                <div key={`${item.productId}-${item.variantId}`} className="bg-[#1b1b1b] border border-[#2f2f2f] rounded-2xl p-4 sm:p-5 flex gap-4 sm:gap-5 items-start">
+                <div key={`${item.productId}-${item.variantId}`} className="cart-item bg-[#1b1b1b] border border-[#2f2f2f] rounded-2xl p-4 sm:p-5 flex gap-4 sm:gap-5 items-start">
                   <div className="w-24 h-24 sm:w-28 sm:h-28 product-image-stage mb-0 flex-shrink-0">
                     <img src={item.image} alt={item.name} className="w-full h-full object-contain" />
                   </div>
@@ -178,110 +180,110 @@ export default function CartPage() {
 
           {/* Order Summary & Checkout */}
           <div>
-            <div className="bg-[#1b1b1b] border border-[#2f2f2f] rounded-2xl p-6 sm:p-7 sticky top-24">
+            <div className="cart-summary bg-[#1b1b1b] border border-[#2f2f2f] rounded-2xl p-6 sm:p-7 sticky top-24">
               <h2 className="font-semibold text-[#f3efe6] text-xl mb-6 normal-case">Order Summary</h2>
 
-              <div className="space-y-4 mb-8 text-sm">
+              <div className="cart-totals space-y-4 mb-8 text-sm">
                 <div className="flex justify-between text-[#aaa59c]">
                   <span>Subtotal</span>
-                  <span className="font-semibold text-[#f3efe6]">${subtotal.toFixed(2)}</span>
+                  <span className="font-semibold text-[#f3efe6]">${(currentQuote?.subtotal??subtotal).toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between text-[#aaa59c]">
-                  <span>Shipping</span>
-                  <span className="font-semibold text-[#f3efe6]">${SHIPPING_COST.toFixed(2)}</span>
+                  <span>Delivery & handling</span>
+                  <span className="font-semibold text-[#f3efe6]">{currentQuote?`$${currentQuote.shipping.toFixed(2)}`:'Review after address'}</span>
                 </div>
                 <div className="flex justify-between text-[#aaa59c]">
-                  <span>Tax</span>
-                  <span className="font-semibold text-[#f3efe6]">${tax.toFixed(2)}</span>
+                  <span>Production taxes</span>
+                  <span className="font-semibold text-[#f3efe6]">Included in delivery quote</span>
                 </div>
                 <div className="border-t border-[#2f2f2f] pt-4 flex justify-between font-bold text-[#f3efe6] text-lg">
-                  <span>Total</span>
-                  <span>${total.toFixed(2)}</span>
+                  <span>{currentQuote?'Total to pay':'Items total'}</span>
+                  <span>${(currentQuote?.total??subtotal).toFixed(2)}</span>
                 </div>
               </div>
 
-              <div className="space-y-4 mb-6">
+              <div className="cart-address space-y-4 mb-6">
                 <div>
-                  <label className="block text-xs font-semibold text-[#f3efe6] mb-2 uppercase tracking-[0.1em]">First Name *</label>
+                  <label htmlFor="cart-first" className="block text-xs font-semibold text-[#f3efe6] mb-2 uppercase tracking-[0.1em]">First Name *</label>
                   <input
                     type="text"
                     value={shippingAddress.firstName}
                     onChange={(e) => setShippingAddress({ ...shippingAddress, firstName: e.target.value })}
                     className="w-full min-h-[48px] px-3 py-2 bg-[#141414] border border-[#3a3a3a] text-[#f3efe6] placeholder-[#75706a] text-sm rounded-md"
-                    placeholder="First name"
+                    id="cart-first" placeholder="First name"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-[#f3efe6] mb-2 uppercase tracking-[0.1em]">Last Name *</label>
+                  <label htmlFor="cart-last" className="block text-xs font-semibold text-[#f3efe6] mb-2 uppercase tracking-[0.1em]">Last Name *</label>
                   <input
                     type="text"
                     value={shippingAddress.lastName}
                     onChange={(e) => setShippingAddress({ ...shippingAddress, lastName: e.target.value })}
                     className="w-full min-h-[48px] px-3 py-2 bg-[#141414] border border-[#3a3a3a] text-[#f3efe6] placeholder-[#75706a] text-sm rounded-md"
-                    placeholder="Last name"
+                    id="cart-last" placeholder="Last name"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-[#f3efe6] mb-2 uppercase tracking-[0.1em]">Email *</label>
+                  <label htmlFor="cart-email" className="block text-xs font-semibold text-[#f3efe6] mb-2 uppercase tracking-[0.1em]">Email *</label>
                   <input
                     type="email"
                     value={shippingAddress.email}
                     onChange={(e) => setShippingAddress({ ...shippingAddress, email: e.target.value })}
                     className="w-full min-h-[48px] px-3 py-2 bg-[#141414] border border-[#3a3a3a] text-[#f3efe6] placeholder-[#75706a] text-sm rounded-md"
-                    placeholder="Email"
+                    id="cart-email" placeholder="Email"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-[#f3efe6] mb-2 uppercase tracking-[0.1em]">Address *</label>
+                  <label htmlFor="cart-address" className="block text-xs font-semibold text-[#f3efe6] mb-2 uppercase tracking-[0.1em]">Address *</label>
                   <input
                     type="text"
                     value={shippingAddress.address}
                     onChange={(e) => setShippingAddress({ ...shippingAddress, address: e.target.value })}
                     className="w-full min-h-[48px] px-3 py-2 bg-[#141414] border border-[#3a3a3a] text-[#f3efe6] placeholder-[#75706a] text-sm rounded-md"
-                    placeholder="Address"
+                    id="cart-address" placeholder="Address"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-[#f3efe6] mb-2 uppercase tracking-[0.1em]">City *</label>
+                  <label htmlFor="cart-city" className="block text-xs font-semibold text-[#f3efe6] mb-2 uppercase tracking-[0.1em]">City *</label>
                   <input
                     type="text"
                     value={shippingAddress.city}
                     onChange={(e) => setShippingAddress({ ...shippingAddress, city: e.target.value })}
                     className="w-full min-h-[48px] px-3 py-2 bg-[#141414] border border-[#3a3a3a] text-[#f3efe6] placeholder-[#75706a] text-sm rounded-md"
-                    placeholder="City"
+                    id="cart-city" placeholder="City"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-[#f3efe6] mb-2 uppercase tracking-[0.1em]">State *</label>
+                  <label htmlFor="cart-state" className="block text-xs font-semibold text-[#f3efe6] mb-2 uppercase tracking-[0.1em]">State *</label>
                   <input
                     type="text"
                     value={shippingAddress.state}
                     onChange={(e) => setShippingAddress({ ...shippingAddress, state: e.target.value.slice(0, 2).toUpperCase() })}
                     className="w-full min-h-[48px] px-3 py-2 bg-[#141414] border border-[#3a3a3a] text-[#f3efe6] placeholder-[#75706a] text-sm rounded-md"
-                    placeholder="State (TX)"
+                    id="cart-state" placeholder="State (TX)"
                     maxLength={2}
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-[#f3efe6] mb-2 uppercase tracking-[0.1em]">ZIP Code *</label>
+                  <label htmlFor="cart-zip" className="block text-xs font-semibold text-[#f3efe6] mb-2 uppercase tracking-[0.1em]">ZIP Code *</label>
                   <input
                     type="text"
                     value={shippingAddress.postalCode}
                     onChange={(e) => setShippingAddress({ ...shippingAddress, postalCode: e.target.value })}
                     className="w-full min-h-[48px] px-3 py-2 bg-[#141414] border border-[#3a3a3a] text-[#f3efe6] placeholder-[#75706a] text-sm rounded-md"
-                    placeholder="ZIP code"
+                    id="cart-zip" placeholder="ZIP code"
                   />
                 </div>
               </div>
 
-              {error && <div className="bg-[#4a1f1f] text-[#f3efe6] p-3 mb-4 text-sm rounded border border-[#7f1d1d]">{error}</div>}
+              {error && <div role="alert" className="bg-[#4a1f1f] text-[#f3efe6] p-3 mb-4 text-sm rounded border border-[#7f1d1d]">{error}</div>}
 
               <button
                 onClick={handleCheckout}
                 disabled={loading || items.length === 0}
                 className="btn-primary-oxblood w-full mb-3 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {loading ? 'Processing...' : 'Proceed to Checkout'}
+                {loading ? 'Checking...' : currentQuote?'Pay with Stripe':'Review delivered price'}
               </button>
 
               <button

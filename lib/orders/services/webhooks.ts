@@ -10,6 +10,8 @@ import { StoreOrderItem } from '@/lib/orders/types';
 export type StripeSessionShape = {
   id: string;
   payment_status: string;
+  currency?: string | null;
+  livemode?: boolean;
   customer_email?: string | null;
   payment_intent?: { id?: string } | string | null;
   amount_subtotal?: number | null;
@@ -60,17 +62,12 @@ export async function processStripeEvent(
   event: StripeEventShape,
   resolveSession: (sessionId: string) => Promise<StripeSessionShape>,
 ): Promise<void> {
-  const inserted = await repository.recordWebhookEvent({
-    provider: 'stripe',
-    eventId: event.id,
-    eventType: event.type,
-    payloadHash: hashPayload(event.data.object),
-  });
+  if (await repository.hasWebhookEvent('stripe', event.id)) return;
+  await applyStripeEvent(repository, event, resolveSession);
+  await repository.recordWebhookEvent({ provider: 'stripe', eventId: event.id, eventType: event.type, payloadHash: hashPayload(event.data.object) });
+}
 
-  if (!inserted) {
-    return;
-  }
-
+async function applyStripeEvent(repository: OrderRepository, event: StripeEventShape, resolveSession: (sessionId: string) => Promise<StripeSessionShape>): Promise<void> {
   switch (event.type) {
     case 'checkout.session.completed':
     case 'checkout.session.async_payment_succeeded': {
@@ -79,42 +76,47 @@ export async function processStripeEvent(
         return;
       }
 
-      const existing = await repository.getByStripeCheckoutSessionId(session.id);
-      if (existing) {
-        return;
-      }
-
       const metadata = session.metadata || {};
-      const items = await parseCartItems(metadata);
-      const token = metadata.orderAccessToken || generatePublicAccessToken();
-      const orderId = metadata.orderId || crypto.randomUUID();
-
-      await repository.create({
-        id: orderId,
-        publicTokenHash: hashPublicAccessToken(token),
-        status: 'paid',
-        customerEmail: session.customer_email || '',
-        shippingAddress: buildShipping(metadata, session.customer_email || ''),
-        stripeCheckoutSessionId: session.id,
-        stripePaymentIntentId: typeof session.payment_intent === 'string' ? session.payment_intent : session.payment_intent?.id,
-        subtotal: (session.amount_subtotal || 0) / 100,
-        shipping: (session.total_details?.amount_shipping || 0) / 100,
-        tax: (session.total_details?.amount_tax || 0) / 100,
-        total: (session.amount_total || 0) / 100,
-        currency: 'USD',
-        fulfilled: false,
-        items,
-      });
-
-      if (process.env.PRINTFUL_ENABLE_FULFILLMENT === 'true') {
-        const order = await createDraftForOrder(repository, orderId, 'stripe_webhook');
-        if (process.env.PRINTFUL_AUTO_CONFIRM === 'true' && order.printfulOrderId) {
-          await submitOrderToFulfillment(repository, order.id, 'stripe_webhook');
+      const orderId = metadata.orderId;
+      let order = await repository.getByStripeCheckoutSessionId(session.id);
+      if (!order && orderId) order = await repository.getById(orderId);
+      if (metadata.checkoutVersion === '2') {
+        if (!order || order.id !== orderId || (order.stripeCheckoutSessionId && order.stripeCheckoutSessionId !== session.id)) {
+          throw new Error('Checkout does not match a saved order');
         }
+        if (session.currency?.toUpperCase() !== order.currency || session.amount_subtotal !== Math.round(order.subtotal * 100) || session.amount_total !== Math.round(order.total * 100) || session.total_details?.amount_shipping !== Math.round(order.shipping * 100) || (session.total_details?.amount_tax || 0) !== Math.round(order.tax * 100)) {
+          throw new Error('Paid checkout totals do not match the saved order');
+        }
+        if (order.status === 'pending_payment') {
+          order = await repository.transitionStatus(order.id, ['pending_payment'], 'paid', 'stripe_webhook', 'Stripe payment confirmed', {
+            stripeCheckoutSessionId: session.id,
+            stripePaymentIntentId: typeof session.payment_intent === 'string' ? session.payment_intent : session.payment_intent?.id,
+          });
+        }
+      } else if (!order) {
+        const items = await parseCartItems(metadata);
+        const token = metadata.orderAccessToken || generatePublicAccessToken();
+        order = await repository.create({
+          id: orderId || crypto.randomUUID(), publicTokenHash: hashPublicAccessToken(token), status: 'paid',
+          customerEmail: session.customer_email || '', shippingAddress: buildShipping(metadata, session.customer_email || ''),
+          stripeCheckoutSessionId: session.id,
+          stripePaymentIntentId: typeof session.payment_intent === 'string' ? session.payment_intent : session.payment_intent?.id,
+          subtotal: (session.amount_subtotal || 0) / 100, shipping: (session.total_details?.amount_shipping || 0) / 100,
+          tax: (session.total_details?.amount_tax || 0) / 100, total: (session.amount_total || 0) / 100,
+          currency: 'USD', fulfilled: false, items,
+        });
+      }
+      if (!order) throw new Error('Order not found');
+      const testDraft = session.livemode === false && process.env.PRINTFUL_ENABLE_TEST_ORDERS === 'true';
+      if (order.status === 'paid' && (process.env.PRINTFUL_ENABLE_FULFILLMENT === 'true' || testDraft)) {
+        order = await createDraftForOrder(repository, order.id, 'stripe_webhook', testDraft);
+      }
+      if (session.livemode === true && process.env.PRINTFUL_ENABLE_FULFILLMENT === 'true' && process.env.PRINTFUL_AUTO_CONFIRM === 'true' && order.status === 'printful_draft_created' && order.printfulOrderId) {
+        await submitOrderToFulfillment(repository, order.id, 'stripe_webhook');
       }
 
       logOrderEvent('order.payment_confirmed', {
-        orderId,
+        orderId: order.id,
         stripeEventId: event.id,
         status: 'paid',
       });
@@ -145,6 +147,8 @@ export async function processStripeEvent(
 
 export type PrintfulEventShape = {
   id?: string;
+  store?: number;
+  created?: number;
   type: string;
   data?: {
     order?: {
@@ -152,6 +156,7 @@ export type PrintfulEventShape = {
       external_id?: string;
     };
     shipment?: {
+      id?: number;
       tracking_number?: string;
       tracking_url?: string;
     };
@@ -159,20 +164,19 @@ export type PrintfulEventShape = {
 };
 
 export async function processPrintfulEvent(repository: OrderRepository, event: PrintfulEventShape): Promise<void> {
-  const fallbackEventId = `${event.type}:${event.data?.order?.id || 'unknown'}`;
+  const fallbackEventId = `${event.type}:${event.data?.order?.id || 'unknown'}:${event.data?.shipment?.id || event.created || hashPayload(event.data)}`;
   const eventId = event.id || fallbackEventId;
-
-  const inserted = await repository.recordWebhookEvent({
+  if(await repository.hasWebhookEvent('printful',eventId)) return;
+  await applyPrintfulEvent(repository,event);
+  await repository.recordWebhookEvent({
     provider: 'printful',
     eventId,
     eventType: event.type,
     payloadHash: hashPayload(event),
   });
 
-  if (!inserted) {
-    return;
-  }
-
+}
+async function applyPrintfulEvent(repository:OrderRepository,event:PrintfulEventShape):Promise<void>{
   const printfulOrderId = event.data?.order?.id;
   if (!printfulOrderId) {
     return;

@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { processPrintfulEvent, processStripeEvent } from '@/lib/orders/services/webhooks';
 import { createInMemoryRepository } from './helpers/inMemoryRepo';
 import { hashPublicAccessToken } from '@/lib/orders/publicAccess';
@@ -95,6 +95,9 @@ describe('webhook idempotency and safety', () => {
       data: { order: { id: 555 }, shipment: { tracking_number: '1Z', tracking_url: 'https://track' } },
     } as any;
 
+    vi.spyOn(repository,'transitionStatus').mockRejectedValueOnce(new Error('Temporary database outage'));
+    await expect(processPrintfulEvent(repository,event)).rejects.toThrow('Temporary database outage');
+    expect(await repository.hasWebhookEvent('printful','p_evt')).toBe(false);
     await processPrintfulEvent(repository, event);
     await processPrintfulEvent(repository, event);
 

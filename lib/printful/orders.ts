@@ -1,11 +1,21 @@
 import { printfulRequest } from './client';
 import { PrintfulDraftOrderPayload, PrintfulOrder, PrintfulRecipient } from './types';
 import { StoreOrder, StoreOrderItem } from '@/lib/orders/types';
+import { createHash } from 'node:crypto';
+
+// Printful accepts only 32 ASCII letters, digits, dashes or underscores.
+// Preserve compatible legacy IDs; hash UUIDs and longer IDs deterministically.
+export function printfulExternalId(orderId: string): string {
+  return /^[A-Za-z0-9_-]{1,32}$/.test(orderId)
+    ? orderId
+    : createHash('sha256').update(orderId).digest('hex').slice(0,32);
+}
 
 export type ResolvedPrintfulOrderItem = {
   sync_variant_id: number;
   quantity: number;
   name: string;
+  retail_price: string;
 };
 
 export function buildPrintfulRecipient(shippingAddress: StoreOrder['shippingAddress'], email: string, phone?: string): PrintfulRecipient {
@@ -27,16 +37,18 @@ export function mapOrderItemsToPrintful(items: StoreOrderItem[]): ResolvedPrintf
     sync_variant_id: Number(item.printfulVariantId),
     quantity: item.quantity,
     name: item.name,
+    retail_price: item.unitPrice.toFixed(2),
   }));
 }
 
 export async function createPrintfulDraftOrder(order: StoreOrder, confirm = false): Promise<PrintfulOrder> {
   const payload: PrintfulDraftOrderPayload = {
-    external_id: order.id,
+    external_id: printfulExternalId(order.id),
     recipient: buildPrintfulRecipient(order.shippingAddress, order.customerEmail),
     items: mapOrderItemsToPrintful(order.items),
     shipping: 'STANDARD',
     confirm,
+    retail_costs: {currency: order.currency, shipping: order.shipping.toFixed(2), tax: order.tax.toFixed(2)},
   };
 
   const response = await printfulRequest<PrintfulOrder>('/orders', {

@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { BRAND } from '@/data/brand';
 import { DROPS, getDropBySlug } from '@/data/drops';
 import { getPublicProducts } from '@/lib/catalog/service';
+import { defaultShareImage } from '@/lib/seo/site';
 import { resolveProductImage } from '@/lib/products/imageResolver';
 import { SiteFooter, SiteHeader } from '@/components/layout';
 import NewsletterSignup from '@/components/common/NewsletterSignup';
@@ -46,6 +47,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description,
       type: 'website',
       url: `https://shittytees.com/drops/${drop.slug}`,
+      images: [defaultShareImage],
     },
     twitter: {
       card: 'summary_large_image',

@@ -237,6 +237,11 @@ export function createFileOrderRepository(): OrderRepository {
       });
     },
 
+    async hasWebhookEvent(provider, eventId) {
+      const state = await readStore();
+      return state.processedWebhookEvents.some((event) => event.provider === provider && event.eventId === eventId);
+    },
+
     async recordWebhookEvent(event) {
       return mutateStore((state) => {
         const exists = state.processedWebhookEvents.some(

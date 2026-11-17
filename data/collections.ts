@@ -12,6 +12,7 @@ export interface CollectionCampaign {
 
 export const PRIMARY_COLLECTION_SLUGS = [
   'dark-humor',
+  'shitty-politics',
   'artists-bench',
   'tattoo-culture',
   'blue-collar',
@@ -24,6 +25,7 @@ const THEME_BY_SLUG: Record<string, CollectionTheme> = {
   'best-sellers': 'black',
   'drop-001': 'oxblood',
   'dark-humor': 'black',
+  'shitty-politics': 'oxblood',
   'artists-bench': 'bone',
   'tattoo-culture': 'bone',
   'blue-collar': 'charcoal',

@@ -18,6 +18,11 @@ export function getPool(): Pool {
       max: 10,
       ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : undefined,
     });
+    // pg removes failed idle clients before emitting this event. Handle it so a
+    // backend disconnect does not become an uncaught exception in the function.
+    pool.on('error', () => {
+      console.error('Postgres pool lost an idle connection; the client was removed.');
+    });
   }
   return pool;
 }

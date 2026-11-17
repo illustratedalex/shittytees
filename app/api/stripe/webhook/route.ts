@@ -4,10 +4,9 @@ import { getCheckoutSession } from '@/lib/stripe/checkout';
 import { getOrderRepository } from '@/lib/orders';
 import { toErrorResponse } from '@/lib/orders/http';
 import { processStripeEvent, StripeSessionShape } from '@/lib/orders/services/webhooks';
+import { PrintfulError } from '@/lib/printful/errors';
 
 export async function POST(request: NextRequest) {
-  const stripe = getStripe();
-  const repository = getOrderRepository();
   const sig = request.headers.get('stripe-signature') || '';
   const body = await request.text();
   const secret = process.env.STRIPE_WEBHOOK_SECRET;
@@ -16,6 +15,9 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Webhook secret is not configured' }, { status: 503 });
   }
 
+  if (!process.env.STRIPE_SECRET_KEY) return NextResponse.json({ error: 'Payment system is not configured' }, { status: 503 });
+  const stripe = getStripe();
+  const repository = getOrderRepository();
   let event: unknown;
   try {
     event = stripe.webhooks.constructEvent(body, sig, secret);
@@ -32,6 +34,8 @@ export async function POST(request: NextRequest) {
         const session = await getCheckoutSession(sessionId);
         return {
           id: session.id,
+          currency: session.currency,
+          livemode: session.livemode,
           payment_status: session.payment_status,
           customer_email: session.customer_email,
           payment_intent: session.payment_intent as string | { id?: string } | null,
@@ -49,6 +53,7 @@ export async function POST(request: NextRequest) {
     );
     return NextResponse.json({ received: true });
   } catch (error) {
+    console.error('Stripe webhook processing failed', {kind: error instanceof Error ? error.name : 'unknown',printfulStatus: error instanceof PrintfulError ? error.status : undefined});
     return toErrorResponse(error);
   }
 }

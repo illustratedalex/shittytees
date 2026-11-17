@@ -50,6 +50,7 @@ export type OrderRepository = {
     note?: string,
     patch?: OrderPatch,
   ): Promise<StoreOrder>;
+  hasWebhookEvent(provider: 'stripe' | 'printful', eventId: string): Promise<boolean>;
   recordWebhookEvent(event: ProcessedWebhookEvent): Promise<boolean>;
   list(options?: OrderListOptions): Promise<OrderListResult>;
 };

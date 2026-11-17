@@ -95,7 +95,7 @@ function rowToVariant(row: VariantRow): ProductVariant {
 function rowToProduct(row: ProductRow, variants: ProductVariant[]): Product {
   return {
     id: row.id,
-    printfulProductId: row.printful_external_id || (row.printful_product_id ? String(row.printful_product_id) : undefined),
+    printfulProductId: row.printful_product_id ? String(row.printful_product_id) : undefined,
     printfulExternalId: row.printful_external_id || undefined,
     slug: row.slug,
     name: row.name,

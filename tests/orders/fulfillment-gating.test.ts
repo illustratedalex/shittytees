@@ -3,10 +3,12 @@ import { createInMemoryRepository } from './helpers/inMemoryRepo';
 import { hashPublicAccessToken } from '@/lib/orders/publicAccess';
 
 vi.mock('@/lib/printful/orders', () => ({
+  confirmPrintfulOrder: vi.fn(async () => ({ id: 90210, status: 'pending', external_id: 'ext_1' })),
   createPrintfulDraftOrder: vi.fn(async () => ({ id: 90210, external_id: 'ext_1' })),
 }));
 
 import { createDraftForOrder, submitOrderToFulfillment } from '@/lib/orders/services/fulfillment';
+import {confirmPrintfulOrder} from '@/lib/printful/orders';
 
 function baseOrder(status: 'paid' | 'printful_draft_created' = 'paid') {
   return {
@@ -50,6 +52,27 @@ function baseOrder(status: 'paid' | 'printful_draft_created' = 'paid') {
 }
 
 describe('fulfillment gating', () => {
+  it('keeps a rejected provider confirmation retryable instead of reporting fulfillment',async()=>{
+    process.env.PRINTFUL_ENABLE_FULFILLMENT='true';
+    const repository=createInMemoryRepository();
+    await repository.create(baseOrder('printful_draft_created'));
+    vi.mocked(confirmPrintfulOrder).mockResolvedValueOnce({id:90210,status:'failed',external_id:'ext_1'});
+    await expect(submitOrderToFulfillment(repository,'ord_gate','stripe_webhook')).rejects.toThrow('not accepted');
+    const saved=await repository.getById('ord_gate');
+    expect(saved?.status).toBe('printful_draft_created');expect(saved?.fulfilled).toBe(false);expect(saved?.mappingError).toContain('failed');
+  });
+  it('permits test drafts without permitting test fulfillment', async () => {
+    process.env.PRINTFUL_ENABLE_FULFILLMENT = 'false';
+    process.env.PRINTFUL_ENABLE_TEST_ORDERS = 'true';
+    const repository = createInMemoryRepository();
+    await repository.create({ ...baseOrder(), stripeCheckoutSessionId: 'cs_test_draft' });
+    const draft = await createDraftForOrder(repository, 'ord_gate', 'stripe_webhook', true);
+    expect(draft.status).toBe('printful_draft_created');
+    process.env.PRINTFUL_ENABLE_FULFILLMENT = 'true';
+    await expect(submitOrderToFulfillment(repository, 'ord_gate', 'admin_action')).rejects.toThrow('Test payments');
+    delete process.env.PRINTFUL_ENABLE_TEST_ORDERS;
+  });
+
   it('blocks draft creation when fulfillment disabled', async () => {
     process.env.PRINTFUL_ENABLE_FULFILLMENT = 'false';
     const repository = createInMemoryRepository();

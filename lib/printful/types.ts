@@ -5,6 +5,11 @@ export type PrintfulFile = {
   preview_url?: string;
   thumbnail_url?: string;
   filename?: string;
+  status?: string;
+  width?: number;
+  height?: number;
+  dpi?: number;
+  hash?: string;
   visible?: boolean;
   options?: Record<string, string | number | boolean>;
 };
@@ -112,6 +117,7 @@ export type PrintfulDraftOrderItem = {
   sync_variant_id: number;
   quantity: number;
   name?: string;
+  retail_price?: string;
 };
 
 export type PrintfulDraftOrderPayload = {
@@ -120,6 +126,7 @@ export type PrintfulDraftOrderPayload = {
   items: PrintfulDraftOrderItem[];
   shipping?: string;
   confirm?: boolean;
+  retail_costs?: {currency:string;shipping:string;tax:string};
 };
 
 export type PrintfulOrder = {

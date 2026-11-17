@@ -1,4 +1,27 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
+import { defaultShareImage } from '@/lib/seo/site';
+
+const title = 'FAQ | Shitty Tees';
+const description = 'Shipping times, damaged shirts, returns, and the other practical questions about ordering a shirt from Shitty Tees.';
+
+export const metadata: Metadata = {
+  title,
+  description,
+  alternates: { canonical: '/faq' },
+  openGraph: {
+    title,
+    description,
+    url: '/faq',
+    type: 'website',
+    images: [defaultShareImage],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title,
+    description,
+  },
+};
 
 export default function FAQPage() {
   const faqs = [

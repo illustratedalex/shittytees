@@ -116,6 +116,8 @@ export function createInMemoryRepository(): OrderRepository {
       return clone(updated);
     },
 
+    async hasWebhookEvent(provider, eventId) { return events.has(`${provider}:${eventId}`); },
+
     async recordWebhookEvent(event: ProcessedWebhookEvent) {
       const key = `${event.provider}:${event.eventId}`;
       if (events.has(key)) return false;

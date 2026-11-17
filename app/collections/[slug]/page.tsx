@@ -1,6 +1,10 @@
+import {SHITTY_COLLECTIONS} from '@/data/shittyCollections';
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { cache } from 'react';
 import { getCollectionBySlug, getProductsByCollection } from '@/lib/catalog/service';
+import { collectionCanonicalPath, collectionIsIndexable } from '@/lib/seo/collections';
+import { defaultShareImage } from '@/lib/seo/site';
 import ProductTile from '@/components/product/ProductTile';
 import { SiteFooter, SiteHeader } from '@/components/layout';
 
@@ -10,7 +14,7 @@ const COLLECTION_BODY_COPY: Record<string, string> = {
 
 export const dynamic = 'force-dynamic';
 
-export async function getCollectionPageState(slug: string) {
+export const getCollectionPageState = cache(async function getCollectionPageState(slug: string) {
   const collection = getCollectionBySlug(slug);
   const products = collection ? await getProductsByCollection(collection.slug) : [];
 
@@ -21,7 +25,7 @@ export async function getCollectionPageState(slug: string) {
     isComingSoon: collection?.slug === 'artists-bench' && products.length === 0,
     bodyCopy: collection ? COLLECTION_BODY_COPY[collection.slug] || collection.description : undefined,
   };
-}
+});
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -29,7 +33,7 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const collection = getCollectionBySlug(slug);
+  const { collection, products } = await getCollectionPageState(slug);
   if (!collection) {
     return {
       title: 'Collection Not Found | ShittyTees',
@@ -37,11 +41,26 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
-  return {
-    title: `${collection.name} | ShittyTees`,
-    description: collection.slug === 'artists-bench'
+  const title = `${collection.name} | ShittyTees`;
+  const description = collection.slug === 'artists-bench'
       ? 'Original ShittyTees apparel inspired by sketchbooks, tattoo shops, late nights, and the people who make things by hand.'
-      : collection.description,
+      : collection.description;
+  const canonical = collectionCanonicalPath(collection.slug);
+
+  return {
+    title,
+    description,
+    alternates: { canonical },
+    robots: collectionIsIndexable(products.length)
+      ? { index: true, follow: true }
+      : { index: false, follow: true },
+    openGraph: {
+      title,
+      description,
+      url: canonical,
+      type: 'website',
+      images: [defaultShareImage],
+    },
   };
 }
 
@@ -59,6 +78,9 @@ export default async function CollectionSlugPage({ params }: Props) {
       </main>
     );
   }
+
+  if (SHITTY_COLLECTIONS.some(c=>c.slug===slug)) return <><SiteHeader/><main className="storefront"><section className="store-section site-shell"><Link href="/collections" className="store-text-link">← The Shitty Tees family</Link><p className="store-eyebrow mt-6">A Shitty Tees collection</p><h1 className="store-page-title">{collection.name.toUpperCase()}.</h1><p className="store-page-description">{collection.description}</p>{products.length?<div className="shop-grid">{products.map(product=><ProductTile key={product.id} product={product}/>)}</div>:<p className="store-release-message">The first shirts are being prepared. Check back for the release.</p>}</section></main><SiteFooter/></>;
+
 
   return (
     <>

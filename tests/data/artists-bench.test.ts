@@ -52,6 +52,7 @@ describe("Artist's Bench collection", () => {
     expect(state.products).toHaveLength(0);
     expect(metadata.title).toBe("Artist's Bench | ShittyTees");
     expect(metadata.description).toBe('Original ShittyTees apparel inspired by sketchbooks, tattoo shops, late nights, and the people who make things by hand.');
+    expect(metadata.robots).toEqual({ index: false, follow: true });
   });
 
   it('lists Artist\'s Bench drafts in products review output', () => {
