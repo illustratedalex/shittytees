@@ -4,10 +4,30 @@ import robots from '@/app/robots';
 
 vi.mock('@/lib/catalog/service', () => ({
   getPublicProducts: vi.fn(async () => [
-    { slug: 'public-shirt', active: true, updatedAt: '2026-10-01T00:00:00Z' },
-    { slug: 'inactive-shirt', active: false, updatedAt: '2026-10-01T00:00:00Z' },
+    {
+      slug: 'public-shirt',
+      active: true,
+      updatedAt: '2026-10-01T00:00:00Z',
+      createdAt: new Date('2026-10-01T00:00:00Z'),
+      collectionSlug: 'shitty-politics',
+      publishStatus: 'published',
+      tags: ['shitty-politics', 'new-arrival'],
+    },
+    {
+      slug: 'inactive-shirt',
+      active: false,
+      updatedAt: '2026-10-01T00:00:00Z',
+      createdAt: new Date('2026-09-01T00:00:00Z'),
+      collectionSlug: 'shitty-politics',
+      publishStatus: 'published',
+      tags: ['shitty-politics'],
+    },
   ]),
-  getAllCollections: vi.fn(() => [{ slug: 'shitty-politics' }]),
+  getAllCollections: vi.fn(() => [
+    { slug: 'shitty-politics' },
+    { slug: 'dark-humor' },
+    { slug: 'new-arrivals' },
+  ]),
 }));
 
 afterEach(() => vi.unstubAllEnvs());
@@ -29,6 +49,8 @@ describe('public crawl routes', () => {
       'https://shittytees.com/shop/public-shirt',
       'https://shittytees.com/collections/shitty-politics',
     ]);
+    expect(urls).not.toContain('https://shittytees.com/collections/dark-humor');
+    expect(urls).not.toContain('https://shittytees.com/collections/new-arrivals');
   });
 
   it('addresses the actual non-public routes and a valid sitemap URL', () => {

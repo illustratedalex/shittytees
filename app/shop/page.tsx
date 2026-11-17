@@ -2,6 +2,7 @@ import { SHITTY_COLLECTIONS } from '@/data/shittyCollections';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getPublicProducts } from '@/lib/catalog/service';
+import { defaultShareImage } from '@/lib/seo/site';
 import { SiteFooter, SiteHeader } from '@/components/layout';
 import ProductTile from '@/components/product/ProductTile';
 import DesignShowcase from '@/components/product/DesignShowcase';
@@ -15,6 +16,7 @@ export const metadata: Metadata = {
     description: 'Original graphic shirts with dark humor and absolutely no filter.',
     url: '/shop',
     type: 'website',
+    images: [defaultShareImage],
   },
 };
 export default async function ShopPage() {

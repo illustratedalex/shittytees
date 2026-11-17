@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { getPublicProducts } from '@/lib/catalog/service';
+import { defaultShareImage } from '@/lib/seo/site';
 import { SiteFooter, SiteHeader } from '@/components/layout';
 import ProductTile from '@/components/product/ProductTile';
 import DesignShowcase from '@/components/product/DesignShowcase';
@@ -16,6 +17,7 @@ export const metadata: Metadata = {
     description: 'Original graphic tees. Dark humor, questionable leadership, and absolutely no filter.',
     url: '/',
     type: 'website',
+    images: [defaultShareImage],
   },
 };
 export default async function Home() {
